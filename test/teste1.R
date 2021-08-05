@@ -131,19 +131,19 @@ dummy2 <- as.matrix(dummy_on_off(n, c(1, 1000), c(999, n)))
 pars <- list(ar = .6, 
              omega = 1, alpha = .13, beta = .85, 
              deltaMedia = 1, 
-             deltaVar = c(-5, -2.5))
+             deltaVar = c(-5, -1))
 
 pars_init <- list(
   psi2 = log(.1),
   psi3 = log(.9),
   ar = .6,
   deltaMedia = 1,
-  deltaVar = c(-5, -1)
+  deltaVar = c(-5, -5)
 )
 alpha_order <- length(pars_init$psi2)
 beta_order <- length(pars_init$psi3)
-kmed <- 1
-kvar <- 1
+kmed <- length(pars_init$deltaMedia)
+kvar <- length(pars_init$deltaVar)
 
 data <- modelo(pars, dummy1, dummy2, n)
 yt <- data$yt
@@ -213,6 +213,7 @@ mean(resid_pad[-c(1, 2)])
 var(resid_pad[-c(1, 2)])
 
 plot(resid_pad[-c(1, 2)], type = 'l')
+
 # Exemplo 6 ---------------------------------------------------------------
 
 n <- 2000

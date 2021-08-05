@@ -33,8 +33,15 @@ p2 <- ggplot(TSX, aes(x = Index, y = tsx)) +
   theme_minimal() + 
   geom_vline(xintercept = as.Date(c("2007-07-01", "2008-11-28")), 
              colour = 'red', size = 1.5, linetype = "dashed")
+
+p3 <- ggplot(TSX, aes(x = Index, y = tsx)) +
+  geom_line(size = 1L, colour = "#112446") +
+  labs(x = "Tempo", y = "Retorno", title = "TSXX com as Restrições") +
+  theme_minimal() + 
+  geom_vline(xintercept = as.Date(c("2008-09-19", "2008-10-08")), 
+             colour = 'blue', size = 1.5, linetype = "dashed")
 # p2
-gridExtra::grid.arrange(p1, p2, ncol = 1)
+gridExtra::grid.arrange(p1, p2, p3, ncol = 1)
 
 # Ordens e Parametros - INICIO
 pars <- list(

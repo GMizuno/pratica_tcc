@@ -3,8 +3,6 @@ source('src/util.R')
 
 # Dummy1 => Delta1, Dummy2 => Delta2
 
-# Modelo Gaussiano -----------------------------------------------------------
-
 # Simulacao de um GARCH - INICIO
 Garch <- function(pars, n){
   
@@ -174,7 +172,7 @@ modelo_smooth <- function(pars, dummy1, dummy2, t_ast, t_til, n){
   int1 <-  as.matrix(dummy1)%*%delta1
   
   int2 <- exp((as.matrix(dummy2)%*%delta2)/2)
-  int2[t_ast:(t_til - 1)] <- reta(delta2[1]/2, delta2[2]/2, t_ast, t_til, t_ast:(t_til - 1))
+  int2[t_ast:t_til] <- reta(delta2[1]/2, delta2[2]/2, t_ast, t_til, t_ast:t_til)
   # Efeito regressao - FIM
   
   # Gerando a serie final - INICIO
@@ -236,10 +234,12 @@ modelo_smooth2 <- function(pars, dummy1, dummy2, t_ast, t_til, n){
   
   int2 <- exp((as.matrix(dummy2)%*%delta2)/2)
   
-  int2[t_ast[1]:(t_til[1] - 1)] <- reta(delta2[2]/2, delta2[3]/2, 
-                                        t_ast[1], t_til[1], t_ast[1]:(t_til[1] - 1))
-  int2[t_ast[2]:(t_til[2] - 1)] <- reta(delta2[3]/2, delta2[4]/2, 
-                                        t_ast[2], t_til[2], t_ast[2]:(t_til[2] - 1))
+  int2[t_ast[1]:(t_til[1])] <- reta(delta2[1]/2, delta2[2]/2, 
+                                        t_ast[1], t_til[1], t_ast[1]:t_til[1])
+  int2[t_ast[2]:(t_til[2])] <- reta(delta2[2]/2, delta2[3]/2, 
+                                        t_ast[2], t_til[2], t_ast[2]:t_til[2])
+  int2[t_ast[3]:(t_til[3])] <- reta(delta2[3]/2, delta2[4]/2, 
+                                    t_ast[3], t_til[3], t_ast[3]:t_til[3])
   # Efeito regressao - FIM
   
   # Gerando a serie final - INICIO

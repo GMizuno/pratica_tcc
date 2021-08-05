@@ -33,9 +33,15 @@ p2 <- ggplot(DAX, aes(x = Index, y = dax)) +
   theme_minimal() + 
   geom_vline(xintercept = as.Date(c("2007-07-01", "2008-11-28")), 
              colour = 'red', size = 1.5, linetype = "dashed")
-# p2
-gridExtra::grid.arrange(p1, p2, ncol = 1)
 
+p3 <- ggplot(DAX, aes(x = Index, y = dax)) +
+  geom_line(size = 1L, colour = "#112446") +
+  labs(x = "Tempo", y = "Retorno", title = "DAX com as Restrições") +
+  theme_minimal() + 
+  geom_vline(xintercept = as.Date(c("2008-09-20", "2011-03-31")), 
+             colour = 'blue', size = 1.5, linetype = "dashed")
+# p2
+gridExtra::grid.arrange(p1, p2, p3, ncol = 1)
 # Ordens e Parametros - INICIO
 pars <- list(
   psi2 = log(.15),

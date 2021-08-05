@@ -13,28 +13,35 @@ load("dados/NYSE.RData")
 BegSample <- '2004-01-01'
 EndSample <- '2009-12-31'
 
-CAC <- CAC %>% 
+NYSE <- NYSE %>% 
   fortify.zoo %>% 
   as_tibble %>% 
   filter(Index >= as.Date(BegSample), Index <= as.Date(EndSample)) %>% 
   mutate(id = row_number()) %>% select(Index, id, everything())
 
-yt <- CAC$cac %>% as.vector()
+yt <- NYSE$cac %>% as.vector()
 Varyt <- var(yt[1:50])
 
-p1 <- ggplot(CAC, aes(x = Index, y = CAC)) +
+p1 <- ggplot(NYSE, aes(x = Index, y = NYSE)) +
   geom_line(size = 1L, colour = "#112446") +
-  labs(x = "Tempo", y = "Preço", title = "CAC") +
+  labs(x = "Tempo", y = "Preço", title = "NYSE") +
   theme_minimal()
 
-p2 <- ggplot(CAC, aes(x = Index, y = cac)) +
+p2 <- ggplot(NYSE, aes(x = Index, y = nyse)) +
   geom_line(size = 1L, colour = "#112446") +
-  labs(x = "Tempo", y = "Retorno", title = "CAC") +
+  labs(x = "Tempo", y = "Retorno", title = "NYSE") +
   theme_minimal() + 
   geom_vline(xintercept = as.Date(c("2007-07-01", "2008-11-28")), 
              colour = 'red', size = 1.5, linetype = "dashed")
+
+p3 <- ggplot(NYSE, aes(x = Index, y = nyse)) +
+  geom_line(size = 1L, colour = "#112446") +
+  labs(x = "Tempo", y = "Retorno", title = "NYSE com as Restrições") +
+  theme_minimal() + 
+  geom_vline(xintercept = as.Date(c("2008-10-20", "2010-07-31")), 
+             colour = 'blue', size = 1.5, linetype = "dashed")
 # p2
-# gridExtra::grid.arrange(p1, p2, ncol = 1)
+gridExtra::grid.arrange(p1, p2, p3, ncol = 1)
 
 # Ordens e Parametros - INICIO
 pars <- list(

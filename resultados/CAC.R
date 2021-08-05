@@ -34,8 +34,15 @@ p2 <- ggplot(CAC, aes(x = Index, y = cac)) +
   theme_minimal() + 
   geom_vline(xintercept = as.Date(c("2007-07-01", "2008-11-28")), 
              colour = 'red', size = 1.5, linetype = "dashed")
+
+p3 <- ggplot(CAC, aes(x = Index, y = cac)) +
+  geom_line(size = 1L, colour = "#112446") +
+  labs(x = "Tempo", y = "Retorno", title = "CAC com as Restrições") +
+  theme_minimal() + 
+  geom_vline(xintercept = as.Date(c("2008-09-22", "2012-12-11")), 
+             colour = 'blue', size = 1.5, linetype = "dashed")
 # p2
-# gridExtra::grid.arrange(p1, p2, ncol = 1)
+gridExtra::grid.arrange(p1, p2, p3, ncol = 1)
 
 # Ordens e Parametros - INICIO
 pars <- list(
@@ -95,7 +102,6 @@ resid_pad_data <- resid_pad_data[-1, ]
 
 mean(resid_pad_data$resid_pad)
 var(resid_pad_data$resid_pad)
-
 
 ggplot(resid_pad_data, aes(sample = resid_pad)) + 
   stat_qq() + 

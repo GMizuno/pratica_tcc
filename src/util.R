@@ -1,7 +1,6 @@
 require(purrr)
 require(dplyr)
 
-# Modelo novo -------------------------------------------------------------
 
 # Funcao para criar variaveis dummies do tipo step - INICIO
 dummy_step <- function(size, time = 1, suffix = "Var"){
@@ -51,9 +50,10 @@ unpack_exp <- function(pars){
   delta2 <- pars[grepl("^deltaVar", names(pars))]
   ar <- pars[grepl("^ar", names(pars))]
 
+  omega <- exp(pars[grepl("^omega", names(pars))])
   alpha <- exp(pars[grepl("^alpha", names(pars))])
   beta <- exp(pars[grepl("^beta", names(pars))])
-  return(c(alpha, beta, ar, delta1, delta2))
+  return(c(omega, alpha, beta, ar, delta1, delta2))
 }
 # Funcao para voltar achar os parametros interpretaveis  - FIM
 
@@ -90,24 +90,21 @@ estimando <- function(model, pars_init){
 }
 # Funcao para estimar os modelos e fazer output bonito - INICIO
 
-# Funcao para estimar os modelos e fazer output bonito usando c++ - INICIO
-estimando_cpp <- function(pars_init, data, dummyMedia, dummyVar, 
-                          kvar, n, Varyt){
+# Funcao para estimar os modelos e fazer output bonito - INICIO
+estimando_arch <- function(model, pars_init){
   # Iniciando a estimacao - INICIO
+  
   opt <- optim(unname(unlist(pars_init)), 
-               llike, 
+               model, 
                method = 'BFGS',
                control = list(fnscale = -1, maxit = 500,
-                              reltol = 1e-8),
-               data = data, dummyMedia = dummyMedia,
-               dummyVar = dummyVar, 
-               kvar = kvar, n = n, Varyt = Varyt)
+                              reltol = 1e-8, trace = 1, REPORT = 1))
   # Iniciando a estimacao - FIM
   
-  # Guardando as estimativas/medidas - INICIO
+  # Guardando as estimativas/medidas - INICIO 
   nomes <- names(unlist(pars_init)) 
-  nomes[1] <- "alpha"
-  nomes[2] <- "beta"
+  nomes <- stringr::str_replace(nomes, 'psi1', 'omega')
+  nomes <- stringr::str_replace(nomes, 'psi2', 'alpha')
   names(opt$par) <- nomes
   
   n <- length(yt)
@@ -120,29 +117,28 @@ estimando_cpp <- function(pars_init, data, dummyMedia, dummyVar,
                      llike = llike, 
                      AIC = -2*llike + 2*p,
                      BIC = -2*llike + p*log(n))
-  
   # Guardando as estimativas/medidas - FIM
+  
   return(data)
 }
-# Funcao para estimar os modelos e fazer output bonito usando c++ - INICIO
+# Funcao para estimar os modelos e fazer output bonito - INICIO
 
-# Funcao para estimar os modelos e fazer output bonito usando c++ - INICIO
-estimando_cpp_geral <- function(pars_init, data, dummyMedia, dummyVar, 
-                                kmed, kvar, n, Varyt){
+# Funcao para estimar os modelos e fazer output bonito - INICIO
+estimando_garch <- function(model, pars_init){
   # Iniciando a estimacao - INICIO
+  
   opt <- optim(unname(unlist(pars_init)), 
-               llike_geral, 
+               model, 
                method = 'BFGS',
-               control = list(fnscale = -1, maxit = 500),
-               data = data, dummyMedia = dummyMedia,
-               dummyVar = dummyVar, 
-               kvar = kvar, kmed = kmed, n = n, Varyt = Varyt)
+               control = list(fnscale = -1, maxit = 500,
+                              reltol = 1e-8, trace = 1, REPORT = 1))
   # Iniciando a estimacao - FIM
   
-  # Guardando as estimativas/medidas - INICIO
+  # Guardando as estimativas/medidas - INICIO 
   nomes <- names(unlist(pars_init)) 
-  nomes[1] <- "alpha"
-  nomes[2] <- "beta"
+  nomes <- stringr::str_replace(nomes, 'psi1', 'omega')
+  nomes <- stringr::str_replace(nomes, 'psi2', 'alpha')
+  nomes <- stringr::str_replace(nomes, 'psi3', 'beta')
   names(opt$par) <- nomes
   
   n <- length(yt)
@@ -155,84 +151,8 @@ estimando_cpp_geral <- function(pars_init, data, dummyMedia, dummyVar,
                      llike = llike, 
                      AIC = -2*llike + 2*p,
                      BIC = -2*llike + p*log(n))
-  
   # Guardando as estimativas/medidas - FIM
+  
   return(data)
 }
-# Funcao para estimar os modelos e fazer output bonito usando c++ - INICIO
-
-# Funcao para estimar os modelos e fazer output bonito usando c++ - INICIO
-estimando_cpp_geral_suave <- function(pars_init, data, 
-                                       dummyMedia, dummyVar,
-                                       t_ast, t_til,
-                                       kmed, kvar, n, Varyt){
-  # Iniciando a estimacao - INICIO
-  opt <- optim(unname(unlist(pars_init)), 
-               llike_cpp_suave, 
-               method = 'BFGS',
-               control = list(fnscale = -1, maxit = 500),
-               data = data, dummyMedia = dummyMedia,
-               dummyVar = dummyVar, 
-               t_ast = t_ast, t_til = t_til, 
-               kvar = kvar, kmed = kmed, n = n, Varyt = Varyt)
-  # Iniciando a estimacao - FIM
-  
-  # Guardando as estimativas/medidas - INICIO
-  nomes <- names(unlist(pars_init)) 
-  nomes[1] <- "alpha"
-  nomes[2] <- "beta"
-  names(opt$par) <- nomes
-  
-  n <- length(yt)
-  p <- length(unname(unlist(pars_init)))
-  llike <- unname(opt$value)
-  ite <- unname(opt$counts[2])
-  
-  data <- data.frame(t(unpack_exp(opt$par)), 
-                     ite = ite, 
-                     llike = llike, 
-                     AIC = -2*llike + 2*p,
-                     BIC = -2*llike + p*log(n))
-  
-  # Guardando as estimativas/medidas - FIM
-  return(data)
-}
-# Funcao para estimar os modelos e fazer output bonito usando c++ - INICIO
-
-# Funcao para estimar os modelos e fazer output bonito usando c++ - INICIO
-estimando_cpp_geral_suave2 <- function(pars_init, data, 
-                                      dummyMedia, dummyVar,
-                                      t_ast, t_til,
-                                      kmed, kvar, n, Varyt){
-  # Iniciando a estimacao - INICIO
-  opt <- optim(unname(unlist(pars_init)), 
-               llike_cpp_suave2, 
-               method = 'BFGS',
-               control = list(fnscale = -1, maxit = 500),
-               data = data, dummyMedia = dummyMedia,
-               dummyVar = dummyVar, 
-               t_ast = t_ast, t_til = t_til, 
-               kvar = kvar, kmed = kmed, n = n, Varyt = Varyt)
-  # Iniciando a estimacao - FIM
-  
-  # Guardando as estimativas/medidas - INICIO
-  nomes <- names(unlist(pars_init)) 
-  nomes[1] <- "alpha"
-  nomes[2] <- "beta"
-  names(opt$par) <- nomes
-  
-  n <- length(yt)
-  p <- length(unname(unlist(pars_init)))
-  llike <- unname(opt$value)
-  ite <- unname(opt$counts[2])
-  
-  data <- data.frame(t(unpack_exp(opt$par)), 
-                     ite = ite, 
-                     llike = llike, 
-                     AIC = -2*llike + 2*p,
-                     BIC = -2*llike + p*log(n))
-  
-  # Guardando as estimativas/medidas - FIM
-  return(data)
-}
-# Funcao para estimar os modelos e fazer output bonito usando c++ - INICIO
+# Funcao para estimar os modelos e fazer output bonito - INICIO

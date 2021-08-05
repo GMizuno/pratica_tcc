@@ -33,8 +33,15 @@ p2 <- ggplot(FTSE, aes(x = Index, y = ftse)) +
   theme_minimal() + 
   geom_vline(xintercept = as.Date(c("2007-07-01", "2008-11-28")), 
              colour = 'red', size = 1.5, linetype = "dashed")
+
+p3 <- ggplot(FTSE, aes(x = Index, y = ftse)) +
+  geom_line(size = 1L, colour = "#112446") +
+  labs(x = "Tempo", y = "Retorno", title = "FTSE com as Restrições") +
+  theme_minimal() + 
+  geom_vline(xintercept = as.Date(c("2008-09-19", "2009-01-19")), 
+             colour = 'blue', size = 1.5, linetype = "dashed")
 # p2
-gridExtra::grid.arrange(p1, p2, ncol = 1)
+gridExtra::grid.arrange(p1, p2, p3, ncol = 1)
 
 # Ordens e Parametros - INICIO
 pars <- list(
@@ -44,6 +51,7 @@ pars <- list(
   deltaMedia = 0.0,
   deltaVar = c(-13, -12, -11)
 )
+
 # Definindo parametros e dummies ------------------------------------------
 # Estimando e residuos ----------------------------------------------------
 # Analisando residuos -----------------------------------------------------
