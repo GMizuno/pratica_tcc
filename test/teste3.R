@@ -8,7 +8,7 @@ library(fGarch)
 # Exemplo 1 - AR(1)-GARCH(1,1)  ------------------------------------------------
 
 n <- 2000
-spec = garchSpec(model = list(mu = 0, ar = .5, omega = 1))
+spec <- garchSpec(model = list(mu = 0, ar = .5, omega = 1))
 dados <- garchSim(spec, n = n)
 yt <- dados$garch
 

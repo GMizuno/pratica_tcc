@@ -1,7 +1,6 @@
 require(purrr)
 require(dplyr)
 
-
 # Funcao para criar variaveis dummies do tipo step - INICIO
 dummy_step <- function(size, time = 1, suffix = "Var"){
   
@@ -156,3 +155,9 @@ estimando_garch <- function(model, pars_init){
   return(data)
 }
 # Funcao para estimar os modelos e fazer output bonito - INICIO
+
+# Funcao para dar chute inicial no DeltaVar - INICIO
+chute_inicial <- function(delta1, chute){
+  accumulate(chute, `*`) %>% map_dbl(\(x) delta1 + 2*x)
+}
+# Funcao para dar chute inicial no DeltaVar - FIM

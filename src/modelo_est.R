@@ -1,6 +1,4 @@
-# Modelos -------------------------------------------------------------
-
-# Inciando verossimilhanca do modelo completo - INICIO
+# Verossimilhanca de um AR-ARCH - INICIO
 llike_arch <- function(pars){
   
   pos <- cumsum(c(1, alpha_order, 1))
@@ -17,12 +15,22 @@ llike_arch <- function(pars){
   media_cond_yt <- rep(NA, n)
   # Momentos condicionais - FIM
   
+  # Momentos condicionais - INICIO
+  sigma2 <- rep(NA, n)
+  media_cond_xt <- rep(NA, n)
+  # Momentos condicionais - FIM
+  
+  # Efeito regressao - INICIO
+  int1 <- dummy1%*%delta1
+  # Efeito regressao - FIM
+  
   # Insumos verossimilhanca - INICIO
-  media_cond_yt[1] <- yt[1]
+  Xt <- yt - int1
   
-  media_cond_yt[-1] <- ar*yt[-length(yt)]
+  media_cond_xt[1] <- Xt[1]
+  media_cond_xt[-1] <- ar*Xt[-length(Xt)]
   
-  epst <- yt - media_cond_yt
+  epst <- Xt - media_cond_xt
   
   sigma2[1:alpha_order] <- Varyt
   
@@ -40,12 +48,12 @@ llike_arch <- function(pars){
   return(sum(soma))
   # Computando verossimilhanca - FIM
 }
-# Inciando verossimilhanca do modelo completo - FIM
+# Verossimilhanca de um AR-ARCH- FIM
 
-# Inciando verossimilhanca do modelo completo - INICIO
+# Verossimilhanca de um AR-GARCH - INICIO
 llike_garch <- function(pars){
 
-  pos <- cumsum(c(1, alpha_order, beta_order, 1))
+  pos <- cumsum(c(1, alpha_order, beta_order, 1, 1))
   
   # Definicao dos parametros - INICIO
   omega <- exp(pars[1])
@@ -53,19 +61,26 @@ llike_garch <- function(pars){
   beta <- exp(pars[(pos[2] + 1):pos[3]])
   
   ar <- pars[pos[4]]
+  
+  delta1 <- pars[pos[5]]
   # Definicao dos parametros - FIM
   
   # Momentos condicionais - INICIO
   sigma2 <- rep(NA, n)
-  media_cond_yt <- rep(NA, n)
+  media_cond_xt <- rep(NA, n)
   # Momentos condicionais - FIM
   
+  # Efeito regressao - INICIO
+  int1 <- dummy1%*%delta1
+  # Efeito regressao - FIM
+  
   # Insumos verossimilhanca - INICIO
-  media_cond_yt[1] <- yt[1]
+  Xt <- yt - int1
   
-  media_cond_yt[-1] <- ar*yt[-length(yt)]
+  media_cond_xt[1] <- Xt[1]
+  media_cond_xt[-1] <- ar*Xt[-length(Xt)]
   
-  epst <- yt - media_cond_yt
+  epst <- Xt - media_cond_xt
   
   sigma2[1:alpha_order] <- Varyt
   
@@ -81,16 +96,16 @@ llike_garch <- function(pars){
   
   # Computando verossimilhanca - INICIO
   soma <- dnorm(x = yt[51:n], 
-                mean = media_cond_yt[51:n],
+                mean = (int1 + media_cond_xt)[51:n],
                 sd = sqrt(sigma2)[51:n], 
                 log = TRUE)
   
   return(sum(soma))
   # Computando verossimilhanca - FIM
 }
-# Inciando verossimilhanca do modelo completo - FIM
+# Verossimilhanca de um AR-GARCH - FIM
 
-# Inciando verossimilhanca do modelo completo - INICIO
+# Verossimilhanca do modelo com AR-ARCH - INICIO
 llike_model_arch <- function(pars){
   
   pos <- cumsum(c(alpha_order, 1, kmed, kvar))
@@ -142,9 +157,9 @@ llike_model_arch <- function(pars){
   return(sum(soma))
   # Computando verossimilhanca - FIM
 }
-# Inciando verossimilhanca do modelo completo - FIM
+# Verossimilhanca do modelo com AR-ARCH - FIM
 
-# Inciando verossimilhanca do modelo completo - INICIO
+# Verossimilhanca do modelo com AR-GARCH - INICIO
 llike_model_garch <- function(pars){
   
   pos <- cumsum(c(alpha_order, beta_order, 1, kmed, kvar))
@@ -155,6 +170,7 @@ llike_model_garch <- function(pars){
   beta <- exp(pars[(pos[1] + 1):(pos[2])])
   
   ar <- pars[pos[3]]
+  
   delta1 <- pars[(pos[3] + 1):(pos[4])]
   delta2 <- pars[(pos[4] + 1):(pos[5])]
   # Definicao dos parametros - FIM
@@ -200,9 +216,9 @@ llike_model_garch <- function(pars){
   return(sum(soma))
   # Computando verossimilhanca - FIM
 }
-# Inciando verossimilhanca do modelo completo - FIM
+# Verossimilhanca do modelo com AR-ARCH - FIM
 
-# Inciando verossimilhanca do modelo suave - INICIO
+# Verossimilhanca do modelo com transição suave - INICIO
 llike_suave <- function(pars){
   
   # Definicao dos parametros - INICIO
@@ -224,7 +240,7 @@ llike_suave <- function(pars){
   int1 <-  as.matrix(dummy1)%*%delta1
   
   int2 <- exp((as.matrix(dummy2)%*%delta2)/2)
-  int2[t_ast:t_til] <- reta(delta2[1]/2, delta2[2]/2,
+  int2[t_ast:t_til] <- reta(delta2[3]/2, delta2[4]/2,
                                   t_ast, t_til, t_ast:t_til)
   # Efeito regressao - FIM
   
@@ -256,9 +272,9 @@ llike_suave <- function(pars){
   return(sum(soma))
   # Computando verossimilhanca - FIM
 }
-# Inciando verossimilhanca do modelo suave - FIM
+# Verossimilhanca do modelo com transição suave - FIM
 
-# Inciando verossimilhanca do modelo suave - INICIO
+# Verossimilhanca do modelo com transição suave - INICIO
 llike_suave2 <- function(pars){
   
   # Definicao dos parametros - INICIO
@@ -314,4 +330,4 @@ llike_suave2 <- function(pars){
   return(sum(soma))
   # Computando verossimilhanca - FIM
 }
-# Inciando verossimilhanca do modelo suave - FIM
+# Verossimilhanca do modelo com transição suave - FIM
