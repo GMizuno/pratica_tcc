@@ -161,3 +161,14 @@ chute_inicial <- function(delta1, chute){
   accumulate(chute, `*`) %>% map_dbl(\(x) delta1 + 2*x)
 }
 # Funcao para dar chute inicial no DeltaVar - FIM
+
+# Teste LR - INICIO
+teste_lr <- function(model_com, model_red, alpha = .05){
+  p <- length(model_com)
+  q <- length(model_red)
+  
+  lambda <- -2*(model_red$llike - model_com$llike)
+  pvalue <- pchisq(lambda, p - q, lower.tail = FALSE)
+  return(data.frame(lambda = lambda, pvalue = pvalue, df = p - q))
+}
+# Teste LR - FIM

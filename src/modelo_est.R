@@ -240,7 +240,7 @@ llike_suave <- function(pars){
   int1 <-  as.matrix(dummy1)%*%delta1
   
   int2 <- exp((as.matrix(dummy2)%*%delta2)/2)
-  int2[t_ast:t_til] <- reta(delta2[3]/2, delta2[4]/2,
+  int2[t_ast:t_til] <- reta(delta2[delta_ind]/2, delta2[delta_ind + 1]/2,
                                   t_ast, t_til, t_ast:t_til)
   # Efeito regressao - FIM
   

@@ -33,7 +33,7 @@ esp_cond <- function(data, est, dummy1, dummy2,
 ## Funcao para estimar a media condicional do modelo - FIM
 
 ## Funcao para estimar a media condicional do modelo c/ int suave - INICIO
-esp_cond_sauve <- function(data, est, dummy1, dummy2, t_ast, t_til,
+esp_cond_sauve <- function(data, est, dummy1, dummy2, t_ast, t_til, delta_ind,
                            alpha_order, beta_order, kmed, kvar, n){
   
   est <- as.matrix(est) %>% unname()
@@ -49,7 +49,7 @@ esp_cond_sauve <- function(data, est, dummy1, dummy2, t_ast, t_til,
   int1 <- dummy1%*%delta1
   int2 <- exp((dummy2%*%delta2)/2)
   
-  int2[t_ast:(t_til)] <- reta(delta2[3]/2, delta2[4]/2, 
+  int2[t_ast:(t_til)] <- reta(delta2[delta_ind]/2, delta2[delta_ind + 1]/2, 
                               t_ast, t_til, t_ast:t_til)
   # Efeito regressao - FIM
   
@@ -180,7 +180,8 @@ var_cond <- function(data, est, dummy1, dummy2, Varyt,
 ## Funcao para estimar a media condicional do modelo - FIM
 
 ## Funcao para estimar a var condicional do modelo c/ int suave - INICIO
-var_cond_sauve <- function(data, est, dummy1, dummy2, t_ast, t_til, Varyt, 
+var_cond_sauve <- function(data, est, dummy1, dummy2, 
+                           t_ast, t_til, delta_ind, Varyt, 
                            alpha_order, beta_order, kmed, kvar, n){
   
   est <- as.matrix(est) %>% unname()
@@ -200,7 +201,7 @@ var_cond_sauve <- function(data, est, dummy1, dummy2, t_ast, t_til, Varyt,
   int1 <- dummy1%*%delta1
   int2 <- exp((dummy2%*%delta2)/2)
   
-  int2[t_ast:(t_til)] <- reta(delta2[3]/2, delta2[4]/2, 
+  int2[t_ast:(t_til)] <- reta(delta2[delta_ind]/2, delta2[delta_ind + 1]/2, 
                               t_ast, t_til, t_ast:t_til)
   # Efeito regressao - FIM
   
@@ -367,7 +368,7 @@ var_indcond_sauve <- function(data, est, dummy1, dummy2, Varyt, t_ast, t_til,
   # Efeito regressao - INICIO
   int2 <- exp((dummy2%*%delta2)/2)
   
-  int2[t_ast:(t_til)] <- reta(delta2[3]/2, delta2[4]/2, 
+  int2[t_ast:(t_til)] <- reta(delta2[delta_ind]/2, delta2[delta_ind + delta_ind]/2, 
                               t_ast, t_til, t_ast:t_til)
   # Efeito regressao - FIM
   
