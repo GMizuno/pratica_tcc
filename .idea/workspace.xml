@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0446d0af-c055-4800-8e21-0f8e147225c3" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/resultados/CAC.R" beforeDir="false" afterPath="$PROJECT_DIR$/resultados/CAC.R" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultados/DAX.R" beforeDir="false" afterPath="$PROJECT_DIR$/resultados/DAX.R" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultados/FTSE.R" beforeDir="false" afterPath="$PROJECT_DIR$/resultados/FTSE.R" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultados/NIKKEI.R" beforeDir="false" afterPath="$PROJECT_DIR$/resultados/NIKKEI.R" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultados/NYSE.R" beforeDir="false" afterPath="$PROJECT_DIR$/resultados/NYSE.R" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resultados/TSX.R" beforeDir="false" afterPath="$PROJECT_DIR$/resultados/TSX.R" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Analise de reisduos.R" beforeDir="false" afterPath="$PROJECT_DIR$/src/Analise de reisduos.R" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modelo_est.R" beforeDir="false" afterPath="$PROJECT_DIR$/src/modelo_est.R" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util.R" beforeDir="false" afterPath="$PROJECT_DIR$/src/util.R" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1wws27kZIRYSUEDi0fKztp6uWJv" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="MTHome" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0446d0af-c055-4800-8e21-0f8e147225c3" name="Default Changelist" comment="" />
+      <created>1629380779415</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1629380779415</updated>
+      <workItem from="1629380782558" duration="6000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

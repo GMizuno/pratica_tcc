@@ -8,10 +8,12 @@ library(imputeTS)
 library(ggplot2)
 library(dplyr)
 
-# Carregando dados e graficos ---------------------------------------------
+# Carregando dados --------------------------------------------------------
+
 load("dados/FTSE.RData")
 BegSample <- '2004-01-01'
 EndSample <- '2009-12-31'
+crises <- as.Date(c("2007-07-01", "2008-11-28"))
 
 FTSE <- FTSE %>% 
   fortify.zoo %>% 
@@ -21,6 +23,8 @@ FTSE <- FTSE %>%
 
 yt <- FTSE$ftse %>% as.vector()
 Varyt <- var(yt[1:50])
+
+# Graficos ----------------------------------------------------------------
 
 p1 <- ggplot(FTSE, aes(x = Index, y = FTSE)) +
   geom_line(size = 1L, colour = "#112446") +

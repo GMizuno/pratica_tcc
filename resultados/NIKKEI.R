@@ -8,10 +8,11 @@ library(imputeTS)
 library(ggplot2)
 library(dplyr)
 
-# Carregando dados e graficos ---------------------------------------------
+# Carregando dados ---------------------------------------------
 load("dados/NIKKEI.RData")
 BegSample <- '2004-01-01'
 EndSample <- '2009-12-31'
+crises <- as.Date(c("2007-07-01", "2008-11-28"))
 
 NIKKEI <- NIKKEI %>% 
   fortify.zoo() %>% 
@@ -22,6 +23,8 @@ NIKKEI <- NIKKEI %>%
 
 yt <- NIKKEI$nikkei %>% as.vector()
 Varyt <- var(yt[1:50])
+
+# Graficos ----------------------------------------------------------------
 
 p1 <- ggplot(NIKKEI, aes(x = Index, y = NIKKEI)) +
   geom_line(size = 1L, colour = "#112446") +
@@ -65,7 +68,7 @@ acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1))
 pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1))
 
 acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 
 # Modelo 1 ----------------------------------------------------------------
 
@@ -77,7 +80,7 @@ pars <- list(
   deltaMedia = 0.0,
   deltaVar = c(-3, -3, -3, -3, -3)
 )
-## Definindo parametros e dummies
+
 alpha_order <- length(pars$psi2)
 beta_order <- length(pars$psi3)
 kmed <- length(pars$deltaMedia)
@@ -89,18 +92,19 @@ t_til <- 1227
 
 dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
 dummy2 <- as.matrix(dummy_on_off(n, c(1, 985, 1175, 1227, 1313),
-                                 c(984, 1174, 1179, 1312,n)))
-## Estimando e residuos 
+                                 c(984, 1174, 1179, 1312, n)))
+# Ordens e Parametros - FIM
+
+# Estimando e residuos - INICIO
 
 (opt1 <- estimando(llike_suave, pars))
-
-# Residuos - INICIO
 
 media_cond <- esp_cond_sauve(
   data = yt,
   est = opt1,
   dummy1 = dummy1,
   dummy2 = dummy2,
+  delta_ind = delta_ind,
   t_ast = t_ast,
   t_til = t_til,
   alpha_order = alpha_order,
@@ -115,6 +119,7 @@ var_cond <- var_cond_sauve(
   est = opt1,
   dummy1 = dummy1,
   dummy2 = dummy2,
+  delta_ind = delta_ind,
   t_ast = t_ast,
   t_til = t_til,
   Varyt = Varyt,
@@ -130,9 +135,9 @@ var_incond <- var_indcond_sauve(
   est = opt1,
   dummy1 = dummy1,
   dummy2 = dummy2,
+  delta_ind = delta_ind,
   t_ast = t_ast,
   t_til = t_til,
-  Varyt = Varyt,
   alpha_order = alpha_order,
   beta_order = beta_order,
   kmed = kmed,
@@ -140,26 +145,29 @@ var_incond <- var_indcond_sauve(
 )
 
 resid_pad <- (yt - media_cond)/sqrt(var_cond)
-resid_pad <-resid_pad[-(1:50)]
+resid_pad <- resid_pad[-(1:50)]
 
 resid_pad_data <- data.frame(resid_pad = resid_pad, 
                              time = seq_along(resid_pad))
 resid_pad_data <- resid_pad_data[-1, ]
 
+plot(resid_pad, type = 'l')
+plot(var_incond, type = 'l')
+
 mean(resid_pad_data$resid_pad)
 var(resid_pad_data$resid_pad)
 
-## Analisando residuos 
+# Estimando e residuos - FIM
 
-## FAC e FACP - INICIO
+# FAC e FACP - INICIO
 acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
 pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
 
 acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-## FAC e FACP - FIM
+# FAC e FACP - FIM
 
-## QQplot e Histograma - INICIO
+# QQplot e Histograma - INICIO
 ggplot(resid_pad_data, aes(sample = resid_pad)) + 
   stat_qq() + 
   geom_abline(slope = 1, intercept = 0) + 
@@ -172,9 +180,9 @@ ggplot(resid_pad_data, aes(x = resid_pad)) +
   labs(x = "Residuos padronizados", y = 'Densidade') + 
   scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
   stat_function(fun = dnorm, args = list(0, 1), color = 'red')
-## QQplot e Histograma - FIM
+# QQplot e Histograma - FIM
 
-## TH - INICIO
+# TH - INICIO
 
 Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box')
 Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box')
@@ -185,9 +193,9 @@ nortest::ad.test(resid_pad_data$resid_pad)
 
 (dw <- sum(diff(yt - media_cond)^2)/sum((yt - media_cond)^2))
 
-## TH - FIM
+# TH - FIM
 
-## Graficos de linha para esp_cond e var_cond - INICIO
+# Graficos de linha para esp_cond e var_cond - INICIO
 data <- data.frame(
   yt = yt,
   one_step_predict = media_cond,
@@ -211,7 +219,7 @@ ggplot(data, aes(x = time, y = var_incond)) +
   labs(x = "Tempo", y = "Variancia Condicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue")
-## Graficos de linha para esp_cond e var_cond - FIM
+# Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 2 ----------------------------------------------------------------
 pars <- list(
@@ -229,7 +237,7 @@ kmed <- length(pars$deltaMedia)
 n <- length(yt)
 dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
 
-(opt2 <- estimando_garch(llike_garch, pars))
+(opt2 <- estimando(llike_garch, pars))
 
 # Teste LR - INICIO
 teste_lr(opt1, opt2)
@@ -258,6 +266,7 @@ var_cond <- var_cond_garch(
   n = n
 )
 
+
 resid_pad <- (yt - media_cond)/sqrt(var_cond)
 resid_pad <- resid_pad[-(1:50)]
 
@@ -265,6 +274,10 @@ plot(resid_pad, type = 'l')
 
 mean(resid_pad)
 var(resid_pad)
+
+(var_incond <- opt2$omega/(1 - opt2$alpha - opt2$beta)*(1/(1 - opt2$ar^2)) * var(resid_pad))
+var(yt)
+var(yt[-(1:50)])
 
 resid_pad_data <- data.frame(resid_pad = resid_pad, time = seq_along(resid_pad))
 
@@ -332,27 +345,25 @@ pars <- list(
   deltaMedia = 0.0,
   deltaVar = c(-3, -3, -3, -3)
 )
+
 ## Definindo parametros e dummies
 alpha_order <- length(pars$psi2)
 beta_order <- length(pars$psi3)
 kmed <- length(pars$deltaMedia)
 kvar <- length(pars$deltaVar)
 n <- length(yt) # Tamanho da serie
+delta_ind <- 3
 t_ast <- 1179
 t_til <- 1227
 
 dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
 dummy2 <- as.matrix(dummy_on_off(n, c(1, 985, 1175, 1227),
                                  c(984, 1174, 1179, n)))
-## Estimando e residuos 
+# Ordens e Parametros - FIM
+
+# Estimando e residuos  - INICIO
 
 (opt3 <- estimando(llike_suave, pars))
-
-# Teste LR - INICIO
-teste_lr(opt1, opt3)
-# Teste LR - FIM
-
-# Residuos - INICIO
 
 media_cond <- esp_cond_sauve(
   data = yt,
@@ -361,6 +372,7 @@ media_cond <- esp_cond_sauve(
   dummy2 = dummy2,
   t_ast = t_ast,
   t_til = t_til,
+  delta_ind = delta_ind,
   alpha_order = alpha_order,
   beta_order = beta_order,
   kmed = kmed,
@@ -375,6 +387,7 @@ var_cond <- var_cond_sauve(
   dummy2 = dummy2,
   t_ast = t_ast,
   t_til = t_til,
+  delta_ind = delta_ind,
   Varyt = Varyt,
   alpha_order = alpha_order,
   beta_order = beta_order,
@@ -390,7 +403,7 @@ var_incond <- var_indcond_sauve(
   dummy2 = dummy2,
   t_ast = t_ast,
   t_til = t_til,
-  Varyt = Varyt,
+  delta_ind = delta_ind,
   alpha_order = alpha_order,
   beta_order = beta_order,
   kmed = kmed,
@@ -403,6 +416,9 @@ resid_pad <-resid_pad[-(1:50)]
 resid_pad_data <- data.frame(resid_pad = resid_pad, 
                              time = seq_along(resid_pad))
 resid_pad_data <- resid_pad_data[-1, ]
+
+plot(resid_pad, type = 'l')
+plot(var_incond, type = 'l')
 
 mean(resid_pad_data$resid_pad)
 var(resid_pad_data$resid_pad)
@@ -466,7 +482,7 @@ ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   geom_line(aes(x = time, y = abs(yt)), colour = "green")
 
 ggplot(data, aes(x = time, y = var_incond)) +
-  labs(x = "Tempo", y = "Variancia Condicional") + 
+  labs(x = "Tempo", y = "Variancia incondicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue")
 ## Graficos de linha para esp_cond e var_cond - FIM
@@ -493,15 +509,11 @@ delta_ind <- 2
 dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
 dummy2 <- as.matrix(dummy_on_off(n, c(1, 1175, 1227, 1313),
                                  c(1174, 1179, 1312, n)))
-## Estimando e residuos 
+# Estimando e residuos - INICIO
 
 (opt4 <- estimando(llike_suave, pars))
 
-# Teste LR - INICIO
 teste_lr(opt1, opt4)
-# Teste LR - FIM
-
-# Residuos - INICIO
 
 media_cond <- esp_cond_sauve(
   data = yt,
@@ -510,6 +522,7 @@ media_cond <- esp_cond_sauve(
   dummy2 = dummy2,
   t_ast = t_ast,
   t_til = t_til,
+  delta_ind = delta_ind,
   alpha_order = alpha_order,
   beta_order = beta_order,
   kmed = kmed,
@@ -524,6 +537,7 @@ var_cond <- var_cond_sauve(
   dummy2 = dummy2,
   t_ast = t_ast,
   t_til = t_til,
+  delta_ind = delta_ind,
   Varyt = Varyt,
   alpha_order = alpha_order,
   beta_order = beta_order,
@@ -539,6 +553,7 @@ var_incond <- var_indcond_sauve(
   dummy2 = dummy2,
   t_ast = t_ast,
   t_til = t_til,
+  delta_ind = delta_ind,
   Varyt = Varyt,
   alpha_order = alpha_order,
   beta_order = beta_order,
@@ -553,20 +568,23 @@ resid_pad_data <- data.frame(resid_pad = resid_pad,
                              time = seq_along(resid_pad))
 resid_pad_data <- resid_pad_data[-1, ]
 
+plot(resid_pad, type = 'l')
+plot(var_incond, type = 'l')
+
 mean(resid_pad_data$resid_pad)
 var(resid_pad_data$resid_pad)
 
-## Analisando residuos 
+# Analisando residuos - FIM
 
-## FAC e FACP - INICIO
+# FAC e FACP - INICIO
 acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
 pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
 
 acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-## FAC e FACP - FIM
+# FAC e FACP - FIM
 
-## QQplot e Histograma - INICIO
+# QQplot e Histograma - INICIO
 ggplot(resid_pad_data, aes(sample = resid_pad)) + 
   stat_qq() + 
   geom_abline(slope = 1, intercept = 0) + 
@@ -579,9 +597,9 @@ ggplot(resid_pad_data, aes(x = resid_pad)) +
   labs(x = "Residuos padronizados", y = 'Densidade') + 
   scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
   stat_function(fun = dnorm, args = list(0, 1), color = 'red')
-## QQplot e Histograma - FIM
+# QQplot e Histograma - FIM
 
-## TH - INICIO
+# TH - INICIO
 
 Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box')
 Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box')
@@ -592,9 +610,9 @@ nortest::ad.test(resid_pad_data$resid_pad)
 
 (dw <- sum(diff(yt - media_cond)^2)/sum((yt - media_cond)^2))
 
-## TH - FIM
+# TH - FIM
 
-## Graficos de linha para esp_cond e var_cond - INICIO
+# Graficos de linha para esp_cond e var_cond - INICIO
 data <- data.frame(
   yt = yt,
   one_step_predict = media_cond,
@@ -618,4 +636,23 @@ ggplot(data, aes(x = time, y = var_incond)) +
   labs(x = "Tempo", y = "Variancia Condicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue")
-## Graficos de linha para esp_cond e var_cond - FIM
+# Graficos de linha para esp_cond e var_cond - FIM
+
+
+
+# Resultados --------------------------------------------------------------
+
+teste <- function(modelo, nome){
+  modelo %>% select(llike, AIC, BIC) %>% mutate(Modelo = nome)
+  
+}
+
+resultado <- rbind(teste(opt1, "opt1"),
+                   teste(opt2, "opt2"),
+                   teste(opt3, "opt3"),
+                   teste(opt4, "opt4"))
+
+resultado %>% arrange(AIC)
+resultado %>% arrange(BIC)
+
+

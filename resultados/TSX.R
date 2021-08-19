@@ -8,7 +8,9 @@ library(imputeTS)
 library(ggplot2)
 library(dplyr)
 
-# Carregando dados e graficos ---------------------------------------------
+
+# Carregando dados --------------------------------------------------------
+
 load("dados/TSX.RData")
 BegSample <- '2004-01-01'
 EndSample <- '2009-12-31'
@@ -21,6 +23,8 @@ TSX <- TSX %>%
 
 yt <- TSX$tsx %>% as.vector()
 Varyt <- var(yt[1:50])
+
+# Graficos ----------------------------------------------------------------
 
 p1 <- ggplot(TSX, aes(x = Index, y = TSX)) +
   geom_line(size = 1L, colour = "#112446") +

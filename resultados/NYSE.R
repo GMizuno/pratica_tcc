@@ -11,7 +11,8 @@ library(dplyr)
 # Carregando dados e graficos ---------------------------------------------
 load("dados/NYSE.RData")
 BegSample <- '2004-01-01'
-EndSample <- '2009-12-31'
+EndSample <- '2010-12-31'
+crises <- as.Date(c("2007-07-01", "2008-11-28"))
 
 NYSE <- NYSE %>% 
   fortify.zoo %>% 
@@ -21,6 +22,8 @@ NYSE <- NYSE %>%
 
 yt <- NYSE$cac %>% as.vector()
 Varyt <- var(yt[1:50])
+
+# Graficos ----------------------------------------------------------------
 
 p1 <- ggplot(NYSE, aes(x = Index, y = NYSE)) +
   geom_line(size = 1L, colour = "#112446") +

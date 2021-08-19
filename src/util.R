@@ -69,72 +69,6 @@ estimando <- function(model, pars_init){
   
   # Guardando as estimativas/medidas - INICIO 
   nomes <- names(unlist(pars_init)) 
-  nomes <- stringr::str_replace(nomes, 'psi3', 'beta')
-  nomes <- stringr::str_replace(nomes, 'psi2', 'alpha')
-  names(opt$par) <- nomes
-  
-  n <- length(yt)
-  p <- length(unname(unlist(pars_init)))
-  llike <- unname(opt$value)
-  ite <- unname(opt$counts[2])
-  
-  data <- data.frame(t(unpack_exp(opt$par)), 
-                     ite = ite, 
-                     llike = llike, 
-                     AIC = -2*llike + 2*p,
-                     BIC = -2*llike + p*log(n))
-  # Guardando as estimativas/medidas - FIM
-  
-  return(data)
-}
-# Funcao para estimar os modelos e fazer output bonito - INICIO
-
-# Funcao para estimar os modelos e fazer output bonito - INICIO
-estimando_arch <- function(model, pars_init){
-  # Iniciando a estimacao - INICIO
-  
-  opt <- optim(unname(unlist(pars_init)), 
-               model, 
-               method = 'BFGS',
-               control = list(fnscale = -1, maxit = 500,
-                              reltol = 1e-8, trace = 1, REPORT = 1))
-  # Iniciando a estimacao - FIM
-  
-  # Guardando as estimativas/medidas - INICIO 
-  nomes <- names(unlist(pars_init)) 
-  nomes <- stringr::str_replace(nomes, 'psi1', 'omega')
-  nomes <- stringr::str_replace(nomes, 'psi2', 'alpha')
-  names(opt$par) <- nomes
-  
-  n <- length(yt)
-  p <- length(unname(unlist(pars_init)))
-  llike <- unname(opt$value)
-  ite <- unname(opt$counts[2])
-  
-  data <- data.frame(t(unpack_exp(opt$par)), 
-                     ite = ite, 
-                     llike = llike, 
-                     AIC = -2*llike + 2*p,
-                     BIC = -2*llike + p*log(n))
-  # Guardando as estimativas/medidas - FIM
-  
-  return(data)
-}
-# Funcao para estimar os modelos e fazer output bonito - INICIO
-
-# Funcao para estimar os modelos e fazer output bonito - INICIO
-estimando_garch <- function(model, pars_init){
-  # Iniciando a estimacao - INICIO
-  
-  opt <- optim(unname(unlist(pars_init)), 
-               model, 
-               method = 'BFGS',
-               control = list(fnscale = -1, maxit = 500,
-                              reltol = 1e-8, trace = 1, REPORT = 1))
-  # Iniciando a estimacao - FIM
-  
-  # Guardando as estimativas/medidas - INICIO 
-  nomes <- names(unlist(pars_init)) 
   nomes <- stringr::str_replace(nomes, 'psi1', 'omega')
   nomes <- stringr::str_replace(nomes, 'psi2', 'alpha')
   nomes <- stringr::str_replace(nomes, 'psi3', 'beta')
@@ -158,7 +92,7 @@ estimando_garch <- function(model, pars_init){
 
 # Funcao para dar chute inicial no DeltaVar - INICIO
 chute_inicial <- function(delta1, chute){
-  accumulate(chute, `*`) %>% map_dbl(\(x) delta1 + 2*x)
+  accumulate(chute, `*`) %>% log() %>% map_dbl(\(x) delta1 + 2*x)
 }
 # Funcao para dar chute inicial no DeltaVar - FIM
 
