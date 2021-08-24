@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0446d0af-c055-4800-8e21-0f8e147225c3" name="Default Changelist" comment="">
+    <list default="true" id="2157c257-aa1a-4dfe-93ec-cc6568ad01a7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/pratica_tcc.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resultados/CAC.R" beforeDir="false" afterPath="$PROJECT_DIR$/resultados/CAC.R" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resultados/DAX.R" beforeDir="false" afterPath="$PROJECT_DIR$/resultados/DAX.R" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resultados/FTSE.R" beforeDir="false" afterPath="$PROJECT_DIR$/resultados/FTSE.R" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resultados/NIKKEI.R" beforeDir="false" afterPath="$PROJECT_DIR$/resultados/NIKKEI.R" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resultados/NYSE.R" beforeDir="false" afterPath="$PROJECT_DIR$/resultados/NYSE.R" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resultados/TSX.R" beforeDir="false" afterPath="$PROJECT_DIR$/resultados/TSX.R" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Analise de reisduos.R" beforeDir="false" afterPath="$PROJECT_DIR$/src/Analise de reisduos.R" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modelo_est.R" beforeDir="false" afterPath="$PROJECT_DIR$/src/modelo_est.R" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util.R" beforeDir="false" afterPath="$PROJECT_DIR$/src/util.R" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,7 +22,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1wws27kZIRYSUEDi0fKztp6uWJv" />
+  <component name="ProjectId" id="1xAuuKoWsM8ZkJKfETbKASRqZqX" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -35,12 +37,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="0446d0af-c055-4800-8e21-0f8e147225c3" name="Default Changelist" comment="" />
-      <created>1629380779415</created>
+      <changelist id="2157c257-aa1a-4dfe-93ec-cc6568ad01a7" name="Default Changelist" comment="" />
+      <created>1629810438894</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1629380779415</updated>
-      <workItem from="1629380782558" duration="6000" />
+      <updated>1629810438894</updated>
+      <workItem from="1629810442137" duration="58000" />
     </task>
     <servers />
   </component>

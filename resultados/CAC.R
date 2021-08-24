@@ -15,11 +15,17 @@ BegSample <- '2004-01-01'
 EndSample <- '2009-12-31'
 crises <- as.Date(c("2007-07-01", "2008-11-28"))
 
-CAC <- CAC %>% 
-  fortify.zoo %>% 
-  as_tibble %>% 
+CAC <- CAC %>% fortify.zoo %>% as_tibble
+
+ggplot(CAC, aes(x = Index, y = 100 * cac)) +
+  geom_line(size = 1L, colour = "#112446") +
+  labs(x = "Tempo", y = "Retorno", title = "CAC") +
+  theme_minimal()
+
+CAC <- CAC %>%
   filter(Index >= as.Date(BegSample), Index <= as.Date(EndSample)) %>% 
-  mutate(id = row_number()) %>% select(Index, id, everything())
+  mutate(id = row_number(), cac = 100*cac) %>%
+  select(Index, id, everything())
 
 yt <- CAC$cac %>% as.vector()
 Varyt <- var(yt[1:50])

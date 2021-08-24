@@ -16,7 +16,13 @@ crises <- as.Date(c("2007-07-01", "2008-11-28"))
 
 NIKKEI <- NIKKEI %>% 
   fortify.zoo() %>% 
-  as_tibble() %>% 
+  as_tibble()
+
+ggplot(NIKKEI, aes(x = Index, y = 100 * nikkei)) +
+  geom_line(size = 1L, colour = "#112446") + 
+  labs(x = "Tempo", y = "Retorno", title = "NIKKEI")
+
+NIKKEI <- NIKKEI %>% 
   dplyr::filter(Index >= as.Date(BegSample), Index <= as.Date(EndSample)) %>% 
   mutate(id = row_number(), nikkei = 100*nikkei) %>% 
   select(Index, id, everything()) 
