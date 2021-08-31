@@ -32,7 +32,7 @@ esp_cond_model <- function(data, est, dummy1, dummy2,
 }
 ## Funcao para estimar a media condicional do modelo - FIM
 
-## Funcao para estimar a media condicional do modelo - INICIO
+## Funcao para estimar a media condicional do modelo com AR-ARCH - INICIO
 esp_cond_model_arch <- function(data, est, dummy1, dummy2,
                                  alpha_order, kmed, kvar, n){
   
@@ -62,7 +62,7 @@ esp_cond_model_arch <- function(data, est, dummy1, dummy2,
   
   return(media_cond)
 }
-## Funcao para estimar a media condicional do modelo - FIM
+## Funcao para estimar a media condicional do modelo com AR-ARCH - FIM
 
 ## Funcao para estimar a media condicional do modelo c/ int suave - INICIO
 esp_cond_sauve <- function(data, est, dummy1, dummy2, t_ast, t_til, delta_ind,
@@ -102,7 +102,7 @@ esp_cond_sauve <- function(data, est, dummy1, dummy2, t_ast, t_til, delta_ind,
 }
 ## Funcao para estimar a media condicional do modelo c/ int suave - FIM
 
-## Funcao para estimar a media condicional de ARCH - INICIO
+## Funcao para estimar a media condicional de ARCH c/ int na media- INICIO
 esp_cond_arch <- function(data, est, dummy1,
                           alpha_order, kmed, n){
   
@@ -130,9 +130,9 @@ esp_cond_arch <- function(data, est, dummy1,
   
   return(media_cond)
 }
-## Funcao para estimar a media condicional de ARCH - FIM
+## Funcao para estimar a media condicional de ARCH c/ int na media - FIM
 
-## Funcao para estimar a media condicional de GARCH - INICIO
+## Funcao para estimar a media condicional de GARCH c/ int na media - INICIO
 esp_cond_garch <- function(data, est, dummy1,
                            alpha_order, beta_order, kmed, n){
   
@@ -160,7 +160,7 @@ esp_cond_garch <- function(data, est, dummy1,
   
   return(media_cond)
 }
-## Funcao para estimar a media condicional de GARCH - FIM
+## Funcao para estimar a media condicional de GARCH c/ int na media - FIM
 
 # Variancia Condicional ---------------------------------------------------
 
@@ -170,8 +170,8 @@ var_cond_model <- function(data, est, dummy1, dummy2, Varyt,
   
   est <- as.matrix(est) %>% unname()
   pos <- cumsum(c(alpha_order, beta_order, 1, kmed, kvar))
+  
   # Estimativas - INICIO
-  omega <- 1
   alpha <- est[1:pos[1]]
   beta <- est[(pos[1] + 1):(pos[2])]
   
@@ -179,7 +179,6 @@ var_cond_model <- function(data, est, dummy1, dummy2, Varyt,
   
   delta1 <- est[(pos[3] + 1):(pos[4])]
   delta2 <- est[(pos[4] + 1):(pos[5])]
-  # Definicao dos parametros - FIM
   # Estimativas - FIM
   
   # Efeito regressao - INICIO
@@ -213,14 +212,13 @@ var_cond_model <- function(data, est, dummy1, dummy2, Varyt,
 }
 ## Funcao para estimar a media condicional do modelo - FIM
 
-## Funcao para estimar a media condicional do modelo - INICIO
+## Funcao para estimar a media condicional do modelo com AR-ARCH - INICIO
 var_cond_model_arch  <- function(data, est, dummy1, dummy2, Varyt,
                                  alpha_order, beta_order, kmed, kvar, n){
   
   est <- as.matrix(est) %>% unname()
   pos <- cumsum(c(alpha_order, 1, kmed, kvar))
   # Estimativas - INICIO
-  omega <- 1
   alpha <- est[1:pos[1]]
   beta <- est[(pos[1] + 1):(pos[2])]
   
@@ -259,7 +257,7 @@ var_cond_model_arch  <- function(data, est, dummy1, dummy2, Varyt,
   
   return(var_cond)
 }
-## Funcao para estimar a media condicional do modelo - FIM
+## Funcao para estimar a media condicional do modelo com AR-ARCH - FIM
 
 ## Funcao para estimar a var condicional do modelo c/ int suave - INICIO
 var_cond_sauve <- function(data, est, dummy1, dummy2, 
@@ -269,14 +267,12 @@ var_cond_sauve <- function(data, est, dummy1, dummy2,
   est <- as.matrix(est) %>% unname()
   pos <- cumsum(c(alpha_order, beta_order, 1, kmed, kvar))
   # Estimativas - INICIO
-  omega <- 1
   alpha <- est[1:pos[1]]
   beta <- est[(pos[1] + 1):(pos[2])]
   
   ar <- est[pos[3]]
   delta1 <- est[(pos[3] + 1):(pos[4])]
   delta2 <- est[(pos[4] + 1):(pos[5])]
-  # Definicao dos parametros - FIM
   # Estimativas - FIM
   
   # Efeito regressao - INICIO
@@ -316,7 +312,7 @@ var_cond_sauve <- function(data, est, dummy1, dummy2,
 }
 ## Funcao para estimar a var condicional do modelo c/ int suave - FIM
 
-## Funcao para estimar a var condicional do modelo com ARCH - INICIO
+## Funcao para estimar a var condicional do modelo com ARCH c/ int na media - INICIO
 var_cond_arch <- function(data, est, dummy1, Varyt,
                           alpha_order, kmed, kvar, n){
   
@@ -359,9 +355,9 @@ var_cond_arch <- function(data, est, dummy1, Varyt,
   
   return(var_cond)
 }
-## Funcao para estimar a var condicional do modelo com ARCH - FIM
+## Funcao para estimar a var condicional do modelo com ARCH c/ int na media - FIM
 
-## Funcao para estimar a media condicional com GARCH - INICIO
+## Funcao para estimar a media condicional com GARCH c/ int na media - INICIO
 var_cond_garch <- function(data, est, dummy1, Varyt, 
                            alpha_order, beta_order, kmed, n){
   
@@ -406,10 +402,11 @@ var_cond_garch <- function(data, est, dummy1, Varyt,
   
   return(var_cond)
 }
-## Funcao para estimar a media condicional com GARCH - FIM
+## Funcao para estimar a media condicional com GARCH c/ int na media - FIM
 
 # Variancia Incondicional -------------------------------------------------
 
+## Função para estimar a variancia incondicional do modelo - INICIO
 var_indcond <- function(data, est, dummy1, dummy2,
                         alpha_order, beta_order, kmed, kvar){
   est <- as.matrix(est) %>% unname()
@@ -432,7 +429,9 @@ var_indcond <- function(data, est, dummy1, dummy2,
   
   return(var_ind)
 }
+## Função para estimar a variancia incondicional do modelo - FIM
 
+## Função para estimar a variancia incondicional do modelo c/ int suave - INICIO
 var_indcond_sauve <- function(data, est, dummy1, dummy2, 
                               t_ast, t_til, delta_ind,
                               alpha_order, beta_order, kmed, kvar){
@@ -463,3 +462,4 @@ var_indcond_sauve <- function(data, est, dummy1, dummy2,
   
   return(var_ind)
 }
+## Função para estimar a variancia incondicional do modelo c/ int suave - FIM

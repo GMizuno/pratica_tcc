@@ -79,3 +79,4 @@ dummy2 <- as.matrix(dummy_on_off(n, c(1, 985, 1175, 1227, 1313),
 # Estimando e residuos - INICIO
 
 (opt1 <- estimando(llike_suave, pars))
+# Resultados --------------------------------------------------------------
