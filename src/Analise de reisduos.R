@@ -1,4 +1,4 @@
-# Media Condicional  ------------------------------------------------------
+# Media Condicional ------------------------------------------------------
 
 ## Funcao para estimar a media condicional do modelo - INICIO
 esp_cond_model <- function(data, est, dummy1, dummy2,
@@ -137,11 +137,11 @@ esp_cond_garch <- function(data, est, dummy1,
                            alpha_order, beta_order, kmed, n){
   
   est <- as.matrix(est) %>% unname()
-  pos <- cumsum(c(alpha_order, beta_order, 1, kmed))
+  pos <- cumsum(c(1, alpha_order, beta_order, 1, kmed))
   
   # Estimativas - INICIO
-  ar <- est[pos[3]]
-  delta1 <- est[(pos[3] + 1):(pos[4])]
+  ar <- est[pos[4]]
+  delta1 <- est[(pos[4] + 1):(pos[5])]
   # Estimativas - FIM
   
   # Efeito regressao - INICIO
@@ -425,7 +425,7 @@ var_indcond <- function(data, est, dummy1, dummy2,
   int2 <- exp((dummy2%*%delta2)/2)
   # Efeito regressao - FIM
   
-  var_ind <- (int2^2)*(1/(1 - sum(alpha) - sum(beta)))*(1/(1-ar^2))
+  var_ind <- (int2^2) * (1/(1 - sum(alpha) - sum(beta))) * (1/(1-ar^2))
   
   return(var_ind)
 }

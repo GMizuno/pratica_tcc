@@ -167,7 +167,6 @@ llike_model_garch <- function(pars){
   pos <- cumsum(c(alpha_order, beta_order, 1, kmed, kvar))
   
   # Definicao dos parametros - INICIO
-  omega <- 1
   alpha <- exp(pars[1:pos[1]])
   beta <- exp(pars[(pos[1] + 1):(pos[2])])
   
@@ -226,7 +225,6 @@ llike_suave <- function(pars){
   pos <- cumsum(c(alpha_order, beta_order, 1, kmed, kvar))
   
   # Definicao dos parametros - INICIO
-  omega <- 1
   alpha <- exp(pars[1:pos[1]])
   beta <- exp(pars[(pos[1] + 1):(pos[2])])
   

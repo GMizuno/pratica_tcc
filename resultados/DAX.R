@@ -350,6 +350,7 @@ pars <- list(
   deltaMedia = 0.0
 )
 
+kmed <- 1
 alpha_order <- length(pars$psi2)
 beta_order <- length(pars$psi3)
 n <- length(yt) # Tamanho da serie

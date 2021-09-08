@@ -82,8 +82,9 @@ estimando <- function(model, pars_init){
   data <- data.frame(t(unpack_exp(opt$par)), 
                      ite = ite, 
                      llike = llike, 
+                     num_par = p,
                      AIC = -2*llike + 2*p,
-                     BIC = -2*llike + p*log(n))
+                     BIC = -2*llike + p*log(n-50))
   # Guardando as estimativas/medidas - FIM
   
   return(data)
@@ -98,11 +99,23 @@ chute_inicial <- function(delta1, chute){
 
 # Teste LR - INICIO
 teste_lr <- function(model_com, model_red, alpha = .05){
-  p <- length(model_com)
-  q <- length(model_red)
+  p <- length(model_com) - 5 # Tirando o q nao eh parametro
+  q <- length(model_red) - 5 # Tirando o q nao eh parametro
   
   lambda <- -2*(model_red$llike - model_com$llike)
   pvalue <- pchisq(lambda, p - q, lower.tail = FALSE)
   return(data.frame(lambda = lambda, pvalue = pvalue, df = p - q))
 }
 # Teste LR - FIM
+
+# Funcao para calcular o poder preditivo - INICIO
+poder_pred <- function(yt, media_cond, var_cond){
+  xi <- ((yt - media_cond)^2)[-c(1:50)]
+  xi_hat <- var_cond[-c(1:50)]
+  
+  mape <- abs((xi - xi_hat)/xi) %>% mean()
+  mse <- (xi - xi_hat)^2 %>% sum()
+  
+  return(list(mape = mape, mse = mse))
+}
+# Funcao para calcular o poder preditivo - FIM
