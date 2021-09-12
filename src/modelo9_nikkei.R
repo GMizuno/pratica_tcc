@@ -49,7 +49,7 @@ llike_suave_nikkei <- function(pars){
   }
   
   media_cond_yt <- int1 + int2*media_cond_xt
-  dp_cond_yt <- (int2*sqrt(sigma2))
+  dp_cond_yt <- (int2 * sqrt(sigma2))
   # Insumos verossimilhanca - FIM
   
   # Computando verossimilhanca - INICIO

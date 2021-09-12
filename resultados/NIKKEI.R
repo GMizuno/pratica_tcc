@@ -42,7 +42,7 @@ p3 <- ggplot(NIKKEI, aes(x = Index, y = nikkei)) +
   geom_line(size = 1L, colour = "#112446") +
   labs(x = "Tempo", y = "Retorno", title = "NIKKEI com as Restrições") +
   theme_minimal() + 
-  geom_vline(xintercept = as.Date(c("2008-10-10", "2010-07-31")), 
+  geom_vline(xintercept = as.Date(c("2008-09-15", "2010-07-31")), 
              colour = 'blue', size = 1.5, linetype = "dashed") + 
   geom_vline(xintercept = as.Date(c("2008-10-20", "2010-07-31")), 
              colour = 'grey', size = 1.5, linetype = "dashed") + 
@@ -51,7 +51,10 @@ p3 <- ggplot(NIKKEI, aes(x = Index, y = nikkei)) +
   geom_vline(xintercept = as.Date(c("2009-05-13")), 
              colour = 'pink', size = 1.5, linetype = "dashed") + 
   geom_vline(xintercept = as.Date(c("2009-01-01")), 
-             colour = 'yellow', size = 1.5, linetype = "dashed") 
+             colour = 'yellow', size = 1.5, linetype = "dashed") +
+  geom_vline(xintercept = as.Date(c("2008-10-10")), 
+             colour = 'cyan', size = 1.5, linetype = "dashed") +
+  xlim(as.Date(c("2008-06-01", "2009-01-01")))
 
 p3
 gridExtra::grid.arrange(p1, p3, ncol = 1)
@@ -1145,7 +1148,7 @@ resid_pad_data <- data.frame(resid_pad = resid_pad_mod9,
 resid_pad_data <- resid_pad_data[-1, ]
 
 plot(resid_pad_mod9, type = 'l', ylim = c(-6, 6))
-plot(var_incond_mod9, type = 'l')
+plot(var_incond_mod9[-c(1:50)], type = 'l')
 
 mean(resid_pad_data$resid_pad)
 var(resid_pad_data$resid_pad)
@@ -1210,13 +1213,131 @@ ggplot(data, aes(x = time, y = var_cond)) +
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = (yt - media_cond_mod9)^2), colour = "green")
 
-ggplot(data, aes(x = time, y = var_incond)) +
-  labs(x = "Tempo", y = "Variancia incondicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = yt^2), colour = "blue")
+ggplot(data, aes(x = time, y = sqrt(var_incond))) +
+  labs(x = "Tempo", y = "Desvio padrao incondicional") + 
+  geom_line(size = 1L, colour = "red") + ylim(0, 5) + 
+  xlim(900, 1300)
+  geom_line(aes(x = time, y = (yt - opt9$data$deltaMedia)^2), colour = "blue") 
+  
 ## Graficos de linha para esp_cond e var_cond - FIM
 
 
+# Modelo 10 ----------------------------------------------------------------
+
+# Ordens e Parametros - INICIO
+pars <- list(
+  psi2 = log(.15),
+  psi3 = log(.74),
+  ar = .2,
+  deltaMedia = 0.0,
+  deltaVar = c(-3, -3, -3)
+)
+  
+## Definindo parametros e dummies
+alpha_order <- length(pars$psi2)
+beta_order <- length(pars$psi3)
+kmed <- length(pars$deltaMedia)
+kvar <- length(pars$deltaVar)
+n <- length(yt) # Tamanho da serie
+delta_ind <- 3
+t_ast <- 1179
+t_til <- 1227
+  
+dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
+dummy2 <- as.matrix(dummy_on_off(n, c(1, 985, 1157, 1227),
+                                   c(984, 1156, 1179, n)))
+# Ordens e Parametros - FIM
+  
+# Estimando e residuos  - INICIO
+  
+opt10 <- estimando_model9(llike_suave_nikkei, pars)
+
+media_cond_mod10 <- opt10$media_cond
+var_cond_mod10 <- opt10$dp_cond^2
+var_incond_mod10 <- opt10$var_indcond
+
+resid_pad_mod10 <- (yt - media_cond_mod10)/sqrt(var_cond_mod10)
+resid_pad_mod10 <- resid_pad_mod10[-c(1:50)]
+
+resid_pad_data <- data.frame(resid_pad = resid_pad_mod10, 
+                             time = seq_along(resid_pad_mod10))
+resid_pad_data <- resid_pad_data[-1, ]
+
+plot(resid_pad_mod10, type = 'l', ylim = c(-6, 6))
+plot(var_incond_mod10[-c(1:50)], type = 'l')
+
+mean(resid_pad_mod10)
+var(resid_pad_mod10)
+
+## Analisando residuos 
+
+## FAC e FACP - INICIO
+acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+
+acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+## FAC e FACP - FIM
+
+## QQplot e Histograma - INICIO
+ggplot(resid_pad_data, aes(sample = resid_pad)) + 
+  stat_qq() + 
+  geom_abline(slope = 1, intercept = 0) + 
+  ylim(-6,6) + 
+  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6))
+
+ggplot(resid_pad_data, aes(x = resid_pad)) + 
+  geom_histogram(aes(y =..density..), fill = "#0c4c8a") +
+  theme_minimal() +
+  labs(x = "Residuos padronizados", y = 'Densidade') + 
+  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
+  stat_function(fun = dnorm, args = list(0, 1), color = 'red')
+## QQplot e Histograma - FIM
+
+## TH - INICIO
+
+Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
+Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
+
+shapiro.test(resid_pad_data$resid_pad)
+tseries::jarque.bera.test(resid_pad_data$resid_pad)
+nortest::ad.test(resid_pad_data$resid_pad)
+
+(dw <- sum(diff(yt - media_cond_mod10)^2)/sum((yt - media_cond_mod10)^2))
+moments::kurtosis(resid_pad_mod10)
+moments::skewness(resid_pad_mod10)
+
+## TH - FIM
+
+## Graficos de linha para esp_cond e var_cond - INICIO
+data <- data.frame(
+  yt = yt,
+  one_step_predict = media_cond_mod9,
+  var_incond = var_incond_mod9,
+  var_cond = var_cond_mod9,
+  time = seq_along(media_cond_mod9)
+)
+
+ggplot(data, aes(x = time, y = yt)) +
+  geom_line(size = 1L, colour = "#0c4c8a") +
+  geom_line(aes(y = one_step_predict), size = 1L, colour = "red") +
+  theme(axis.title.y = element_text(angle = 0)) +
+  labs(x = 'Tempo') 
+
+ggplot(data, aes(x = time, y = var_cond)) +
+  labs(y = "Tempo", x = "Variancia Condicional") + 
+  geom_line(size = 1L, colour = "red") + 
+  geom_line(aes(x = time, y = (yt - media_cond_mod9)^2), colour = "green")
+
+ggplot(data, aes(x = time, y = sqrt(var_incond))) +
+  labs(x = "Tempo", y = "Desvio padrao incondicional") + 
+  geom_line(size = 1L, colour = "red") + ylim(0, 5) + 
+  xlim(900, 1300)
+geom_line(aes(x = time, y = (yt - opt9$data$deltaMedia)^2), colour = "blue") 
+
+## Graficos de linha para esp_cond e var_cond - FIM
+
+  
 # Resultados --------------------------------------------------------------
 
 teste <- function(modelo, nome){
@@ -1231,7 +1352,8 @@ resultado <- rbind(teste(opt1, "opt1"),
                    teste(opt5, "opt5"),
                    teste(opt6, "opt6"),
                    teste(opt7, "opt7"),
-                   teste(opt8, "opt8"))
+                   teste(opt8, "opt8")
+                   )
                    
 resultado %>% arrange(AIC)
 resultado %>% arrange(BIC)
@@ -1252,6 +1374,10 @@ teste_lr(opt7, opt6)
 teste_lr(opt3, opt7)
 teste_lr(opt1, opt7)
 
+teste_lr(opt1, opt9$data)
+teste_lr(opt3, opt9$data)
+teste_lr(opt9$data, opt2)
+
 ## Poder preditivo
 poder_pred(yt, media_cond_mod1, var_cond_mod1)
 poder_pred(yt, media_cond_mod2, var_cond_mod2)
@@ -1262,6 +1388,24 @@ poder_pred(yt, media_cond_mod6, var_cond_mod6)
 poder_pred(yt, media_cond_mod7, var_cond_mod7)
 poder_pred(yt, media_cond_mod8, var_cond_mod8)
 poder_pred(yt, media_cond_mod9, var_cond_mod9)
+poder_pred(yt, media_cond_mod10, var_cond_mod10)
 
 
+cor(var_cond_mod1[-(1:50)], ((yt - media_cond_mod1)^2)[-(1:50)])^2
+cor(var_cond_mod2[-(1:50)], ((yt - media_cond_mod2)^2)[-(1:50)])^2
+cor(var_cond_mod3[-(1:50)], ((yt - media_cond_mod3)^2)[-(1:50)])^2
+cor(var_cond_mod9[-(1:50)], ((yt - media_cond_mod9)^2)[-(1:50)])^2
+cor(var_cond_mod10[-(1:50)], ((yt - media_cond_mod10)^2)[-(1:50)])^2
 
+((yt - opt9$data$deltaMedia)[51:900])^2 %>% mean()
+var_incond_mod9[51]
+
+abs((yt - opt9$data$deltaMedia)[51:900]) %>% mean()
+var_incond_mod9[51] %>% sqrt()
+
+
+((yt - opt3$deltaMedia)[51:900])^2 %>% mean()
+var_incond_mod3[51]
+
+abs((yt - opt3$deltaMedia)[51:900]) %>% mean()
+var_incond_mod3[51] %>% sqrt()

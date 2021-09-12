@@ -113,9 +113,9 @@ poder_pred <- function(yt, media_cond, var_cond){
   xi <- ((yt - media_cond)^2)[-c(1:50)]
   xi_hat <- var_cond[-c(1:50)]
   
-  mape <- abs((xi - xi_hat)/xi) %>% mean()
+  mape <- abs((xi - xi_hat)/xi) %>% mean() * 100
   mse <- (xi - xi_hat)^2 %>% sum()
   
-  return(list(mape = mape, mse = mse))
+  return(list(mape = mape, mse = mse, rmse = sqrt(mse)))
 }
 # Funcao para calcular o poder preditivo - FIM
