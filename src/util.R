@@ -114,7 +114,7 @@ poder_pred <- function(yt, media_cond, var_cond){
   xi_hat <- var_cond[-c(1:50)]
   
   mape <- abs((xi - xi_hat)/xi) %>% mean() * 100
-  mse <- (xi - xi_hat)^2 %>% sum()
+  mse <- (xi - xi_hat)^2 %>% mean()
   
   return(list(mape = mape, mse = mse, rmse = sqrt(mse)))
 }
