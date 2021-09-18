@@ -628,7 +628,6 @@ ggplot(CAC, aes(x = Index, y = cac)) +
              colour = c('red', "grey", "yellow"), size = 1.5,
              linetype = "dashed")
 
-
 # Ordens e Parametros - INICIO
 pars <- list(
   psi2 = log(.15),
@@ -779,6 +778,8 @@ ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue")
 # Graficos de linha para esp_cond e var_cond - FIM
+
+
 
 # Resultado ---------------------------------------------------------------
 

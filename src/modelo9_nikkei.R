@@ -3,14 +3,16 @@
 # Verossimilhanca do modelo com transição suave - INICIO
 llike_suave_nikkei <- function(pars){
   
+  pos <- cumsum(c(alpha_order, beta_order, 1, kmed, kvar))
+  
   # Definicao dos parametros - INICIO
-  alpha <- exp(pars[1])
-  beta <- exp(pars[2])
+  alpha <- exp(pars[1:pos[1]])
+  beta <- exp(pars[(pos[1] + 1):(pos[2])])
   
-  ar <- pars[3]
+  ar <- pars[pos[3]]
   
-  delta1 <- pars[4]
-  delta2 <- c(pars[5:7], pars[6])
+  delta1 <- pars[(pos[3] + 1):(pos[4])]
+  delta2 <- c(pars[(pos[4] + 1):(pos[5])], pars[(pos[4] + 2)])
   # Definicao dos parametros - FIM
   
   # Momentos condicionais - INICIO
@@ -71,18 +73,17 @@ llike_suave_nikkei <- function(pars){
 # Verossimilhanca do modelo com transição suave - FIM
 
 # Verossimilhanca do modelo com transição suave - INICIO
-llike_suave_nikkei_v2 <- function(pars){
+llike_suave_nikkei_arch <- function(pars){
   
-  pos <- cumsum(c(alpha_order, beta_order, 1, kmed, kvar))
+  pos <- cumsum(c(alpha_order, 1, kmed, kvar))
   
   # Definicao dos parametros - INICIO
   alpha <- exp(pars[1:pos[1]])
-  beta <- exp(pars[(pos[1] + 1):(pos[2])])
   
-  ar <- pars[pos[3]]
+  ar <- pars[pos[2]]
   
-  delta1 <- pars[(pos[3] + 1):(pos[4])]
-  delta2 <- c(pars[(pos[4] + 1):(pos[5])], pars[(pos[4] + 2)])
+  delta1 <- pars[(pos[2] + 1):(pos[3])]
+  delta2 <- c(pars[(pos[3] + 1):(pos[4])], pars[(pos[3] + 2)])
   # Definicao dos parametros - FIM
   
   # Momentos condicionais - INICIO
@@ -114,10 +115,8 @@ llike_suave_nikkei_v2 <- function(pars){
   m <- max(alpha_order, beta_order)
   sigma2[1:m] <- Varyt
   
-  for (i in (m + 1):n) {
-    sigma2[i] <- 1 +
-      sum(alpha*(epst[i-(1:alpha_order)])^2) +
-      sum(beta*sigma2[i-(1:beta_order)])
+  for (i in (alpha_order + 1):n) {
+    sigma2[i] <- 1 + sum(alpha*(epst[i-(1:alpha_order)])^2)
   }
   
   media_cond_yt <- int1 + int2*media_cond_xt
@@ -130,7 +129,7 @@ llike_suave_nikkei_v2 <- function(pars){
                 sd = dp_cond_yt[51:n], 
                 log = TRUE)
   
-  var_indcond <- (int2^2) * (1/(1 - sum(alpha) - sum(beta))) * (1/(1-ar^2))
+  var_indcond <- (int2^2) * (1/(1 - sum(alpha))) * (1/(1-ar^2))
   
   return(list(
     llike = sum(soma),

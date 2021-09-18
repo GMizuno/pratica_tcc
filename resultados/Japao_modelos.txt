@@ -64,6 +64,7 @@ Modelo 09 => 7.633231
 Modelo 10 => 7.925752
 Modelo 11 => 7.615103
 Modelo 12 => 7.671767
+Modelo 12_1 => 7.605349
 
 Cor
 
@@ -73,6 +74,59 @@ Modelo 03 => 0.3411719
 Modelo 09 => 0.3417239
 Modelo 10 => 0.299666
 Modelo 11 => 0.3418193
-Modelo 12 =>  0.3445408
+Modelo 12 => 0.3445408
+Modelo 12_1 => 0.3567573
  
- 
+Teste de Hipooteses
+
+> teste_lr(opt1, opt9$data)
+    lambda    pvalue df
+1 1.097852 0.5775699  2
+> teste_lr(opt3, opt9$data)
+      lambda    pvalue df
+1 0.01919984 0.8897951  1
+> teste_lr(opt9$data, opt2)
+    lambda     pvalue df
+1 7.420374 0.02447295  2
+> teste_lr(opt11$data, opt9$data)
+    lambda      pvalue df
+1 9.183621 0.002441904  1
+> teste_lr(opt11$data, opt10$data)
+    lambda    pvalue df
+1 1.970222 0.1604243  1
+> teste_lr(opt12_1$data, opt12$data)
+    lambda     pvalue df
+1 3.752527 0.05272775  1
+
+Ajuste Fino
+
+       llike      AIC      BIC Modelo
+1  -2404.801 4823.602 4860.401  opt12
+
+> opt12_1$data
+      alpha1     alpha2      beta          ar deltaMedia deltaVar1 deltaVar2 deltaVar3 ite     llike num_par     AIC      BIC
+1 0.02173653 0.07070795 0.8842382 -0.04250093 0.05441295 -3.324822  -2.58925 -0.392635  24 -2402.925       8 4821.85 4863.906
+
+> opt12_1$data
+      alpha1    alpha2          ar deltaMedia  deltaVar1 deltaVar2 deltaVar3 ite     llike num_par      AIC      BIC
+1 0.04009968 0.1468251 -0.04585509 0.02950019 0.06927286 0.9492714  3.463872  33 -2456.553       7 4927.106 4963.905
+
+> opt12_1$data
+      alpha1    alpha2    alpha3          ar deltaMedia  deltaVar1 deltaVar2 deltaVar3 ite     llike num_par      AIC      BIC
+1 0.03628602 0.1481696 0.1592661 -0.03787637 0.04533128 -0.1469052 0.7612315  3.332437  30 -2438.144       8 4892.289 4934.345
+
+> opt12_1$data
+      alpha1   alpha2    alpha3    alpha4          ar deltaMedia  deltaVar1 deltaVar2 deltaVar3 ite     llike num_par      AIC      BIC
+1 0.03933002 0.150051 0.1530808 0.1379322 -0.03592139 0.06081163 -0.3403352 0.5285632  3.175378  32 -2427.829       9 4873.658 4920.971
+
+> opt12_1$data
+      alpha1    alpha2    alpha3    alpha4    alpha5          ar deltaMedia  deltaVar1 deltaVar2 deltaVar3 ite     llike num_par      AIC      BIC
+1 0.01766685 0.1250191 0.1449093 0.1594955 0.1302377 -0.03547252 0.06358569 -0.4820103 0.2659085  3.040384  34 -2417.435      10 4854.871 4907.441
+
+> opt12_1$data
+       alpha     beta1       beta2        ar deltaMedia deltaVar1 deltaVar2  deltaVar3 ite     llike num_par      AIC      BIC
+1 0.07897096 0.8959478 0.008736862 -0.044814 0.05468458 -3.643315 -2.906169 -0.7620057  55 -2404.838       8 4825.677 4867.733
+
+> opt12_1$data
+      alpha1     alpha2     beta1     beta2          ar deltaMedia deltaVar1 deltaVar2  deltaVar3 ite     llike num_par      AIC      BIC
+1 0.02161563 0.07312142 0.8512554 0.0297653 -0.04267581 0.05429874 -3.291136 -2.551577 -0.3496188  40 -2402.948       9 4823.895 4871.208
