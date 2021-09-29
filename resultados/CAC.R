@@ -46,8 +46,8 @@ p3 <- ggplot(CAC, aes(x = Index, y = cac)) +
   geom_line(size = 1L, colour = "#112446") +
   labs(x = "Tempo", y = "Retorno", title = "CAC com as Restrições") +
   theme_minimal() + 
-  geom_vline(xintercept = c(crises[1], as.Date("2008-09-22")), 
-             colour = c('red', "red"), size = 1.5,
+  geom_vline(xintercept = c(crises, as.Date("2008-09-22")), 
+             colour = c('red', "blue", "grey"), size = 1.5,
              linetype = "dashed")
 p3
 gridExtra::grid.arrange(p2, p3, ncol = 1)
@@ -340,12 +340,12 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Variancia Condicional") + 
+  labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue")
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Variancia Incondicional") + 
+  labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue")
 # Graficos de linha para esp_cond e var_cond - FIM
@@ -489,17 +489,18 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Variancia Condicional") + 
+  labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue")
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Variancia Incondicional") + 
+  labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue")
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = 0.5)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 4 ----------------------------------------------------------------
+
 pars <- list(
   psi1 = log(1),
   psi2 = log(.15),
@@ -519,7 +520,7 @@ dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
 # Estimando e residuos - INICIO
 (opt4 <- estimando(llike_garch, pars))
 
-media_cond_mod3 <- esp_cond_garch(
+media_cond_mod4 <- esp_cond_garch(
   data = yt,
   est = opt4,
   dummy1 = dummy1,
@@ -529,7 +530,7 @@ media_cond_mod3 <- esp_cond_garch(
   n = n
 )
 
-var_cond_mod3 <- var_cond_garch(
+var_cond_mod4 <- var_cond_garch(
   data = yt,
   est = opt4,
   dummy1 = dummy1,
@@ -540,11 +541,11 @@ var_cond_mod3 <- var_cond_garch(
   n = n
 )
 
-resid_pad_mod4 <- (yt - media_cond_mod3)/sqrt(var_cond)
-resid_pad_mod4 <- resid_pad[-(1:50)]
+resid_pad_mod4 <- (yt - media_cond_mod4)/sqrt(var_cond_mod4)
+resid_pad_mod4 <- resid_pad_mod4[-(1:50)]
 
 resid_pad_data <- data.frame(resid_pad = resid_pad_mod4, 
-                             time = seq_along(resid_pad))
+                             time = seq_along(resid_pad_mod4))
 resid_pad_data <- resid_pad_data[-1, ]
 
 plot(resid_pad_mod4, type = 'l')
@@ -595,9 +596,8 @@ moments::skewness(resid_pad_mod4)
 # Graficos de linha para esp_cond e var_cond - INICIO
 data <- data.frame(
   yt = yt,
-  one_step_predict = media_cond,
-  var_incond = var_incond,
-  var_cond = var_cond,
+  one_step_predict = media_cond_mod4,
+  var_cond = var_cond_mod4,
   time = 1:n
 )
 
@@ -608,12 +608,7 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Variancia Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue")
-
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Variancia Incondicional") + 
+  labs(x = "Tempo", y = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue")
 # Graficos de linha para esp_cond e var_cond - FIM
@@ -779,24 +774,31 @@ ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   geom_line(aes(x = time, y = abs(yt)), colour = "blue")
 # Graficos de linha para esp_cond e var_cond - FIM
 
-
-
 # Resultado ---------------------------------------------------------------
 
-teste <- function(modelo, nome){
+medidas <- function(modelo, nome){
   modelo %>% select(llike, AIC, BIC) %>% mutate(Modelo = nome)
 }
 
-resultado <- rbind(teste(opt1, "opt1"),
-                   teste(opt2, "opt2"),
-                   teste(opt3, "opt3"),
-                   teste(opt4, "opt4"), 
-                   teste(opt5, "opt5")
+resultado <- rbind(medidas(opt1, "opt1"),
+                   medidas(opt2, "opt2"),
+                   medidas(opt3, "opt3"),
+                   medidas(opt4, "opt4"), 
+                   medidas(opt5, "opt5")
                    )
 
 resultado %>% arrange(AIC)
 resultado %>% arrange(BIC)
 
+## Teste LR
 teste_lr(opt2, opt1)
 teste_lr(opt2, opt3)
-teste_lr(opt2, opt4)
+teste_lr(opt1, opt4)
+teste_lr(opt3, opt4)
+
+## Poder preditivo
+poder_pred(yt, media_cond_mod1, var_cond_mod1)$rmse
+poder_pred(yt, media_cond_mod2, var_cond_mod2)$rmse
+poder_pred(yt, media_cond_mod3, var_cond_mod3)$rmse
+poder_pred(yt, media_cond_mod4, var_cond_mod4)$rmse
+poder_pred(yt, media_cond_mod5, var_cond_mod5)$rmse
