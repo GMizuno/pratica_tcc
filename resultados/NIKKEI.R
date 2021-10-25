@@ -41,28 +41,62 @@ p1 <- ggplot(NIKKEI, aes(x = Index, y = NIKKEI)) +
 p3 <- ggplot(NIKKEI, aes(x = Index, y = nikkei)) +
   geom_line(size = 1L, colour = "#112446") +
   labs(x = "Tempo", y = "Retorno", title = "NIKKEI com as Restrições") +
-  theme_minimal() + 
-  geom_vline(xintercept = as.Date(c("2008-09-15", "2010-07-31")), 
-             colour = 'blue', size = 1.5, linetype = "dashed") + 
-  geom_vline(xintercept = as.Date(c("2008-10-20", "2010-07-31")), 
-             colour = 'grey', size = 1.5, linetype = "dashed") + 
-  geom_vline(xintercept = as.Date(c("2008-01-01")), 
-            colour = 'red', size = 1.5, linetype = "dashed") + 
-  geom_vline(xintercept = as.Date(c("2009-05-13")), 
-             colour = 'pink', size = 1.5, linetype = "dashed") + 
-  geom_vline(xintercept = as.Date(c("2009-01-01")), 
-             colour = 'yellow', size = 1.5, linetype = "dashed") +
-  geom_vline(xintercept = as.Date(c("2008-10-10")), 
-             colour = 'cyan', size = 1.5, linetype = "dashed")
-
+  theme_minimal() +
+  geom_vline(
+    xintercept = as.Date(c("2008-01-01")),
+    colour = 'red',
+    size = 1.5,
+    linetype = "dashed"
+  ) +
+  geom_vline(
+    xintercept = as.Date(c("2008-09-15", "2010-07-31")),
+    colour = 'blue',
+    size = 1.5,
+    linetype = "dashed"
+  ) +
+  geom_vline(
+    xintercept = as.Date(c("2008-10-10")),
+    colour = 'cyan',
+    size = 1.5,
+    linetype = "dashed"
+  ) +
+  geom_vline(
+    xintercept = as.Date(c("2008-10-20", "2010-07-31")),
+    colour = 'grey',
+    size = 1.5,
+    linetype = "dashed"
+  ) +
+  geom_vline(
+    xintercept = as.Date(c("2009-01-01")),
+    colour = 'yellow',
+    size = 1.5,
+    linetype = "dashed"
+  ) +
+  geom_vline(
+    xintercept = as.Date(c("2009-05-13")),
+    colour = 'pink',
+    size = 1.5,
+    linetype = "dashed"
+  ) + 
+  
 p3
 gridExtra::grid.arrange(p1, p3, ncol = 1)
 
-acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1))
 
-acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+ggplot(NIKKEI, aes(x = Index, y = 100 * nikkei)) +
+  geom_line(size = 1L, colour = "#112446") + 
+  labs(x = "Tempo", y = "Retorno", title = "NIKKEI")
+ggsave(r"{graficos\Japan\jap_serie.png}", width = 6, height = 3.5)
+
+acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+ggsave(r"{graficos\Japan\jap_fac_serie.png}", width = 6, height = 3.5)
+pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+ggsave(r"{graficos\Japan\jap_facp_serie.png}", width = 6, height = 3.5)
+
+acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
+ggsave(r"{graficos\Japan\jap_fac_quad.png}", width = 6, height = 3.5)
+pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+ggsave(r"{graficos\Japan\jap_facp_quad.png}", width = 6, height = 3.5)
 
 # Modelo 01 ----------------------------------------------------------------
 
@@ -1564,7 +1598,7 @@ ggplot(data, aes(x = time, y = var_incond)) +
 
 ## Graficos de linha para esp_cond e var_cond - FIM
 
-# Modelo 12 ajuste fino ---------------------------------------------------
+# Modelo 12 - ajuste fino ---------------------------------------------------
 
 # Ordens e Parametros - INICIO
 pars <- list(
@@ -1818,7 +1852,7 @@ plot(resid_pad_mod14, type = 'l', ylim = c(-6, 6))
 plot(var_incond_mod14, type = 'l')
 
 
-# Modelo 15 ---------------------------------------------------------------
+# Modelo 15 - modelo estranho ---------------------------------------------------------------
 
 # Ordens e Parametros - INICIO
 pars <- list(
@@ -2076,9 +2110,13 @@ resultado <- rbind(medidas(opt1, "opt1"),
                    medidas(opt8, "opt8"),
                    medidas(opt9$data, "opt9"),
                    medidas(opt10$data, "opt10"),
-                   teste(opt11$data, "opt11"),
-                   teste(opt12$data, "opt12"),
-                   teste(opt12_1$data, "opt12_1")
+                   medidas(opt11$data, "opt11"),
+                   medidas(opt12$data, "opt12"),
+                   medidas(opt12_1$data, "opt12_1"),
+                   medidas(opt13, "opt13"),
+                   medidas(opt14, "opt14"),
+                   medidas(opt15, "opt15"),
+                   medidas(opt16, "opt16")
                    )
                    
 resultado %>% arrange(AIC)

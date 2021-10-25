@@ -52,7 +52,22 @@ p3 <- ggplot(CAC, aes(x = Index, y = cac)) +
 p3
 gridExtra::grid.arrange(p2, p3, ncol = 1)
 
-# Modelo 1 ----------------------------------------------------------------
+ggplot(CAC, aes(x = Index, y = 100 * cac)) +
+  geom_line(size = 1L, colour = "#112446") + 
+  labs(x = "Tempo", y = "Retorno", title = "CAC")
+ggsave(r"{graficos\France\fra_serie.png}", width = 6, height = 3.5)
+
+acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+ggsave(r"{graficos\France\fra_fac_serie.png}", width = 6, height = 3.5)
+pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+ggsave(r"{graficos\France\fra_facp_serie.png}", width = 6, height = 3.5)
+
+acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
+ggsave(r"{graficos\France\fra_fac_quad.png}", width = 6, height = 3.5)
+pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+ggsave(r"{graficos\France\fra_facp_quad.png}", width = 6, height = 3.5)
+
+# Modelo 01 ----------------------------------------------------------------
 
 ggplot(CAC, aes(x = Index, y = cac)) +
   geom_line(size = 1L, colour = "#112446") +
@@ -201,7 +216,7 @@ ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   geom_line(aes(x = time, y = abs(yt)), colour = "blue")
 # Graficos de linha para esp_cond e var_cond - FIM
 
-# Modelo 2 ----------------------------------------------------------------
+# Modelo 02 ----------------------------------------------------------------
 
 ggplot(CAC, aes(x = Index, y = cac)) +
   geom_line(size = 1L, colour = "#112446") +
@@ -350,7 +365,7 @@ ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   geom_line(aes(x = time, y = abs(yt)), colour = "blue")
 # Graficos de linha para esp_cond e var_cond - FIM
 
-# Modelo 3 ----------------------------------------------------------------
+# Modelo 03 ----------------------------------------------------------------
 
 ggplot(CAC, aes(x = Index, y = cac)) +
   geom_line(size = 1L, colour = "#112446") +
@@ -499,7 +514,7 @@ ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = 0.5)
 # Graficos de linha para esp_cond e var_cond - FIM
 
-# Modelo 4 ----------------------------------------------------------------
+# Modelo 04 ----------------------------------------------------------------
 
 pars <- list(
   psi1 = log(1),
@@ -613,7 +628,7 @@ ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   geom_line(aes(x = time, y = abs(yt)), colour = "blue")
 # Graficos de linha para esp_cond e var_cond - FIM
 
-# Modelo 5 ----------------------------------------------------------------
+# Modelo 05 ----------------------------------------------------------------
 
 ggplot(CAC, aes(x = Index, y = cac)) +
   geom_line(size = 1L, colour = "#112446") +
