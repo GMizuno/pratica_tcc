@@ -1,0 +1,13 @@
+Ordenado pelo AIC
+
+Ordenado pelo BIC
+
+Modelos Finais
+
+RMSE
+
+Cor
+
+Teste de Hipooteses
+
+Ajuste Fino da parte ARCH/GARCH

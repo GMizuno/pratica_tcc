@@ -77,7 +77,7 @@ p3 <- ggplot(NIKKEI, aes(x = Index, y = nikkei)) +
     colour = 'pink',
     size = 1.5,
     linetype = "dashed"
-  ) + 
+  )  
   
 p3
 gridExtra::grid.arrange(p1, p3, ncol = 1)
@@ -753,8 +753,8 @@ resid_pad_data <- data.frame(resid_pad = resid_pad_mod5,
                              time = seq_along(resid_pad_mod5))
 resid_pad_data <- resid_pad_data[-1, ]
 
-plot(resid_pad, type = 'l')
-plot(var_incond, type = 'l')
+plot(resid_pad_mod5, type = 'l')
+plot(var_incond_mod5, type = 'l')
 
 mean(resid_pad_data$resid_pad)
 var(resid_pad_data$resid_pad)
@@ -825,7 +825,7 @@ ggplot(data, aes(x = time, y = var_incond)) +
   geom_line(aes(x = time, y = abs(yt)), colour = "blue")
 # Graficos de linha para esp_cond e var_cond - FIM
 
-# Modelo 06 ----------------------------------------------------------------
+# Modelo 06 - Pq fiz isso ???????? ----------------------------------------
 
 # Ordens e Parametros - INICIO
 pars <- list(
@@ -905,8 +905,8 @@ resid_pad_data <- data.frame(resid_pad = resid_pad_mod6,
                              time = seq_along(resid_pad_mod6))
 resid_pad_data <- resid_pad_data[-1, ]
 
-plot(resid_pad, type = 'l')
-plot(var_incond, type = 'l')
+plot(resid_pad_mod6, type = 'l')
+plot(var_incond_mod6, type = 'l')
 
 mean(resid_pad_data$resid_pad)
 var(resid_pad_data$resid_pad)
@@ -1138,6 +1138,21 @@ var_incond_mod8 <- var_indcond_sauve(
   kvar = kvar
 )
 
+resid_pad_mod8 <- (yt - media_cond_mod8)/sqrt(var_cond_mod8)
+resid_pad_mod8 <-resid_pad_mod8[-(1:50)]
+
+resid_pad_data <- data.frame(resid_pad = resid_pad_mod8, 
+                             time = seq_along(resid_pad_mod8))
+resid_pad_data <- resid_pad_data[-1, ]
+
+plot(resid_pad_mod7, type = 'l')
+plot(var_incond_mod7, type = 'l', ylim = c(0, 11))
+
+mean(resid_pad_data$resid_pad)
+var(resid_pad_data$resid_pad)
+
+plot(resid_pad_mod8, type = 'l')
+plot(var_incond_mod8, type = 'l', ylim = c(0, 11))
 
 # Modelo 09 ----------------------------------------------------------------
 
@@ -1168,7 +1183,6 @@ dummy2 <- as.matrix(dummy_on_off(n, c(1, 985, 1175, 1227),
 # Estimando e residuos  - INICIO
 
 opt9 <- estimando_model9(llike_suave_nikkei, pars)
-# opt9_v2 <- estimando_model9(llike_suave_nikkei_v2, pars)
 
 media_cond_mod9 <- opt9$media_cond
 var_cond_mod9 <- opt9$dp_cond^2

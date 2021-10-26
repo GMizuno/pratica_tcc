@@ -29,6 +29,21 @@ TSX <- TSX %>%
 yt <- TSX$tsx %>% as.vector()
 Varyt <- var(yt[1:50])
 
+ggplot(TSX, aes(x = Index, y = 100 * tsx)) +
+  geom_line(size = 1L, colour = "#112446") + 
+  labs(x = "Tempo", y = "Retorno", title = "TSX")
+ggsave(r"{graficos\Canada\canada_serie.png}", width = 6, height = 3.5)
+
+acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+ggsave(r"{graficos\Canada\canada_fac_serie.png}", width = 6, height = 3.5)
+pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+ggsave(r"{graficos\Canada\canada_facp_serie.png}", width = 6, height = 3.5)
+
+acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
+ggsave(r"{graficos\Canada\canada_fac_quad.png}", width = 6, height = 3.5)
+pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+ggsave(r"{graficos\Canada\canada_facp_quad.png}", width = 6, height = 3.5)
+
 # Graficos ----------------------------------------------------------------
 
 p1 <- ggplot(TSX, aes(x = Index, y = TSX)) +

@@ -26,7 +26,7 @@ NYSE <- NYSE %>%
   mutate(id = row_number(), nyse = 100 * nyse) %>%
   select(Index, id, everything())
 
-yt <- NYSE$cac %>% as.vector()
+yt <- NYSE$nyse %>% as.vector()
 Varyt <- var(yt[1:50])
 
 # Graficos ----------------------------------------------------------------
@@ -51,6 +51,21 @@ p3 <- ggplot(NYSE, aes(x = Index, y = nyse)) +
              colour = 'blue', size = 1.5, linetype = "dashed")
 # p2
 gridExtra::grid.arrange(p1, p2, p3, ncol = 1)
+
+ggplot(NYSE, aes(x = Index, y = 100 * nyse)) +
+  geom_line(size = 1L, colour = "#112446") + 
+  labs(x = "Tempo", y = "Retorno", title = "NYSE")
+ggsave(r"{graficos\USA\usa_serie.png}", width = 6, height = 3.5)
+
+acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+ggsave(r"{graficos\USA\usa_fac_serie.png}", width = 6, height = 3.5)
+pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+ggsave(r"{graficos\USA\usa_facp_serie.png}", width = 6, height = 3.5)
+
+acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
+ggsave(r"{graficos\USA\usa_fac_quad.png}", width = 6, height = 3.5)
+pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+ggsave(r"{graficos\USA\usa_facp_quad.png}", width = 6, height = 3.5)
 # Modelo 1 ----------------------------------------------------------------
 
 # Ordens e Parametros - INICIO

@@ -1,35 +1,32 @@
 Modelos Japão
 
-Crise I -> 2007-07-01 => 
-Crise F -> 2008-11-28 => 
+Crise I -> 2007-07-01 => 861
+Crise F -> 2008-11-28 => 1206
 Lehman Brothers -> 2008-09-15 => 1212
-
-Intervenção I -> 2008-10-20 => 
-Intervenção F -> 2010-07-31 =>  ---> Muito longe do range dos dados
 
 Intervenção 1 -> 2008-01-01 => 984
 Intervenção 2 -> 2008-09-15 => 1157 (Lehman Brothers)
-Intervenção 3 -> 2008-10-10 => 1174
-Intervenção 4 -> 2008-10-20 => 1179
+Intervenção 3 -> 2008-10-10 => 1174 
+Intervenção 4 -> 2008-10-20 => 1179 (Intervenção BC)
 Intervenção 5 -> 2009-01-01 => 1227
 Intervenção 6 -> 2009-05-13 => 1312
 
-Modelo 01 - 
-Modelo 02 - AR(1)-GARCH(1,1)
-Modelo 03 - 
-Modelo 04 - 
-Modelo 05 - 
-Modelo 06 - 
-Modelo 07 - 
-Modelo 08 - 
-Modelo 09 - 
-Modelo 10 - Considerando LB
-Modelo 11 - Considerando LB
-Modelo 12 - Considerando LB
-Modelo 12 - Ajuste Fino (Modelo 12_1)
-Modelo 13 - AR(1)-GARCH(2,1)
-Modelo 14 - AR(1)-GARCH(2,1)
-Modelo 15 - 
-Modelo 16 - 
-Modelo 17 - 
+Modelo 01 - 5 degraus (Intervenção 1, Intervenção 3, Intervenção 4, Intervenção 5 e Intervenção 6), mas com um Int suave entre Intervenção 4 e Intervenção 5;
+Modelo 02 - AR(1)-GARCH(1,1);
+Modelo 03 - 4 degraus (Intervenção 1, Intervenção 3, Intervenção 4, Intervenção 5), mas com um Int suave entre Intervenção 4 e Intervenção 5;
+Modelo 04 - 4 degraus (Intervenção 3, Intervenção 4, Intervenção 5 e Intervenção 6), mas com um Int suave entre Intervenção 4 e Intervenção 5;
+Modelo 05 - 3 degraus (Intervenção 3, Intervenção 4 e Intervenção 5), mas com um Int suave entre Intervenção 4 e Intervenção 5;
+Modelo 06 - 2 degraus (Intervenção 4 e Intervenção 5), mas com um Int suave entre Intervenção 4 e Intervenção 5;
+Modelo 07 - 3 degraus (Intervenção 1, Intervenção 4, Intervenção 5), mas com um Int suave entre Intervenção 4 e Intervenção 5;
+Modelo 08 - 4 degraus (Intervenção 1, Intervenção 4, Intervenção 5 e Intervenção 6), mas com um Int suave entre Intervenção 4 e Intervenção 5;
+Modelo 09 - 4 degraus (Intervenção 1, Intervenção 3, Intervenção 4 e Intervenção 5), mas com um Int suave entre Intervenção 4 e Intervenção 5; Intervenção 3 igual a Intervenção 5 (modelo nikkei);
+Modelo 10 - 4 degraus (Intervenção 1, Intervenção 2, Intervenção 4 e Intervenção 5), mas com um Int suave entre Intervenção 4 e Intervenção 5; Intervenção 3 igual a Intervenção 5 (modelo nikkei);
+Modelo 11 - 5 degraus (Intervenção 1, Intervenção 2, Intervenção 3, Intervenção 4 e Intervenção 5), mas com um Int suave entre Intervenção 4 e Intervenção 5; Intervenção 3 igual a Intervenção 5 (modelo nikkei);
+Modelo 12 - 4 degraus (Intervenção 1, Intervenção 2, Intervenção 4 e Intervenção 5), mas com um Ints suave entre Intervenção 2 e Intervenção 4, Intervenção 4 e Intervenção 5; Intervenção 3 igual a Intervenção 5 (modelo nikkei);
+Modelo 12 - Ajuste fino do modelo 12 AR(1)-GARCH(2,1) (Modelo 12_1);
+Modelo 13 - AR(1)-GARCH(2,1);
+Modelo 14 - 4 degraus (Intervenção 1, Intervenção 2, Intervenção 4 e Intervenção 5), mas com um Ints suave entre Intervenção 2 e Intervenção 4, Intervenção 4 e Intervenção 5;
+Modelo 15 - 3 degraus (Intervenção 1, Intervenção 2 e Intervenção 3), mas com um Int suave entre Intervenção 2 e Intervenção 3;
+Modelo 16 - 5 degraus (Intervenção 1, Intervenção 2, Intervenção 3, Intervenção 4 e Intervenção 5), mas com um Ints suave entre Intervenção 2 e Intervenção 3, Intervenção 4 e Intervenção 5;
+Modelo 17 - 3 degraus
 

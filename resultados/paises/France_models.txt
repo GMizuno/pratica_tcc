@@ -4,13 +4,13 @@ Crise I -> 2007-07-01 => 898
 Crise F -> 2008-11-28 => 1259
 Lehman Brothers -> 2008-09-15 => 1207
 
-Intervenção I -> 2008-09-22 => 1212
-Intervenção F -> 2012-12-11 => 1226 ---> Muito longe do range dos dados
+Intervenção 1 -> 2008-09-22 => 1212 (Intervenção BC)
+Intervenção 2 -> 2012-12-11 => 1226 ---> Muito longe do range dos dados
 
-Modelo 01 - 3 degraus marcados por inicio da crise e da intervenção do BC.
-Modelo 02 - 4 degraus marcados por inicio/fim da crise e da intervenção do BC.
-Modelo 03 - 3 degraus marcados por inicio/fim da crise.
-Modelo 04 - AR(1)-GARCH(1,1)
-Modelo 05 - 3 degraus marcados por por inicio/fim da crise e da intervenção do BC, mas com um int suave entre BC e fim da crise
-Modelo 06 - 
+Modelo 01 - 3 degraus (Crise I e Intervenção 1);
+Modelo 02 - 4 degraus (Crise I, Intervenção 1 e Crise F);
+Modelo 03 - 3 degraus (Crise I e Crise F);
+Modelo 04 - AR(1)-GARCH(1,1);
+Modelo 05 - 3 degraus (Crise I, Intervenção 1 e Crise F), mas com um Int suave entre BC e fim da crise;
+Modelo 06 - 5 degraus (Crise I, Intervenção 1, Lehman Brothers e Crise F);
 Modelo 07 - 
