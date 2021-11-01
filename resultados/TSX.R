@@ -31,17 +31,22 @@ Varyt <- var(yt[1:50])
 
 ggplot(TSX, aes(x = Index, y = 100 * tsx)) +
   geom_line(size = 1L, colour = "#112446") + 
-  labs(x = "Tempo", y = "Retorno", title = "TSX")
+  labs(x = "Tempo", y = "Retorno", title = "TSX") +
+  theme_minimal() 
 ggsave(r"{graficos\Canada\canada_serie.png}", width = 6, height = 3.5)
 
-acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
+  theme_minimal() 
 ggsave(r"{graficos\Canada\canada_fac_serie.png}", width = 6, height = 3.5)
-pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
+  theme_minimal() 
 ggsave(r"{graficos\Canada\canada_facp_serie.png}", width = 6, height = 3.5)
 
-acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
+acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
+  theme_minimal() 
 ggsave(r"{graficos\Canada\canada_fac_quad.png}", width = 6, height = 3.5)
-pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
+  theme_minimal() 
 ggsave(r"{graficos\Canada\canada_facp_quad.png}", width = 6, height = 3.5)
 
 # Graficos ----------------------------------------------------------------

@@ -54,17 +54,22 @@ gridExtra::grid.arrange(p1, p2, p3, ncol = 1)
 
 ggplot(NYSE, aes(x = Index, y = 100 * nyse)) +
   geom_line(size = 1L, colour = "#112446") + 
-  labs(x = "Tempo", y = "Retorno", title = "NYSE")
+  labs(x = "Tempo", y = "Retorno", title = "NYSE") +
+  theme_minimal() 
 ggsave(r"{graficos\USA\usa_serie.png}", width = 6, height = 3.5)
 
-acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
+  theme_minimal() 
 ggsave(r"{graficos\USA\usa_fac_serie.png}", width = 6, height = 3.5)
-pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
+  theme_minimal() 
 ggsave(r"{graficos\USA\usa_facp_serie.png}", width = 6, height = 3.5)
 
-acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
+acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
+  theme_minimal() 
 ggsave(r"{graficos\USA\usa_fac_quad.png}", width = 6, height = 3.5)
-pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
+  theme_minimal() 
 ggsave(r"{graficos\USA\usa_facp_quad.png}", width = 6, height = 3.5)
 # Modelo 1 ----------------------------------------------------------------
 

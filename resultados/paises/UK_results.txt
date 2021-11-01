@@ -6,8 +6,18 @@ Modelos Finais
 
 RMSE
 
+Modelo 01 =>
+Modelo 02 =>
+Modelo 03 =>
+Modelo 04 =>
+
 Cor
 
-Teste de Hipooteses
+Modelo 01 =>
+Modelo 02 =>
+Modelo 03 =>
+Modelo 04 =>
+
+Teste de Hipoteses
 
 Ajuste Fino da parte ARCH/GARCH

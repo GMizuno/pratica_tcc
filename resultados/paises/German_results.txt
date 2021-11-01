@@ -1,13 +1,42 @@
+      llike      AIC      BIC Modelo
+1 -2306.237 4626.475 4663.569   opt1
+2 -2304.965 4625.929 4668.322   opt2
+3 -2307.102 4628.203 4665.297   opt3
+
 Ordenado pelo AIC
 
+      llike      AIC      BIC Modelo
+1 -2304.965 4625.929 4668.322   opt2
+2 -2306.237 4626.475 4663.569   opt1
+3 -2307.102 4628.203 4665.297   opt3
+
 Ordenado pelo BIC
+
+      llike      AIC      BIC Modelo
+1 -2306.237 4626.475 4663.569   opt1
+2 -2307.102 4628.203 4665.297   opt3
+3 -2304.965 4625.929 4668.322   opt2
 
 Modelos Finais
 
 RMSE
 
+Modelo 01 => 6.189186
+Modelo 02 => 6.196328
+Modelo 03 => 6.199162
+Modelo 04 =>
+
 Cor
 
-Teste de Hipooteses
+Modelo 01 => 0.1736503
+Modelo 02 => 0.1720189
+Modelo 03 => 0.1702377
+Modelo 04 =>
+
+Teste de Hipoteses
+
+> teste_lr(opt2, opt1)
+    lambda    pvalue df
+1 2.545423 0.1106143  1
 
 Ajuste Fino da parte ARCH/GARCH

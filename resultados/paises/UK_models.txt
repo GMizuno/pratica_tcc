@@ -1,0 +1,14 @@
+UK modelos
+
+Crise I -> 2007-07-01 => 882
+Crise F -> 2008-11-28 => 1240
+Lehman Brothers -> 2008-09-15 => 1186
+
+Intervenção 1 -> 2008-09-19 => 1190 (Intervenção BC)
+Intervenção 2 -> 2009-01-19 => 1271 (Intervenção BC)
+
+Modelo 01 -
+Modelo 02 -
+Modelo 03 -
+Modelo 04 -
+Modelo 05 -

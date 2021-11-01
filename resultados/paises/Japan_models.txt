@@ -18,15 +18,14 @@ Modelo 04 - 4 degraus (Intervenção 3, Intervenção 4, Intervenção 5 e Inter
 Modelo 05 - 3 degraus (Intervenção 3, Intervenção 4 e Intervenção 5), mas com um Int suave entre Intervenção 4 e Intervenção 5;
 Modelo 06 - 2 degraus (Intervenção 4 e Intervenção 5), mas com um Int suave entre Intervenção 4 e Intervenção 5;
 Modelo 07 - 3 degraus (Intervenção 1, Intervenção 4, Intervenção 5), mas com um Int suave entre Intervenção 4 e Intervenção 5;
-Modelo 08 - 4 degraus (Intervenção 1, Intervenção 4, Intervenção 5 e Intervenção 6), mas com um Int suave entre Intervenção 4 e Intervenção 5;
-Modelo 09 - 4 degraus (Intervenção 1, Intervenção 3, Intervenção 4 e Intervenção 5), mas com um Int suave entre Intervenção 4 e Intervenção 5; Intervenção 3 igual a Intervenção 5 (modelo nikkei);
-Modelo 10 - 4 degraus (Intervenção 1, Intervenção 2, Intervenção 4 e Intervenção 5), mas com um Int suave entre Intervenção 4 e Intervenção 5; Intervenção 3 igual a Intervenção 5 (modelo nikkei);
-Modelo 11 - 5 degraus (Intervenção 1, Intervenção 2, Intervenção 3, Intervenção 4 e Intervenção 5), mas com um Int suave entre Intervenção 4 e Intervenção 5; Intervenção 3 igual a Intervenção 5 (modelo nikkei);
-Modelo 12 - 4 degraus (Intervenção 1, Intervenção 2, Intervenção 4 e Intervenção 5), mas com um Ints suave entre Intervenção 2 e Intervenção 4, Intervenção 4 e Intervenção 5; Intervenção 3 igual a Intervenção 5 (modelo nikkei);
+Modelo 08 - 4 degraus (Intervenção 1, Intervenção 4, Intervenção 5 e Intervenção 6), mas com uma Int suave entre Intervenção 4 e Intervenção 5;
+Modelo 09 - 4 degraus (Intervenção 1, Intervenção 3, Intervenção 4 e Intervenção 5), mas com uma Int suave entre Intervenção 4 e Intervenção 5; Intervenção 3 igual a Intervenção 5 (modelo nikkei);
+Modelo 10 - 4 degraus (Intervenção 1, Intervenção 2, Intervenção 4 e Intervenção 5), mas com uma Int suave entre Intervenção 4 e Intervenção 5; Intervenção 3 igual a Intervenção 5 (modelo nikkei);
+Modelo 11 - 5 degraus (Intervenção 1, Intervenção 2, Intervenção 3, Intervenção 4 e Intervenção 5), mas com uma Int suave entre Intervenção 4 e Intervenção 5; Intervenção 3 igual a Intervenção 5 (modelo nikkei);
+Modelo 12 - 4 degraus (Intervenção 1, Intervenção 2, Intervenção 4 e Intervenção 5), mas com uma Ints suave entre Intervenção 2 e Intervenção 4, Intervenção 4 e Intervenção 5; Intervenção 3 igual a Intervenção 5 (modelo nikkei);
 Modelo 12 - Ajuste fino do modelo 12 AR(1)-GARCH(2,1) (Modelo 12_1);
 Modelo 13 - AR(1)-GARCH(2,1);
-Modelo 14 - 4 degraus (Intervenção 1, Intervenção 2, Intervenção 4 e Intervenção 5), mas com um Ints suave entre Intervenção 2 e Intervenção 4, Intervenção 4 e Intervenção 5;
-Modelo 15 - 3 degraus (Intervenção 1, Intervenção 2 e Intervenção 3), mas com um Int suave entre Intervenção 2 e Intervenção 3;
-Modelo 16 - 5 degraus (Intervenção 1, Intervenção 2, Intervenção 3, Intervenção 4 e Intervenção 5), mas com um Ints suave entre Intervenção 2 e Intervenção 3, Intervenção 4 e Intervenção 5;
-Modelo 17 - 3 degraus
+Modelo 14 - 4 degraus (Intervenção 1, Intervenção 2, Intervenção 4 e Intervenção 5), mas com Ints suave entre Intervenção 2 e Intervenção 4, Intervenção 4 e Intervenção 5;
+Modelo 15 - 3 degraus (Intervenção 1, Intervenção 2 e Intervenção 3), mas com uma Int suave entre Intervenção 2 e Intervenção 3;
+Modelo 16 - 5 degraus (Intervenção 1, Intervenção 2, Intervenção 3, Intervenção 4 e Intervenção 5), mas com Ints suave entre Intervenção 2 e Intervenção 3, Intervenção 4 e Intervenção 5;
 

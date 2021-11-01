@@ -42,42 +42,18 @@ p3 <- ggplot(NIKKEI, aes(x = Index, y = nikkei)) +
   geom_line(size = 1L, colour = "#112446") +
   labs(x = "Tempo", y = "Retorno", title = "NIKKEI com as Restrições") +
   theme_minimal() +
-  geom_vline(
-    xintercept = as.Date(c("2008-01-01")),
-    colour = 'red',
-    size = 1.5,
-    linetype = "dashed"
-  ) +
-  geom_vline(
-    xintercept = as.Date(c("2008-09-15", "2010-07-31")),
-    colour = 'blue',
-    size = 1.5,
-    linetype = "dashed"
-  ) +
-  geom_vline(
-    xintercept = as.Date(c("2008-10-10")),
-    colour = 'cyan',
-    size = 1.5,
-    linetype = "dashed"
-  ) +
-  geom_vline(
-    xintercept = as.Date(c("2008-10-20", "2010-07-31")),
-    colour = 'grey',
-    size = 1.5,
-    linetype = "dashed"
-  ) +
-  geom_vline(
-    xintercept = as.Date(c("2009-01-01")),
-    colour = 'yellow',
-    size = 1.5,
-    linetype = "dashed"
-  ) +
-  geom_vline(
-    xintercept = as.Date(c("2009-05-13")),
-    colour = 'pink',
-    size = 1.5,
-    linetype = "dashed"
-  )  
+  geom_vline(xintercept = as.Date(c("2008-01-01")), colour = 'red',
+             size = 1.5, linetype = "dashed") +
+  geom_vline(xintercept = as.Date(c("2008-09-15", "2010-07-31")),
+             colour = 'blue', size = 1.5, linetype = "dashed") +
+  geom_vline(xintercept = as.Date(c("2008-10-10")), colour = 'cyan', size = 1.5,
+             linetype = "dashed") +
+  geom_vline(xintercept = as.Date(c("2008-10-20", "2010-07-31")),
+             colour = 'grey', size = 1.5, linetype = "dashed") +
+  geom_vline(xintercept = as.Date(c("2009-01-01")), colour = 'yellow',
+             size = 1.5, linetype = "dashed") +
+  geom_vline(xintercept = as.Date(c("2009-05-13")), colour = 'pink', size = 1.5,
+             linetype = "dashed")  
   
 p3
 gridExtra::grid.arrange(p1, p3, ncol = 1)
@@ -85,17 +61,22 @@ gridExtra::grid.arrange(p1, p3, ncol = 1)
 
 ggplot(NIKKEI, aes(x = Index, y = 100 * nikkei)) +
   geom_line(size = 1L, colour = "#112446") + 
-  labs(x = "Tempo", y = "Retorno", title = "NIKKEI")
+  labs(x = "Tempo", y = "Retorno", title = "NIKKEI") +
+  theme_minimal() 
 ggsave(r"{graficos\Japan\jap_serie.png}", width = 6, height = 3.5)
 
-acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
+  theme_minimal() 
 ggsave(r"{graficos\Japan\jap_fac_serie.png}", width = 6, height = 3.5)
-pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
+  theme_minimal() 
 ggsave(r"{graficos\Japan\jap_facp_serie.png}", width = 6, height = 3.5)
 
-acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
+acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
+  theme_minimal() 
 ggsave(r"{graficos\Japan\jap_fac_quad.png}", width = 6, height = 3.5)
-pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
+  theme_minimal() 
 ggsave(r"{graficos\Japan\jap_facp_quad.png}", width = 6, height = 3.5)
 
 # Modelo 01 ----------------------------------------------------------------

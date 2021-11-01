@@ -1,4 +1,3 @@
-Vermelho - Inicio/Fim da crise
-Azul - Inicio/Fim intervenção
+Vermelho - Inicio/Fim intervenção
 Cinza - Inicio de uma intervenção suave
 Amarelo - Fim de uma intervenção suave
