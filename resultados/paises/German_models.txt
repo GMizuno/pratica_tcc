@@ -7,8 +7,10 @@ Lehman Brothers -> 2008-09-15 => 1202
 Intervenção 1 -> 2008-09-20 => 1207 (Intervenção BC)
 Intervenção 2 -> 2011-03-31 => ???? ---> Muito longe do range dos dados
 
-Modelo 01 - 3 degraus (Crise I, Intervenção 1 e Crise F);
-Modelo 02 - 4 degraus (Crise I, Lehman Brothers, Intervenção 1 e Crise F);
-Modelo 03 - 3 degraus (Crise I, Intervenção 1 e Crise F), mas com uma Int suave entre BC
-Modelo 04 -
-Modelo 05 -
+Modelo 01 - 3 degraus (Crise I e Crise F); 
+Modelo 02 - 4 degraus (Crise I, Intervenção 1 e Crise F);
+Modelo 03 - 4 degraus (Crise I, Lehman Brothers e Crise F);
+Modelo 04 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1 e Crise F);
+Modelo 05 - 4 degraus (Crise I, Intervenção 1 e Crise F), mas com uma Int suave entre BC e Crise F; 
+Modelo 06 -
+Modelo 07 -

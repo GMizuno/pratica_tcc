@@ -377,7 +377,7 @@ ggplot(CAC, aes(x = Index, y = cac)) +
   geom_line(size = 1L, colour = "#112446") +
   labs(x = "Tempo", y = "Retorno", title = "CAC com as Restrições") +
   theme_minimal() + 
-  geom_vline(xintercept = crises, 
+  geom_vline(xintercept = c(crises[1], crises[2]), 
              colour = c('red', "red"), size = 1.5,
              linetype = "dashed")
 
@@ -520,9 +520,7 @@ ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = 0.5)
 # Graficos de linha para esp_cond e var_cond - FIM
 
-# Modelo 04 ----------------------------------------------------------------
-
-# AR(1)-GARCH(1,1)
+# Modelo 04 AR(1)-GARCH(1,1) ----------------------------------------------
 
 pars <- list(
   psi1 = log(1),
@@ -1241,8 +1239,7 @@ ggplot(CAC, aes(x = Index, y = cac)) +
   labs(x = "Tempo", y = "Retorno", title = "CAC com as Restrições") +
   theme_minimal() +
   geom_vline(
-    xintercept = c(crises[1], as.Date("2008-09-22"),
-                   crises[2]),
+    xintercept = c(crises[1], as.Date("2008-09-22"), crises[2]),
     colour = c('red', "red", "red"),
     size = 1.5,
     linetype = "dashed"
@@ -1364,8 +1361,7 @@ ggplot(CAC, aes(x = Index, y = cac)) +
   labs(x = "Tempo", y = "Retorno", title = "CAC com as Restrições") +
   theme_minimal() +
   geom_vline(
-    xintercept = c(crises[1], as.Date("2008-09-15"),
-                   crises[2]),
+    xintercept = c(crises[1], as.Date("2008-09-15"), crises[2]),
     colour = c('red', "red", "red"),
     size = 1.5,
     linetype = "dashed"
