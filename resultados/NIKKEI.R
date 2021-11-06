@@ -684,7 +684,7 @@ dummy2 <- as.matrix(dummy_on_off(n, c(1, 1175, 1227),
 
 media_cond_mod5 <- esp_cond_sauve(
   data = yt,
-  est = opt4,
+  est = opt5,
   dummy1 = dummy1,
   dummy2 = dummy2,
   t_ast = t_ast,
@@ -699,7 +699,7 @@ media_cond_mod5 <- esp_cond_sauve(
 
 var_cond_mod5 <- var_cond_sauve(
   data = yt,
-  est = opt4,
+  est = opt5,
   dummy1 = dummy1,
   dummy2 = dummy2,
   t_ast = t_ast,
@@ -715,7 +715,7 @@ var_cond_mod5 <- var_cond_sauve(
 
 var_incond_mod5 <- var_indcond_sauve(
   data = yt,
-  est = opt4,
+  est = opt5,
   dummy1 = dummy1,
   dummy2 = dummy2,
   t_ast = t_ast,
@@ -783,9 +783,9 @@ moments::skewness(resid_pad_mod5)
 # Graficos de linha para esp_cond e var_cond - INICIO
 data <- data.frame(
   yt = yt,
-  one_step_predict = media_cond,
-  var_incond = var_incond,
-  var_cond = var_cond,
+  one_step_predict = media_cond_mod5,
+  var_incond = var_incond_mod5,
+  var_cond = var_cond_mod5,
   time = 1:n
 )
 
@@ -803,7 +803,7 @@ ggplot(data, aes(x = time, y = sqrt(var_cond))) +
 ggplot(data, aes(x = time, y = var_incond)) +
   labs(x = "Tempo", y = "Variancia Condicional") + 
   geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue")
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 06 - Pq fiz isso ???????? ----------------------------------------

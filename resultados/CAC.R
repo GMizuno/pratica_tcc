@@ -50,7 +50,7 @@ p3 <- ggplot(CAC, aes(x = Index, y = cac)) +
   geom_vline(xintercept = c(crises, as.Date("2008-09-22")), 
              colour = c('red', "blue", "grey"), size = 1.5,
              linetype = "dashed")
-p3
+p3 + xlim(c(as.Date("2008-04-01"), as.Date("2009-12-31")))
 gridExtra::grid.arrange(p2, p3, ncol = 1)
 
 ggplot(CAC, aes(x = Index, y = 100 * cac)) +
@@ -578,7 +578,8 @@ var(resid_pad_data$resid_pad)
 
 # FAC e FACP - INICIO
 acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+pa
+cf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
 
 acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
