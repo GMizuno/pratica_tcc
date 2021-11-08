@@ -1,12 +1,24 @@
-França modelos
+França modelos (CAC2)
 
 Crise I -> 2007-07-01 => 898
 Lehman Brothers -> 2008-09-15 => 1207
 
 Intervenção 1 -> 2008-09-22 => 1212 (Intervenção BC)
 Intervenção 2 -> 2012-12-11 => ???? ---> Muito longe do range dos dados
-Intervenção 3 -> ????-??-?? => 1350 (Data Driven)
-Intervenção 4 -> ????-??-?? => 1400 (Data Driven)
+Intervenção 3 -> 2008-12-18 => 1270 (Data Driven)
+Intervenção 4 -> 2009-04-07 => 1350 (Data Driven)
+Intervenção 5 -> 2009-06-19 => 1400 (Data Driven)
 
 Modelo 00 - AR(1)-GARCH(1,1);
 Modelo 01 - 3 degraus (Crise I e Intervenção 1);
+Modelo 02 - 3 degraus (Crise I e Lehman Brothers);
+Modelo 03 - 4 degraus (Crise I, Lehman Brothers e Intervenção 1);
+Modelo 04 - 4 degraus (Crise I, Lehman Brothers e Intervenção 4), mas com int suave entre Lehman Brothers e Intervenção 1 e considerando 1 ponto em 2008-09-22 (|>); 
+Modelo 05 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1, Intervenção 4 e Intervenção 5), mas com int suave entre Lehman Brothers e Intervenção 1
+Modelo 06 - 4 degraus (Crise I, Lehman Brothers e Intervenção 5), mas com int suave entre Lehman Brothers e Intervenção 1 e considerando 1 ponto em 2009-06-19 (|>); 
+Modelo 07 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1, Intervenção 3 e Intervenção 5), mas com int suave entre Lehman Brothers e Intervenção 1;
+Modelo 08 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1, Intervenção 4 e Intervenção 5), mas com int suave entre Lehman Brothers e Intervenção 1 e beta5 = beta2
+Modelo 09 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1, Intervenção 4 e Intervenção 5), mas com beta5 = beta2
+
+Melhor Modelo => Modelo 09
+ 

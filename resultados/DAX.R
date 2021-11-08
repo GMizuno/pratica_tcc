@@ -1,6 +1,7 @@
 source("src/util.R")
 source("src/Analise de reisduos.R")
 source("src/modelo_est.R")
+source("src/modelo7_dax.R")
 
 library(zoo)
 library(quantmod)
@@ -1147,6 +1148,132 @@ ggplot(data, aes(x = time, y = sqrt(var_incond))) +
 
 # Graficos de linha para esp_cond e var_cond - FIM
 
+
+# Modelo 07 ---------------------------------------------------------------
+
+ggplot(DAX, aes(x = Index, y = dax)) +
+  geom_line(size = 1L, colour = "#112446") +
+  labs(x = "Tempo", y = "Retorno", title = "DAX com as Restrições") +
+  theme_minimal() + 
+  geom_vline(xintercept = c(crises[1], 
+                            as.Date(c("2008-09-15", 
+                                      "2008-09-20", 
+                                      "2008-12-11", 
+                                      "2009-05-26"))), 
+             colour = c('red', 'red', 'red', 'grey', 'yellow'), size = 1.5,
+             linetype = "dashed")
+
+# Ordens e Parametros - INICIO
+pars <- list(
+  psi2 = log(.15),
+  psi3 = log(.84),
+  ar = .2,
+  deltaMedia = 0.0,
+  deltaVar = c(-3, -3, -3, -3)
+)
+
+alpha_order <- length(pars$psi2)
+beta_order <- length(pars$psi3)
+kmed <- length(pars$deltaMedia)
+kvar <- length(pars$deltaVar)
+n <- length(yt) # Tamanho da serie
+delta_ind <- 4
+t_ast <- 1265
+t_til <- 1376
+
+dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
+dummy2 <- as.matrix(dummy_on_off(n, c(1, 896, 1203, 1208, 1376),
+                                 c(895, 1202, 1207, 1265, n)))
+# Ordens e Parametros - FIM
+
+(opt7 <- estimando_dax(llike_suave_dax, pars))
+
+media_cond_mod7 <- opt7$media_cond
+var_cond_mod7 <- opt7$dp_cond^2
+var_incond_mod7 <- opt7$var_indcond
+
+resid_pad_mod7 <- (yt - media_cond_mod7)/sqrt(var_cond_mod7)
+resid_pad_mod7 <- resid_pad_mod7[-(1:50)]
+
+resid_pad_data <- data.frame(resid_pad = resid_pad_mod7, 
+                             time = seq_along(resid_pad_mod7))
+resid_pad_data <- resid_pad_data[-1, ]
+
+plot(resid_pad_mod7, type = 'l')
+plot(var_incond_mod7, type = 'l')
+
+mean(resid_pad_data$resid_pad)
+var(resid_pad_data$resid_pad)
+
+# Estimando e residuos - FIM
+
+# FAC e FACP - INICIO
+acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+
+acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+# FAC e FACP - FIM
+
+# QQplot e Histograma - INICIO
+ggplot(resid_pad_data, aes(sample = resid_pad)) + 
+  stat_qq() + 
+  geom_abline(slope = 1, intercept = 0) + 
+  ylim(-6,6) + 
+  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6))
+
+ggplot(resid_pad_data, aes(x = resid_pad)) + 
+  geom_histogram(aes(y =..density..), fill = "#0c4c8a") +
+  theme_minimal() +
+  labs(x = "Residuos padronizados", y = 'Densidade') + 
+  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
+  stat_function(fun = dnorm, args = list(0, 1), color = 'red')
+# QQplot e Histograma - FIM
+
+poder_pred(yt, media_cond_mod7, var_cond_mod7)$rmse
+cor(var_cond_mod7[-(1:50)], ((yt - media_cond_mod7)^2)[-(1:50)])^2
+
+# TH - INICIO
+
+Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
+Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
+
+shapiro.test(resid_pad_data$resid_pad)
+tseries::jarque.bera.test(resid_pad_data$resid_pad)
+nortest::ad.test(resid_pad_data$resid_pad)
+
+(dw <- sum(diff(yt - media_cond_mod7)^2)/sum((yt - media_cond_mod7)^2))
+moments::kurtosis(resid_pad_mod7)
+moments::skewness(resid_pad_mod7)
+
+# TH - FIM
+
+# Graficos de linha para esp_cond e var_cond - INICIO
+data <- data.frame(
+  yt = yt,
+  one_step_predict = media_cond_mod7,
+  var_incond = var_incond_mod7,
+  var_cond = var_cond_mod7,
+  time = 1:n
+)
+
+ggplot(data, aes(x = time, y = yt)) +
+  geom_line(size = 1L, colour = "#0c4c8a") +
+  geom_line(aes(y = one_step_predict), size = 1L, colour = "red") +
+  theme(axis.title.y = element_text(angle = 0)) +
+  labs(x = 'Tempo') 
+
+ggplot(data, aes(x = time, y = sqrt(var_cond))) +
+  labs(y = "Tempo", x = "Desvio Condicional") + 
+  geom_line(size = 1L, colour = "red") + 
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue")
+
+ggplot(data, aes(x = time, y = sqrt(var_incond))) +
+  labs(x = "Tempo", y = "Desvio Incondicional") + 
+  geom_line(size = 1L, colour = "red") + 
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+# Graficos de linha para esp_cond e var_cond - FIM
+
 # Resultado ---------------------------------------------------------------
 
 medidas <- function(modelo, nome){
@@ -1161,7 +1288,8 @@ resultado <- rbind(
   medidas(opt3, "opt3"),
   medidas(opt4, "opt4"),
   medidas(opt5, "opt5"),
-  medidas(opt6, "opt6")
+  medidas(opt6, "opt6"),
+  medidas(opt7$data, "opt7")
 )
 
 resultado
@@ -1174,11 +1302,16 @@ teste_lr(opt2, opt0)
 teste_lr(opt3, opt0)
 teste_lr(opt4, opt0)
 teste_lr(opt5, opt0)
+teste_lr(opt6, opt0)
+teste_lr(opt7, opt0)
 
 teste_lr(opt3, opt1)
 teste_lr(opt3, opt2)
 teste_lr(opt4, opt3)
 teste_lr(opt5, opt3)
+teste_lr(opt6, opt7$data)
+teste_lr(opt5, opt7$data)
+
 
 ## Poder preditivo
 poder_pred(yt, media_cond_mod1, var_cond_mod1)$rmse
@@ -1186,6 +1319,8 @@ poder_pred(yt, media_cond_mod2, var_cond_mod2)$rmse
 poder_pred(yt, media_cond_mod3, var_cond_mod3)$rmse
 poder_pred(yt, media_cond_mod4, var_cond_mod4)$rmse
 poder_pred(yt, media_cond_mod5, var_cond_mod5)$rmse
+poder_pred(yt, media_cond_mod5, var_cond_mod6)$rmse
+poder_pred(yt, media_cond_mod7, var_cond_mod7)$rmse
 
 
 ## Cor
@@ -1194,6 +1329,8 @@ cor(var_cond_mod2[-(1:50)], ((yt - media_cond_mod2)^2)[-(1:50)])^2
 cor(var_cond_mod3[-(1:50)], ((yt - media_cond_mod3)^2)[-(1:50)])^2
 cor(var_cond_mod4[-(1:50)], ((yt - media_cond_mod4)^2)[-(1:50)])^2
 cor(var_cond_mod5[-(1:50)], ((yt - media_cond_mod5)^2)[-(1:50)])^2
+cor(var_cond_mod6[-(1:50)], ((yt - media_cond_mod6)^2)[-(1:50)])^2
+cor(var_cond_mod7[-(1:50)], ((yt - media_cond_mod7)^2)[-(1:50)])^2
 
 
 

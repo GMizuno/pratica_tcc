@@ -660,13 +660,14 @@ ggplot(data, aes(x = time, y = sqrt(var_incond))) +
 
 # Modelo 04 ---------------------------------------------------------------
 
+# Modelo Triangulo |>
 ggplot(CAC, aes(x = Index, y = cac)) +
   geom_line(size = 1L, colour = "#112446") +
   labs(x = "Tempo", y = "Retorno", title = "CAC com as Restrições") +
   theme_minimal() + 
   geom_vline(xintercept = c(crises[1], as.Date("2008-09-15"), 
-                            as.Date("2008-09-22")), 
-             colour = c('red', "grey", "yellow"), size = 1.5,
+                            as.Date("2008-09-22"), as.Date("2009-04-07")), 
+             colour = c('red', "grey", "yellow", "yellow"), size = 1.5,
              linetype = "dashed")
 
 # Ordens e Parametros - INICIO
@@ -828,6 +829,17 @@ ggplot(data, aes(x = time, y = sqrt(var_incond))) +
 
 # Modelo 05 ---------------------------------------------------------------
 
+ggplot(CAC, aes(x = Index, y = cac)) +
+  geom_line(size = 1L, colour = "#112446") +
+  labs(x = "Tempo", y = "Retorno", title = "CAC com as Restrições") +
+  theme_minimal() + 
+  geom_vline(xintercept = c(crises[1], as.Date("2008-09-15"), 
+                            as.Date("2008-09-22"), 
+                            as.Date("2008-12-18"), 
+                            as.Date("2009-04-07")), 
+             colour = c('red', "grey", "yellow", 'red', 'red'), size = 1.5,
+             linetype = "dashed")
+
 # Ordens e Parametros - INICIO
 pars <- list(
   psi2 = log(.15),
@@ -843,12 +855,12 @@ kmed <- length(pars$deltaMedia)
 kvar <- length(pars$deltaVar)
 n <- length(yt) # Tamanho da serie
 delta_ind <- 2
-t_ast <- 1206
+t_ast <- 1207
 t_til <- 1212
 
 dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
 dummy2 <- as.matrix(dummy_on_off(n, c(1, 899, 1212, 1271, 1351),
-                                 c(898, 1206, 1270, 1350, n)))
+                                 c(898, 1207, 1270, 1350, n)))
 
 # Estimando e residuos - INICIO
 
@@ -862,7 +874,7 @@ media_cond_mod5 <- esp_cond_sauve(
   alpha_order = alpha_order,
   beta_order = beta_order,
   delta_ind = 2,
-  t_ast = 1206,
+  t_ast = 1207,
   t_til = 1212,
   kmed = kmed,
   kvar = kvar,
@@ -878,7 +890,7 @@ var_cond_mod5 <- var_cond_sauve(
   alpha_order = alpha_order,
   beta_order = beta_order,
   delta_ind = 2,
-  t_ast = 1206,
+  t_ast = 1207,
   t_til = 1212,
   kmed = kmed,
   kvar = kvar,
@@ -893,7 +905,7 @@ var_incond_mod5 <- var_indcond_sauve(
   alpha_order = alpha_order,
   beta_order = beta_order,
   delta_ind = 2,
-  t_ast = 1206,
+  t_ast = 1207,
   t_til = 1212,
   kmed = kmed,
   kvar = kvar
@@ -988,8 +1000,8 @@ ggplot(CAC, aes(x = Index, y = cac)) +
   labs(x = "Tempo", y = "Retorno", title = "CAC com as Restrições") +
   theme_minimal() + 
   geom_vline(xintercept = c(crises[1], as.Date("2008-09-15"), 
-                            as.Date("2008-09-22")), 
-             colour = c('red', "grey", "yellow"), size = 1.5,
+                            as.Date("2008-09-22"), as.Date("2009-06-19")), 
+             colour = c('red', "grey", "yellow", "yellow"), size = 1.5,
              linetype = "dashed")
 
 # Ordens e Parametros - INICIO
@@ -1151,6 +1163,17 @@ ggplot(data, aes(x = time, y = sqrt(var_incond))) +
 
 # Modelo 07 ---------------------------------------------------------------
 
+ggplot(CAC, aes(x = Index, y = cac)) +
+  geom_line(size = 1L, colour = "#112446") +
+  labs(x = "Tempo", y = "Retorno", title = "CAC com as Restrições") +
+  theme_minimal() + 
+  geom_vline(xintercept = c(crises[1], as.Date("2008-09-15"), 
+                            as.Date("2008-09-22"), 
+                            as.Date("2008-12-18"), 
+                            as.Date("2009-06-19")), 
+             colour = c('red', "grey", "yellow", 'red', 'red'), size = 1.5,
+             linetype = "dashed")
+
 # Ordens e Parametros - INICIO
 pars <- list(
   psi2 = log(.15),
@@ -1171,7 +1194,7 @@ t_til <- 1212
 
 dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
 dummy2 <- as.matrix(dummy_on_off(n, c(1, 899, 1212, 1271, 1401),
-                                 c(898, 1206, 1270, 1400, n)))
+                                 c(898, 1207, 1270, 1400, n)))
 
 # Estimando e residuos - INICIO
 
@@ -1460,6 +1483,17 @@ ggplot(data, aes(x = time, y = sqrt(var_incond))) +
 
 # Modelo 08 ---------------------------------------------------------------
 
+ggplot(CAC, aes(x = Index, y = cac)) +
+  geom_line(size = 1L, colour = "#112446") +
+  labs(x = "Tempo", y = "Retorno", title = "CAC com as Restrições") +
+  theme_minimal() + 
+  geom_vline(xintercept = c(crises[1], as.Date("2008-09-15"), 
+                            as.Date("2008-09-22"), 
+                            as.Date("2008-12-18"), 
+                            as.Date("2009-06-19")), 
+             colour = c('red', "grey", "yellow", 'red', 'red'), size = 1.5,
+             linetype = "dashed")
+
 # Ordens e Parametros - INICIO
 pars <- list(
   psi2 = log(.15),
@@ -1480,7 +1514,9 @@ t_til <- 1212
 
 dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
 dummy2 <- as.matrix(dummy_on_off(n, c(1, 899, 1212, 1271, 1351),
-                                 c(898, 1206, 1270, 1350, n)))
+                                 c(898, 1207, 1270, 1350, n)))
+dummy2 <- as.matrix(dummy_on_off(n, c(1, 899, 1212, 1271, 1351),
+                                 c(898, 1207, 1270, 1350, n)))
 
 # Estimando e residuos - INICIO
 
