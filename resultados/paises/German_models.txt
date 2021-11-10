@@ -6,14 +6,16 @@ Lehman Brothers -> 2008-09-15 => 1202
 Intervenção 1 -> 2008-09-20 => 1207 (Intervenção BC)
 Intervenção 2 -> 2011-03-31 => ???? ---> Muito longe do range dos dados
 Intervenção 3 -> 2008-12-11 => 1265 (Data Driven)
-Intervenção 4 -> 2009-05-26 => 1370 (Data Driven)
+Intervenção 4 -> 2009-05-26 => 1375 (Data Driven)
 
 Modelo 01 - 3 degraus (Crise I e Intervenção 1);
 Modelo 02 - 3 degraus (Crise I e Lehman Brothers);
 Modelo 03 - 4 degraus (Crise I, Lehman Brothers e Intervenção 1);
-Modelo 04 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1 e Intervenção 3);
-Modelo 05 - 6 degraus (Crise I, Lehman Brothers, Intervenção 1, Intervenção 3 e Intervenção 4);
-Modelo 06 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1 e Intervenção 4), mas com int suave entre Intervenção 1 e Intervenção 4 	
-Modelo 07 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1 e Intervenção 4), mas com int suave entre Intervenção 1 e Intervenção 4 e beta5 = beta2 	
+Modelo 04 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1 e Intervenção 3), mas com int suave entre Lehman Brothers e Intervenção 1	
+Modelo 05 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1 e Intervenção 3);
+Modelo 06 - 6 degraus (Crise I, Lehman Brothers, Intervenção 1, Intervenção 3 e Intervenção 4);
+Modelo 07 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1, Intervenção 3 e Intervenção 4), mas com int suave entre Intervenção 1 e Intervenção 4 	
+Modelo 08 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1, Intervenção 3 e Intervenção 4), mas com int suave entre Intervenção 1 e Intervenção 4 e beta5 = beta2 
+Modelo 09 - 6 degraus (Crise I, Lehman Brothers, Intervenção 1, Intervenção 3 e Intervenção 4), com beta5 = beta2 		
 
-Melhor Modelo => Modelo 05
+Melhor Modelo => Modelo 06

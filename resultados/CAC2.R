@@ -1000,8 +1000,10 @@ ggplot(CAC, aes(x = Index, y = cac)) +
   labs(x = "Tempo", y = "Retorno", title = "CAC com as Restrições") +
   theme_minimal() + 
   geom_vline(xintercept = c(crises[1], as.Date("2008-09-15"), 
-                            as.Date("2008-09-22"), as.Date("2009-06-19")), 
-             colour = c('red', "grey", "yellow", "yellow"), size = 1.5,
+                            as.Date("2008-09-22"), 
+                            as.Date("2008-12-18"), 
+                            as.Date("2009-04-07")), 
+             colour = c('red', "grey", "yellow", 'red', 'red'), size = 1.5,
              linetype = "dashed")
 
 # Ordens e Parametros - INICIO
@@ -1018,13 +1020,13 @@ beta_order <- length(pars$psi3)
 kmed <- length(pars$deltaMedia)
 kvar <- length(pars$deltaVar)
 n <- length(yt) # Tamanho da serie
-delta_ind = c(2, 3)
-t_ast = c(1206, 1212)
-t_til = c(1212, 1400)
+delta_ind <- 2
+t_ast <- 1207
+t_til <- 1212
 
 dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
-dummy2 <- as.matrix(dummy_on_off(n, c(1, 899, 1212, 1400),
-                                 c(898, 1206, 1212, n)))
+dummy2 <- as.matrix(dummy_on_off(n, c(1, 899, 1212, 1271),
+                                 c(898, 1207, 1270, n)))
 
 # Estimando e residuos - INICIO
 
@@ -1037,9 +1039,9 @@ media_cond_mod6 <- esp_cond_sauve(
   dummy2 = dummy2,
   alpha_order = alpha_order,
   beta_order = beta_order,
-  delta_ind = c(2, 3),
-  t_ast = c(1206, 1212),
-  t_til = c(1212, 1400),
+  delta_ind = 2,
+  t_ast = 1207,
+  t_til = 1212,
   kmed = kmed,
   kvar = kvar,
   n = n
@@ -1053,9 +1055,9 @@ var_cond_mod6 <- var_cond_sauve(
   Varyt = Varyt,
   alpha_order = alpha_order,
   beta_order = beta_order,
-  delta_ind = c(2, 3),
-  t_ast = c(1206, 1212),
-  t_til = c(1212, 1350),
+  delta_ind = 2,
+  t_ast = 1207,
+  t_til = 1212,
   kmed = kmed,
   kvar = kvar,
   n = n
@@ -1068,9 +1070,9 @@ var_incond_mod6 <- var_indcond_sauve(
   dummy2 = dummy2,
   alpha_order = alpha_order,
   beta_order = beta_order,
-  delta_ind = c(2, 3),
-  t_ast = c(1206, 1212),
-  t_til = c(1212, 1400),
+  delta_ind = 2,
+  t_ast = 1207,
+  t_til = 1212,
   kmed = kmed,
   kvar = kvar
 )
@@ -1159,7 +1161,6 @@ ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
 # Graficos de linha para esp_cond e var_cond - FIM
-
 
 # Modelo 07 ---------------------------------------------------------------
 
@@ -1515,8 +1516,6 @@ t_til <- 1212
 dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
 dummy2 <- as.matrix(dummy_on_off(n, c(1, 899, 1212, 1271, 1351),
                                  c(898, 1207, 1270, 1350, n)))
-dummy2 <- as.matrix(dummy_on_off(n, c(1, 899, 1212, 1271, 1351),
-                                 c(898, 1207, 1270, 1350, n)))
 
 # Estimando e residuos - INICIO
 
@@ -1609,6 +1608,17 @@ ggplot(data, aes(x = time, y = sqrt(var_incond))) +
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 09 ---------------------------------------------------------------
+
+ggplot(CAC, aes(x = Index, y = cac)) +
+  geom_line(size = 1L, colour = "#112446") +
+  labs(x = "Tempo", y = "Retorno", title = "CAC com as Restrições") +
+  theme_minimal() + 
+  geom_vline(xintercept = c(crises[1], as.Date("2008-09-15"), 
+                            as.Date("2008-09-22"), 
+                            as.Date("2009-04-07"), 
+                            as.Date("2009-06-19")), 
+             colour = c('red', "grey", "yellow", 'red', 'red'), size = 1.5,
+             linetype = "dashed")
 
 # Ordens e Parametros - INICIO
 pars <- list(
@@ -1716,7 +1726,7 @@ ggplot(data, aes(x = time, y = sqrt(var_cond))) +
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5) 
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Resultado ---------------------------------------------------------------
@@ -1743,6 +1753,8 @@ resultado %>% arrange(BIC)
 
 ## Teste LR
 teste_lr(opt2, opt1)
+teste_lr(opt5, opt6)
+
 
 ## Poder preditivo
 poder_pred(yt, media_cond_mod1, var_cond_mod1)$rmse
