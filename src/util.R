@@ -99,10 +99,10 @@ chute_inicial <- function(delta1, chute){
 
 # Teste LR - INICIO
 teste_lr <- function(model_com, model_red, alpha = .05){
-  p <- length(model_com) - 5 # Tirando o q nao eh parametro
-  q <- length(model_red) - 5 # Tirando o q nao eh parametro
+  p <- model_com$num_par # Tirando o q nao eh parametro
+  q <- model_red$num_par # Tirando o q nao eh parametro
   
-  lambda <- -2*(model_red$llike - model_com$llike)
+  lambda <- 2*(model_com$llike - model_red$llike)
   pvalue <- pchisq(lambda, p - q, lower.tail = FALSE)
   return(data.frame(lambda = lambda, pvalue = pvalue, df = p - q))
 }

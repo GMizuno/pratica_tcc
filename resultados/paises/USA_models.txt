@@ -4,11 +4,18 @@ Crise I -> 2007-07-01 => 880
 Crise F -> 2008-11-28 => 1237
 Lehman Brothers -> 2008-09-15 => 1184
 
-Intervenção 1 -> 2008-09-19 => 1188 (Intervenção BC)
-Intervenção 2 -> 2008-10-08 => 1201 (Intervenção BC)
+Intervenção 1 -> 2008-09-19 => 1188 (Intervenção Agência Reguladora)
+Intervenção 2 -> 2008-10-08 => 1201 (Intervenção Agência Reguladora)
+
+Modelo 00 - AR(1)-GARCH(1,1);
 
 Modelo 01 -
+
 Modelo 02 -
+
 Modelo 03 -
+
 Modelo 04 -
+
 Modelo 05 -
+

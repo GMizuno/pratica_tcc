@@ -189,7 +189,8 @@ ggplot(data, aes(x = time, y = yt)) +
 ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(x = "Tempo", y = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue")
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+ggsave(r"{graficos\German\desvio_cond_modelo0.png}", width = 6, height = 3.5)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 01 ---------------------------------------------------------------
@@ -339,12 +340,14 @@ ggplot(data, aes(x = time, y = yt)) +
 ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue")
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+ggsave(r"{graficos\German\desvio_cond_modelo1.png}", width = 6, height = 3.5)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+ggsave(r"{graficos\German\desvio_incond_modelo1.png}", width = 6, height = 3.5)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 02 ---------------------------------------------------------------
@@ -493,12 +496,14 @@ ggplot(data, aes(x = time, y = yt)) +
 ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue")
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+ggsave(r"{graficos\German\desvio_cond_modelo2.png}", width = 6, height = 3.5)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+ggsave(r"{graficos\German\desvio_incond_modelo2.png}", width = 6, height = 3.5)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 03 ---------------------------------------------------------------
@@ -600,6 +605,10 @@ poder_pred(yt, media_cond_mod3, var_cond_mod3)$rmse
 cor(var_cond_mod3[-(1:50)], ((yt - media_cond_mod3)^2)[-(1:50)])^2
 # Poder preditivo - FIM
 
+Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
+Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
+(dw <- sum(diff(yt - media_cond_mod3)^2)/sum((yt - media_cond_mod3)^2))
+
 # QQplot e Histograma - INICIO
 ggplot(resid_pad_data, aes(sample = resid_pad)) + 
   stat_qq() + 
@@ -617,14 +626,10 @@ ggplot(resid_pad_data, aes(x = resid_pad)) +
 
 # TH - INICIO
 
-Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
-Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
-
 shapiro.test(resid_pad_data$resid_pad)
 tseries::jarque.bera.test(resid_pad_data$resid_pad)
 nortest::ad.test(resid_pad_data$resid_pad)
 
-(dw <- sum(diff(yt - media_cond_mod3)^2)/sum((yt - media_cond_mod3)^2))
 moments::kurtosis(resid_pad_mod3)
 moments::skewness(resid_pad_mod3)
 
@@ -648,13 +653,15 @@ ggplot(data, aes(x = time, y = yt)) +
 ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue")
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+ggsave(r"{graficos\German\desvio_cond_modelo3.png}", width = 6, height = 3.5)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5) +
+  geom_vline(xintercept = 1265)
+ggsave(r"{graficos\German\desvio_incond_modelo3.png}", width = 6, height = 3.5)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 04 ---------------------------------------------------------------
@@ -817,13 +824,14 @@ ggplot(data, aes(x = time, y = yt)) +
 ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue")
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+ggsave(r"{graficos\German\desvio_cond_modelo4.png}", width = 6, height = 3.5)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5) + xlim(1100, 1500)
-
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+ggsave(r"{graficos\German\desvio_incond_modelo4.png}", width = 6, height = 3.5)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 05 ---------------------------------------------------------------
@@ -833,8 +841,8 @@ ggplot(DAX, aes(x = Index, y = dax)) +
   labs(x = "Tempo", y = "Retorno", title = "DAX com as Restrições") +
   theme_minimal() + 
   geom_vline(xintercept = c(crises[1], 
-                            as.Date(c("2008-09-15", "2008-09-20", "2008-12-11"))), 
-             colour = c('red', 'red', 'red', 'red'), size = 1.5,
+                            as.Date(c("2008-09-15", "2008-09-20", "2008-12-11", "2009-05-26"))), 
+             colour = c('red', 'red', 'red', 'red', 'red'), size = 1.5,
              linetype = "dashed")
 
 # Ordens e Parametros - INICIO
@@ -843,7 +851,7 @@ pars <- list(
   psi3 = log(.84),
   ar = .2,
   deltaMedia = 0.0,
-  deltaVar = c(-3, -3, -3, -3, -3)
+  deltaVar = c(-3, -3, -3, -3)
 )
 
 alpha_order <- length(pars$psi2)
@@ -851,49 +859,60 @@ beta_order <- length(pars$psi3)
 kmed <- length(pars$deltaMedia)
 kvar <- length(pars$deltaVar)
 n <- length(yt) # Tamanho da serie
-
+delta_ind <- 2
+t_ast <- 1202
+t_til <- 1208
 
 dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
-dummy2 <- as.matrix(dummy_on_off(n, c(1, 896, 1203, 1208, 1266),
-                                 c(895, 1202, 1207, 1265, n)))
+dummy2 <- as.matrix(dummy_on_off(n, c(1, 896, 1208, 1266),
+                                 c(895, 1202, 1265, n)))
 # Ordens e Parametros - FIM
 
 # Estimando e residuos - INICIO
 
-(opt5 <- estimando(llike_model_garch, pars))
+(opt5 <- estimando(llike_suave, pars))
 
-media_cond_mod5 <- esp_cond_model(
+media_cond_mod5 <- esp_cond_sauve(
   data = yt,
   est = opt5,
   dummy1 = dummy1,
   dummy2 = dummy2,
   alpha_order = alpha_order,
   beta_order = beta_order,
+  delta_ind = 2,
+  t_ast = 1202,
+  t_til = 1208,
   kmed = kmed,
   kvar = kvar,
   n = n
 )
 
-var_cond_mod5 <- var_cond_model(
+var_cond_mod5 <- var_cond_sauve(
   data = yt,
   est = opt5,
   dummy1 = dummy1,
   dummy2 = dummy2,
+  alpha_order = alpha_order,
+  beta_order = beta_order,
+  delta_ind = 2,
   Varyt = Varyt,
-  alpha_order = alpha_order,
-  beta_order = beta_order,
+  t_ast = 1202,
+  t_til = 1208,
   kmed = kmed,
   kvar = kvar,
   n = n
 )
 
-var_incond_mod5 <- var_indcond(
+var_incond_mod5 <- var_indcond_sauve(
   data = yt,
   est = opt5,
   dummy1 = dummy1,
   dummy2 = dummy2,
   alpha_order = alpha_order,
   beta_order = beta_order,
+  delta_ind = 2,
+  t_ast = 1202,
+  t_til = 1208,
   kmed = kmed,
   kvar = kvar
 )
@@ -974,14 +993,14 @@ ggplot(data, aes(x = time, y = yt)) +
 ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue")
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+ggsave(r"{graficos\German\desvio_cond_modelo5.png}", width = 6, height = 3.5)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5) +
-  xlim(1100, 1600) +
-  geom_vline(xintercept = c(1265, 1370))
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+ggsave(r"{graficos\German\desvio_incond_modelo5.png}", width = 6, height = 3.5)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 06 ---------------------------------------------------------------
@@ -991,11 +1010,9 @@ ggplot(DAX, aes(x = Index, y = dax)) +
   labs(x = "Tempo", y = "Retorno", title = "DAX com as Restrições") +
   theme_minimal() + 
   geom_vline(xintercept = c(crises[1], 
-                            as.Date(c("2008-09-15", 
-                                      "2008-09-20", 
-                                      "2008-12-11", 
-                                      "2009-05-26"))), 
-             colour = 'red', size = 1.5,
+                            as.Date(c("2008-09-15", "2008-09-20", 
+                                      "2008-12-11", "2009-05-26"))), 
+             colour = c('red', 'red', 'red', 'red', 'red'), size = 1.5,
              linetype = "dashed")
 
 # Ordens e Parametros - INICIO
@@ -1004,7 +1021,7 @@ pars <- list(
   psi3 = log(.84),
   ar = .2,
   deltaMedia = 0.0,
-  deltaVar = c(-3, -3, -3, -3, -3, -3)
+  deltaVar = c(-3, -3, -3, -3, -3)
 )
 
 alpha_order <- length(pars$psi2)
@@ -1012,48 +1029,61 @@ beta_order <- length(pars$psi3)
 kmed <- length(pars$deltaMedia)
 kvar <- length(pars$deltaVar)
 n <- length(yt) # Tamanho da serie
+delta_ind <- 2
+t_ast <- 1202
+t_til <- 1208
 
 dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
-dummy2 <- as.matrix(dummy_on_off(n, c(1, 896, 1203, 1208, 1266, 1376),
-                                 c(895, 1202, 1207, 1265, 1375, n)))
+dummy2 <- as.matrix(dummy_on_off(n, c(1, 896, 1208, 1266, 1376),
+                                 c(895, 1202, 1265, 1375, n)))
+
 # Ordens e Parametros - FIM
 
 # Estimando e residuos - INICIO
 
-(opt6 <- estimando(llike_model_garch, pars))
+(opt6 <- estimando(llike_suave, pars))
 
-media_cond_mod6 <- esp_cond_model(
+media_cond_mod6 <- esp_cond_sauve(
   data = yt,
   est = opt6,
   dummy1 = dummy1,
   dummy2 = dummy2,
   alpha_order = alpha_order,
   beta_order = beta_order,
+  delta_ind = 2,
+  t_ast = 1202,
+  t_til = 1208,
   kmed = kmed,
   kvar = kvar,
   n = n
 )
 
-var_cond_mod6 <- var_cond_model(
+var_cond_mod6 <- var_cond_sauve(
   data = yt,
   est = opt6,
   dummy1 = dummy1,
   dummy2 = dummy2,
+  alpha_order = alpha_order,
+  beta_order = beta_order,
+  delta_ind = 2,
   Varyt = Varyt,
-  alpha_order = alpha_order,
-  beta_order = beta_order,
+  t_ast = 1202,
+  t_til = 1208,
   kmed = kmed,
   kvar = kvar,
   n = n
 )
 
-var_incond_mod6 <- var_indcond(
+var_incond_mod6 <- var_indcond_sauve(
   data = yt,
   est = opt6,
   dummy1 = dummy1,
   dummy2 = dummy2,
   alpha_order = alpha_order,
   beta_order = beta_order,
+  delta_ind = 2,
+  t_ast = 1202,
+  t_til = 1208,
   kmed = kmed,
   kvar = kvar
 )
@@ -1134,31 +1164,18 @@ ggplot(data, aes(x = time, y = yt)) +
 ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue")
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+ggsave(r"{graficos\German\desvio_cond_modelo6.png}", width = 6, height = 3.5)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5) +
-  xlim(1100, 1600) +
-  geom_vline(xintercept = c(1265, 1375))
-
-
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+ggsave(r"{graficos\German\desvio_incond_modelo6.png}", width = 6, height = 3.5)
 # Graficos de linha para esp_cond e var_cond - FIM
 
-# Modelo 07 ---------------------------------------------------------------
 
-ggplot(DAX, aes(x = Index, y = dax)) +
-  geom_line(size = 1L, colour = "#112446") +
-  labs(x = "Tempo", y = "Retorno", title = "DAX com as Restrições") +
-  theme_minimal() + 
-  geom_vline(xintercept = c(crises[1], 
-                            as.Date(c("2008-09-15", 
-                                      "2008-09-20", 
-                                      "2008-12-11", 
-                                      "2009-05-26"))), 
-             colour = c('red', 'red', 'red', 'grey', 'yellow'), size = 1.5,
-             linetype = "dashed")
+# Modelo 07 ---------------------------------------------------------------
 
 # Ordens e Parametros - INICIO
 pars <- list(
@@ -1166,7 +1183,7 @@ pars <- list(
   psi3 = log(.84),
   ar = .2,
   deltaMedia = 0.0,
-  deltaVar = c(-3, -3, -3, -3, -3)
+  deltaVar = c(-3, -3, -3, -3)
 )
 
 alpha_order <- length(pars$psi2)
@@ -1174,18 +1191,17 @@ beta_order <- length(pars$psi3)
 kmed <- length(pars$deltaMedia)
 kvar <- length(pars$deltaVar)
 n <- length(yt) # Tamanho da serie
-delta_ind <- 4
-t_ast <- 1265
-t_til <- 1376
+delta_ind <- c(2, 3)
+t_ast <- c(1202, 1208)
+t_til <- c(1208, 1376)
 
 dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
-dummy2 <- as.matrix(dummy_on_off(n, c(1, 896, 1203, 1208, 1376),
-                                 c(895, 1202, 1207, 1265, n)))
-# Ordens e Parametros - FIM
+dummy2 <- as.matrix(dummy_on_off(n, c(1, 896, 1208, 1376),
+                                 c(895, 1202, 1208, n)))
 
 # Estimando e residuos - INICIO
 
-(opt7 <- estimando(llike_model_garch, pars))
+(opt7 <- estimando(llike_suave, pars))
 
 media_cond_mod7 <- esp_cond_sauve(
   data = yt,
@@ -1194,9 +1210,9 @@ media_cond_mod7 <- esp_cond_sauve(
   dummy2 = dummy2,
   alpha_order = alpha_order,
   beta_order = beta_order,
-  delta_ind = 4,
-  t_ast = 1265,
-  t_til = 1376,
+  delta_ind = c(2, 3),
+  t_ast = c(1202, 1208),
+  t_til = c(1208, 1376),
   kmed = kmed,
   kvar = kvar,
   n = n
@@ -1209,10 +1225,10 @@ var_cond_mod7 <- var_cond_sauve(
   dummy2 = dummy2,
   alpha_order = alpha_order,
   beta_order = beta_order,
-  delta_ind = 4,
+  delta_ind = c(2, 3),
   Varyt = Varyt,
-  t_ast = 1265,
-  t_til = 1376,
+  t_ast = c(1202, 1208),
+  t_til = c(1208, 1376),
   kmed = kmed,
   kvar = kvar,
   n = n
@@ -1225,9 +1241,9 @@ var_incond_mod7 <- var_indcond_sauve(
   dummy2 = dummy2,
   alpha_order = alpha_order,
   beta_order = beta_order,
-  delta_ind = 4,
-  t_ast = 1265,
-  t_til = 1376,
+  delta_ind = c(2, 3),
+  t_ast = c(1202, 1208),
+  t_til = c(1208, 1376),
   kmed = kmed,
   kvar = kvar
 )
@@ -1308,28 +1324,26 @@ ggplot(data, aes(x = time, y = yt)) +
 ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue")
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+ggsave(r"{graficos\German\desvio_cond_modelo7.png}", width = 6, height = 3.5)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-
+ggsave(r"{graficos\German\desvio_incond_modelo7.png}", width = 6, height = 3.5)
 # Graficos de linha para esp_cond e var_cond - FIM
 
-# Modelo 08 ---------------------------------------------------------------
+# Modelo 08 -------------------------------------------------------------
 
-ggplot(DAX, aes(x = Index, y = dax)) +
+ggplot(DAX, aes(x = Index, y = abs(dax))) +
   geom_line(size = 1L, colour = "#112446") +
   labs(x = "Tempo", y = "Retorno", title = "DAX com as Restrições") +
   theme_minimal() + 
   geom_vline(xintercept = c(crises[1], 
-                            as.Date(c("2008-09-15", 
-                                      "2008-09-20", 
-                                      "2008-12-11", 
-                                      "2009-05-26"))), 
-             colour = c('red', 'red', 'red', 'grey', 'yellow'), size = 1.5,
-             linetype = "dashed")
+                            as.Date(c("2008-09-15", "2008-09-20", "2008-12-11", "2009-05-26"))), 
+             colour = c('red', 'red', 'red', 'red', 'red'), size = 1.5,
+             linetype = "dashed") + xlim(as.Date("2004-01-15"), as.Date("2008-09-15"))
 
 # Ordens e Parametros - INICIO
 pars <- list(
@@ -1345,20 +1359,63 @@ beta_order <- length(pars$psi3)
 kmed <- length(pars$deltaMedia)
 kvar <- length(pars$deltaVar)
 n <- length(yt) # Tamanho da serie
-delta_ind <- 4
-t_ast <- 1265
-t_til <- 1376
+delta_ind <- 1
+t_ast <- 1202
+t_til <- 1208
 
 dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
-dummy2 <- as.matrix(dummy_on_off(n, c(1, 896, 1203, 1208, 1376),
-                                 c(895, 1202, 1207, 1265, n)))
+dummy2 <- as.matrix(dummy_on_off(n, c(1,  1208, 1266, 1376),
+                                 c(1202, 1265, 1375, n)))
 # Ordens e Parametros - FIM
 
-(opt8 <- estimando_dax(llike_suave_dax, pars))
+# Estimando e residuos - INICIO
 
-media_cond_mod8 <- opt8$media_cond
-var_cond_mod8 <- opt8$dp_cond^2
-var_incond_mod8 <- opt8$var_indcond
+(opt8 <- estimando(llike_suave, pars))
+
+media_cond_mod8 <- esp_cond_sauve(
+  data = yt,
+  est = opt8,
+  dummy1 = dummy1,
+  dummy2 = dummy2,
+  alpha_order = alpha_order,
+  beta_order = beta_order,
+  delta_ind = 1,
+  t_ast = 1202,
+  t_til = 1208,
+  kmed = kmed,
+  kvar = kvar,
+  n = n
+)
+
+var_cond_mod8 <- var_cond_sauve(
+  data = yt,
+  est = opt8,
+  dummy1 = dummy1,
+  dummy2 = dummy2,
+  alpha_order = alpha_order,
+  beta_order = beta_order,
+  delta_ind = 1,
+  Varyt = Varyt,
+  t_ast = 1202,
+  t_til = 1208,
+  kmed = kmed,
+  kvar = kvar,
+  n = n
+)
+
+var_incond_mod8 <- var_indcond_sauve(
+  data = yt,
+  est = opt8,
+  dummy1 = dummy1,
+  dummy2 = dummy2,
+  alpha_order = alpha_order,
+  beta_order = beta_order,
+  delta_ind = 1,
+  t_ast = 1202,
+  t_til = 1208,
+  kmed = kmed,
+  kvar = kvar
+)
 
 resid_pad_mod8 <- (yt - media_cond_mod8)/sqrt(var_cond_mod8)
 resid_pad_mod8 <- resid_pad_mod8[-(1:50)]
@@ -1383,6 +1440,11 @@ acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 # FAC e FACP - FIM
 
+# Poder preditivo - INICIO
+poder_pred(yt, media_cond_mod8, var_cond_mod8)$rmse
+cor(var_cond_mod8[-(1:50)], ((yt - media_cond_mod8)^2)[-(1:50)])^2
+# Poder preditivo - FIM
+
 # QQplot e Histograma - INICIO
 ggplot(resid_pad_data, aes(sample = resid_pad)) + 
   stat_qq() + 
@@ -1397,9 +1459,6 @@ ggplot(resid_pad_data, aes(x = resid_pad)) +
   scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
   stat_function(fun = dnorm, args = list(0, 1), color = 'red')
 # QQplot e Histograma - FIM
-
-poder_pred(yt, media_cond_mod8, var_cond_mod8)$rmse
-cor(var_cond_mod8[-(1:50)], ((yt - media_cond_mod8)^2)[-(1:50)])^2
 
 # TH - INICIO
 
@@ -1434,27 +1493,17 @@ ggplot(data, aes(x = time, y = yt)) +
 ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue")
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+ggsave(r"{graficos\German\desvio_cond_modelo6_1.png}", width = 6, height = 3.5)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+ggsave(r"{graficos\German\desvio_incond_modelo6_1.png}", width = 6, height = 3.5)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 09 ---------------------------------------------------------------
-
-ggplot(DAX, aes(x = Index, y = dax)) +
-  geom_line(size = 1L, colour = "#112446") +
-  labs(x = "Tempo", y = "Retorno", title = "DAX com as Restrições") +
-  theme_minimal() + 
-  geom_vline(xintercept = c(crises[1], 
-                            as.Date(c("2008-09-15", 
-                                      "2008-09-20", 
-                                      "2008-12-11", 
-                                      "2009-05-26"))), 
-             colour = 'red', size = 1.5,
-             linetype = "dashed")
 
 # Ordens e Parametros - INICIO
 pars <- list(
@@ -1462,7 +1511,7 @@ pars <- list(
   psi3 = log(.84),
   ar = .2,
   deltaMedia = 0.0,
-  deltaVar = c(-3, -3, -3, -3, -3)
+  deltaVar = c(-3, -3, -3, -3)
 )
 
 alpha_order <- length(pars$psi2)
@@ -1470,15 +1519,18 @@ beta_order <- length(pars$psi3)
 kmed <- length(pars$deltaMedia)
 kvar <- length(pars$deltaVar)
 n <- length(yt) # Tamanho da serie
+delta_ind <- 2
+t_ast <- 1202
+t_til <- 1208
 
 dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
-dummy2 <- as.matrix(dummy_on_off(n, c(1, 896, 1203, 1208, 1266, 1376),
-                                 c(895, 1202, 1207, 1265, 1375, n)))
+dummy2 <- as.matrix(dummy_on_off(n, c(1, 896, 1208, 1266, 1376),
+                                 c(895, 1202, 1265, 1375, n)))
 # Ordens e Parametros - FIM
 
 # Estimando e residuos - INICIO
 
-(opt9 <- estimando_dax(llike_dax_mod, pars))
+opt9 <- estimando_dax(llike_suave_dax, pars)
 
 media_cond_mod9 <- opt9$media_cond
 var_cond_mod9 <- opt9$dp_cond^2
@@ -1507,6 +1559,11 @@ acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 # FAC e FACP - FIM
 
+# Poder preditivo - INICIO
+poder_pred(yt, media_cond_mod9, var_cond_mod9)$rmse
+cor(var_cond_mod9[-(1:50)], ((yt - media_cond_mod9)^2)[-(1:50)])^2
+# Poder preditivo - FIM
+
 # QQplot e Histograma - INICIO
 ggplot(resid_pad_data, aes(sample = resid_pad)) + 
   stat_qq() + 
@@ -1521,9 +1578,6 @@ ggplot(resid_pad_data, aes(x = resid_pad)) +
   scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
   stat_function(fun = dnorm, args = list(0, 1), color = 'red')
 # QQplot e Histograma - FIM
-
-poder_pred(yt, media_cond_mod9, var_cond_mod9)$rmse
-cor(var_cond_mod9[-(1:50)], ((yt - media_cond_mod9)^2)[-(1:50)])^2
 
 # TH - INICIO
 
@@ -1558,18 +1612,54 @@ ggplot(data, aes(x = time, y = yt)) +
 ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue")
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+ggsave(r"{graficos\German\desvio_cond_modelo8.png}", width = 6, height = 3.5)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+ggsave(r"{graficos\German\desvio_incond_modelo8.png}", width = 6, height = 3.5)
 # Graficos de linha para esp_cond e var_cond - FIM
+
+
+# Ajuste Fino - Modelo 06 -------------------------------------------------
+
+# Ordens e Parametros - INICIO
+pars <- list(
+  psi2 = log(c(.05)),
+  psi3 = log(c(.45, .45)),
+  ar = .2,
+  deltaMedia = 0.0,
+  deltaVar = c(-3, -3, -3, -3, -3)
+)
+
+alpha_order <- length(pars$psi2)
+beta_order <- length(pars$psi3)
+kmed <- length(pars$deltaMedia)
+kvar <- length(pars$deltaVar)
+n <- length(yt) # Tamanho da serie
+delta_ind <- 2
+t_ast <- 1202
+t_til <- 1208
+
+dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
+dummy2 <- as.matrix(dummy_on_off(n, c(1, 896, 1208, 1266, 1376),
+                                 c(895, 1202, 1265, 1375, n)))
+
+# Ordens e Parametros - FIM
+
+# Estimando e residuos - INICIO
+
+(opt6_1 <- estimando(llike_suave, pars))
+
+#
 
 # Resultado ---------------------------------------------------------------
 
 medidas <- function(modelo, nome){
-  modelo %>% select(llike, AIC, BIC) %>% mutate(Modelo = nome)
+  modelo %>% select(llike, AIC, BIC) %>% mutate(Modelo = nome) %>% 
+    select(Modelo, llike, AIC, BIC)
   
 }
 
@@ -1582,8 +1672,9 @@ resultado <- rbind(
   medidas(opt5, "opt5"),
   medidas(opt6, "opt6"),
   medidas(opt7, "opt7"),
-  medidas(opt8$data, "opt8"),
-  medidas(opt9$data, "opt9")
+  medidas(opt6_1, "opt6_1"),
+  medidas(opt8$data, "opt8")
+
 )
 
 resultado
@@ -1600,16 +1691,11 @@ teste_lr(opt5, opt0)
 teste_lr(opt6, opt0)
 teste_lr(opt7, opt0)
 teste_lr(opt8$data, opt0)
-teste_lr(opt9$data, opt0)
 
+teste_lr(opt5, opt4)
+teste_lr(opt10, opt5)
 teste_lr(opt6, opt5)
-teste_lr(opt6, opt9$data)
-teste_lr(opt6, opt3)
-teste_lr(opt3, opt2)
-teste_lr(opt6, opt2)
-teste_lr(opt9$data, opt2)
-
-
+teste_lr(opt10, opt8$data)
 
 ## Poder preditivo
 poder_pred(yt, media_cond_mod0, var_cond_mod0)$rmse
@@ -1618,7 +1704,7 @@ poder_pred(yt, media_cond_mod2, var_cond_mod2)$rmse
 poder_pred(yt, media_cond_mod3, var_cond_mod3)$rmse
 poder_pred(yt, media_cond_mod4, var_cond_mod4)$rmse
 poder_pred(yt, media_cond_mod5, var_cond_mod5)$rmse
-poder_pred(yt, media_cond_mod5, var_cond_mod6)$rmse
+poder_pred(yt, media_cond_mod6, var_cond_mod6)$rmse
 poder_pred(yt, media_cond_mod7, var_cond_mod7)$rmse
 poder_pred(yt, media_cond_mod8, var_cond_mod8)$rmse
 poder_pred(yt, media_cond_mod9, var_cond_mod9)$rmse
@@ -1634,5 +1720,3 @@ cor(var_cond_mod6[-(1:50)], ((yt - media_cond_mod6)^2)[-(1:50)])^2
 cor(var_cond_mod7[-(1:50)], ((yt - media_cond_mod7)^2)[-(1:50)])^2
 cor(var_cond_mod8[-(1:50)], ((yt - media_cond_mod8)^2)[-(1:50)])^2
 cor(var_cond_mod9[-(1:50)], ((yt - media_cond_mod9)^2)[-(1:50)])^2
-
-

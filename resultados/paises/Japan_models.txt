@@ -29,3 +29,4 @@ Modelo 14 - 4 degraus (Intervenção 1, Intervenção 2, Intervenção 4 e Inter
 Modelo 15 - 3 degraus (Intervenção 1, Intervenção 2 e Intervenção 3), mas com uma Int suave entre Intervenção 2 e Intervenção 3;
 Modelo 16 - 5 degraus (Intervenção 1, Intervenção 2, Intervenção 3, Intervenção 4 e Intervenção 5), mas com Ints suave entre Intervenção 2 e Intervenção 3, Intervenção 4 e Intervenção 5;
 
+Melhor Modelo => Modelo 12_1

@@ -9,6 +9,7 @@ library(ggplot2)
 library(dplyr)
 
 # Carregando dados e graficos ---------------------------------------------
+
 load("dados/NYSE.RData")
 BegSample <- '2004-01-01'
 EndSample <- '2010-12-31'
