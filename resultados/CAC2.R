@@ -57,21 +57,21 @@ ggplot(CAC, aes(x = Index, y = 100 * cac)) +
   geom_line(size = 1L, colour = "#112446") + 
   labs(x = "Tempo", y = "Retorno", title = "CAC") +
   theme_minimal() 
-ggsave(r"{graficos\France\fra_serie.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\fra_serie.png}", width = 20, height = 10)
 
 acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
   theme_minimal() 
-ggsave(r"{graficos\France\fra_fac_serie.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\fra_fac_serie.png}", width = 20, height = 10)
 pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
   theme_minimal() 
-ggsave(r"{graficos\France\fra_facp_serie.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\fra_facp_serie.png}", width = 20, height = 10)
 
 acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
   theme_minimal() 
-ggsave(r"{graficos\France\fra_fac_quad.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\fra_fac_quad.png}", width = 20, height = 10)
 pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
   theme_minimal() 
-ggsave(r"{graficos\France\fra_facp_quad.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\fra_facp_quad.png}", width = 20, height = 10)
 
 # Modelo 00 AR(1)-GARCH(1,1) ----------------------------------------------
 
@@ -186,7 +186,7 @@ ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(x = "Tempo", y = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue")
-ggsave(r"{graficos\France\desvio_cond_modelo0.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\desvio_cond_modelo0.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 01 ----------------------------------------------------------------
@@ -331,13 +331,13 @@ ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\France\desvio_cond_modelo1.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\desvio_cond_modelo1.png}", width = 20, height = 10)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\France\desvio_incond_modelo1.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\desvio_incond_modelo1.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 02 ---------------------------------------------------------------
@@ -485,13 +485,13 @@ ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\France\desvio_cond_modelo2.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\desvio_cond_modelo2.png}", width = 20, height = 10)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\France\desvio_incond_modelo2.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\desvio_incond_modelo2.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 03 ---------------------------------------------------------------
@@ -654,13 +654,13 @@ ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\France\desvio_cond_modelo3.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\desvio_cond_modelo3.png}", width = 20, height = 10)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\France\desvio_incond_modelo3.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\desvio_incond_modelo3.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 04 ---------------------------------------------------------------
@@ -824,13 +824,13 @@ ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\France\desvio_cond_modelo4.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\desvio_cond_modelo4.png}", width = 20, height = 10)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\France\desvio_incond_modelo4.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\desvio_incond_modelo4.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 05 ---------------------------------------------------------------
@@ -992,13 +992,13 @@ ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\France\desvio_cond_modelo5.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\desvio_cond_modelo5.png}", width = 20, height = 10)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\France\desvio_incond_modelo5.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\desvio_incond_modelo5.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 06 ---------------------------------------------------------------
@@ -1163,13 +1163,13 @@ ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\France\desvio_cond_modelo6.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\desvio_cond_modelo6.png}", width = 20, height = 10)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\France\desvio_incond_modelo6.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\desvio_incond_modelo6.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 07 ---------------------------------------------------------------
@@ -1331,13 +1331,13 @@ ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\France\desvio_cond_modelo7.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\desvio_cond_modelo7.png}", width = 20, height = 10)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\France\desvio_incond_modelo7.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\desvio_incond_modelo7.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Ajuste Fino - Modelo 05 -------------------------------------------------
@@ -1612,13 +1612,13 @@ ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\France\desvio_cond_modelo8.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\desvio_cond_modelo8.png}", width = 20, height = 10)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\France\desvio_incond_modelo8.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\desvio_incond_modelo8.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 09 ---------------------------------------------------------------
@@ -1736,13 +1736,13 @@ ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\France\desvio_cond_modelo9.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\desvio_cond_modelo9.png}", width = 20, height = 10)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\France\desvio_incond_modelo9.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\France\desvio_incond_modelo9.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Resultado ---------------------------------------------------------------

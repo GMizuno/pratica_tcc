@@ -20,12 +20,11 @@ Modelo 04 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1 e Intervenção
 	
 Modelo 05 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1 e Intervenção 3);
 
-Modelo 06 -
+Modelo 06 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1, Intervenção 3 e Intervenção 4), mas com int suave entre Lehman Brothers e Intervenção 1;
 
-Modelo 07 -
+Modelo 07 - 3 degraus (Crise I, Lehman Brothers, Intervenção 1 e Intervenção 4), mas com int suave entre Lehman Brothers e Intervenção 1 e Intervenção 1 e Intervenção 4 mas com e considerando 1 ponto em 2008-09-20 (|>);
 
-Modelo 08 -
+Modelo 08 - 5 degraus (Lehman Brothers, Intervenção 1, Intervenção 3 e Intervenção 4), mas com int suave entre Lehman Brothers e Intervenção 1 e beta5 = beta2
 
-Modelo 09 -
 
 Melhor Modelo => Modelo 06
