@@ -1,23 +1,84 @@
+Modelo     llike      AIC      BIC
+  opt1 -2002.227 4022.454 4070.029
+  opt2 -2012.338 4040.675 4082.965
+  opt3 -1999.277 4018.554 4071.416
+  opt4 -1998.230 4016.459 4069.321
+  opt5 -1997.785 4015.570 4068.432
+  opt6 -1998.411 4012.822 4055.111
+  opt7 -1996.954 4009.908 4052.198
+  opt8 -1998.181 4010.363 4047.366
+   
+   
 Ordenado pelo AIC
 
+Modelo     llike      AIC      BIC
+  opt7 -1996.954 4009.908 4052.198
+  opt8 -1998.181 4010.363 4047.366
+  opt6 -1998.411 4012.822 4055.111
+  opt5 -1997.785 4015.570 4068.432
+  opt4 -1998.230 4016.459 4069.321
+  opt3 -1999.277 4018.554 4071.416
+  opt1 -2002.227 4022.454 4070.029
+  opt2 -2012.338 4040.675 4082.965
+
 Ordenado pelo BIC
+
+Modelo     llike      AIC      BIC
+  opt8 -1998.181 4010.363 4047.366
+  opt7 -1996.954 4009.908 4052.198
+  opt6 -1998.411 4012.822 4055.111
+  opt5 -1997.785 4015.570 4068.432
+  opt4 -1998.230 4016.459 4069.321
+  opt1 -2002.227 4022.454 4070.029
+  opt3 -1999.277 4018.554 4071.416
+  opt2 -2012.338 4040.675 4082.965
 
 Modelos Finais
 
 RMSE
 
-Modelo 01 =>
-Modelo 02 =>
-Modelo 03 =>
-Modelo 04 =>
+Modelo 00 => 5.227186
+Modelo 01 => 5.116870
+Modelo 02 => 5.137119
+Modelo 03 => 5.116374
+Modelo 04 => 5.112934
+Modelo 05 => 5.025201
+Modelo 06 => 5.102240
+Modelo 07 => 5.095321
+Modelo 08 => 5.103809
 
 Cor
 
-Modelo 01 =>
-Modelo 02 =>
-Modelo 03 =>
-Modelo 04 =>
+Modelo 00 => 0.2243137
+Modelo 01 => 0.2565738
+Modelo 02 => 0.2535869
+Modelo 03 => 0.2567343
+Modelo 04 => 0.2577561
+Modelo 05 => 0.2817410
+Modelo 06 => 0.2609340
+Modelo 07 => 0.2609431
+Modelo 08 => 0.2584778
 
 Teste de Hipoteses
 
-Ajuste Fino da parte ARCH/GARCH
+> teste_lr(opt1, opt0)
+    lambda       pvalue df
+1 32.12775 1.801465e-06  4
+
+> teste_lr(opt1, opt2)
+    lambda       pvalue df
+1 20.22151 6.897319e-06  1
+
+> teste_lr(opt3, opt1)
+    lambda     pvalue df
+1 5.899703 0.01514344  1
+
+> teste_lr(opt7, opt0)
+    lambda       pvalue df
+1 42.67297 2.887628e-09  3
+
+> teste_lr(opt7, opt8$data)
+    lambda    pvalue df
+1 2.454141 0.1172153  1
+
+Ajuste Fino da parte ARCH/GARCH - Modelo 7

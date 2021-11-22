@@ -222,3 +222,9 @@ dummy2 <- as.matrix(dummy_on_off(n, c(1, 985, 1175, 1227, 1313),
 
 (opt1 <- estimando(llike_suave, pars))
 # Resultados --------------------------------------------------------------
+
+medidas <- function(modelo, nome){
+  modelo %>% select(llike, AIC, BIC) %>% mutate(Modelo = nome) %>% 
+    select(Modelo, llike, AIC, BIC)
+  
+}

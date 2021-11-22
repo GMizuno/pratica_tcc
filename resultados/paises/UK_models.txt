@@ -5,6 +5,8 @@ Lehman Brothers -> 2008-09-15 => 1186
 
 Intervenção 1 -> 2008-09-19 => 1190 (Intervenção Agência Reguladora)
 Intervenção 2 -> 2009-01-19 => 1271 (Intervenção Agência Reguladora)
+Intervenção 3 -> 2009-04-14 => 1330 (Data Driven)
+Intervenção 4 -> 2009-06-18 => 1375 (Data Driven)
 
 Modelo 00 - AR(1)-GARCH(1,1);
 
@@ -17,5 +19,11 @@ Modelo 03 -
 Modelo 04 -
 
 Modelo 05 -
+
+Modelo 06 -
+
+Modelo 07 -
+
+Modelo 08 -
 
 Melhor Modelo => 

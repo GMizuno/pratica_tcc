@@ -1748,7 +1748,9 @@ ggsave(r"{graficos\France\desvio_incond_modelo9.png}", width = 20, height = 10)
 # Resultado ---------------------------------------------------------------
 
 medidas <- function(modelo, nome){
-  modelo %>% select(llike, AIC, BIC) %>% mutate(Modelo = nome)
+  modelo %>% select(llike, AIC, BIC) %>% mutate(Modelo = nome) %>% 
+    select(Modelo, llike, AIC, BIC)
+  
 }
 
 resultado <- rbind(
