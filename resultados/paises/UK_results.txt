@@ -6,12 +6,13 @@ Modelo     llike      AIC      BIC
   opt5 -1997.785 4015.570 4068.432
   opt6 -1998.411 4012.822 4055.111
   opt7 -1996.954 4009.908 4052.198
+opt7_1 -1995.891 4009.782 4057.358
   opt8 -1998.181 4010.363 4047.366
-   
    
 Ordenado pelo AIC
 
 Modelo     llike      AIC      BIC
+opt7_1 -1995.891 4009.782 4057.358
   opt7 -1996.954 4009.908 4052.198
   opt8 -1998.181 4010.363 4047.366
   opt6 -1998.411 4012.822 4055.111
@@ -27,13 +28,12 @@ Modelo     llike      AIC      BIC
   opt8 -1998.181 4010.363 4047.366
   opt7 -1996.954 4009.908 4052.198
   opt6 -1998.411 4012.822 4055.111
+opt7_1 -1995.891 4009.782 4057.358
   opt5 -1997.785 4015.570 4068.432
   opt4 -1998.230 4016.459 4069.321
   opt1 -2002.227 4022.454 4070.029
   opt3 -1999.277 4018.554 4071.416
   opt2 -2012.338 4040.675 4082.965
-
-Modelos Finais
 
 RMSE
 
@@ -45,6 +45,7 @@ Modelo 04 => 5.112934
 Modelo 05 => 5.025201
 Modelo 06 => 5.102240
 Modelo 07 => 5.095321
+Modelo 07 => 5.082742 (Ajuste Fino)
 Modelo 08 => 5.103809
 
 Cor
@@ -57,6 +58,7 @@ Modelo 04 => 0.2577561
 Modelo 05 => 0.2817410
 Modelo 06 => 0.2609340
 Modelo 07 => 0.2609431
+Modelo 07 => 0.2653192 (Ajuste Fino)
 Modelo 08 => 0.2584778
 
 Teste de Hipoteses
@@ -82,3 +84,31 @@ Teste de Hipoteses
 1 2.454141 0.1172153  1
 
 Ajuste Fino da parte ARCH/GARCH - Modelo 7
+
+       alpha          ar deltaMedia  deltaVar1 deltaVar2 deltaVar3 deltaVar4 ite     llike num_par      AIC      BIC
+1 0.08491426 -0.09838535 0.04702737 -0.8851032 0.6748872  2.646867 0.1496176  26 -2031.741       7 4077.482 4114.485
+
+      alpha1   alpha2          ar deltaMedia deltaVar1 deltaVar2 deltaVar3  deltaVar4 ite     llike num_par      AIC      BIC
+1 0.07867746 0.110565 -0.09550542 0.05935293 -1.022435 0.5833315   2.52208 0.07215095  30 -2023.677       8 4063.355 4105.644
+
+      alpha1     alpha2    alpha3          ar deltaMedia deltaVar1 deltaVar2 deltaVar3   deltaVar4 ite     llike num_par      AIC     BIC
+1 0.07493401 0.07349066 0.1410913 -0.08082992 0.05146112 -1.170211 0.4277596  2.419116 -0.05495559  17 -2006.417       9 4030.835 4078.41
+
+      alpha1     alpha2    alpha3     alpha4          ar deltaMedia deltaVar1 deltaVar2 deltaVar3   deltaVar4 ite     llike num_par      AIC      BIC
+1 0.06382046 0.07196993 0.1348329 0.06067237 -0.07461431 0.05086995 -1.231148 0.3373475  2.348569 -0.07278706  19 -2003.152      10 4026.304 4079.166
+
+      alpha1     alpha2    alpha3     alpha4     alpha5          ar deltaMedia deltaVar1 deltaVar2 deltaVar3  deltaVar4 ite     llike num_par      AIC      BIC
+1 0.05755967 0.06276423 0.1219894 0.06024899 0.08633991 -0.06552225 0.05287338 -1.325942 0.2687939  2.200762 -0.1457426  20 -1997.783      11 4017.566 4075.715
+
+       alpha      beta          ar deltaMedia deltaVar1 deltaVar2 deltaVar3 deltaVar4 ite     llike num_par      AIC      BIC
+1 0.08208754 0.8345343 -0.08412707 0.05630824 -3.335824 -1.726861 0.1972833  -2.10526  30 -1996.954       8 4009.908 4052.198
+
+      alpha1     alpha2     beta          ar deltaMedia deltaVar1 deltaVar2 deltaVar3 deltaVar4 ite     llike num_par      AIC      BIC
+1 0.05301325 0.04638029 0.797665 -0.07946289 0.05631154 -3.116014  -1.52038 0.4139832 -1.911081  40 -1995.891       9 4009.782 4057.358
+
+      alpha     beta1     beta2         ar deltaMedia deltaVar1 deltaVar2 deltaVar3 deltaVar4 ite     llike num_par      AIC      BIC
+1 0.1050792 0.3220462 0.4667726 -0.0854043 0.05430604 -3.100592 -1.474745 0.4410637 -1.858269  24 -1997.759       9 4013.518 4061.094
+
+GARCH(2,2) => Muito instável
+
+Ajuste Fino da parte ARCH/GARCH - Modelo 8

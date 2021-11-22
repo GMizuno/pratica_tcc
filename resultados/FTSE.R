@@ -521,7 +521,8 @@ ggplot(FTSE, aes(x = Index, y = ftse)) +
   geom_vline(xintercept = c(crises[1], 
                             as.Date(c("2008-09-15", 
                                       "2008-09-19",
-                                      "2009-01-19"))), 
+                                      "2009-01-19", 
+                                      "2009-06-18"))), 
              colour = 'red', size = 1.5, linetype = "dashed")
 
 # Ordens e Parametros - INICIO
@@ -680,7 +681,9 @@ ggplot(FTSE, aes(x = Index, y = ftse)) +
   geom_vline(xintercept = c(crises[1], 
                             as.Date(c("2008-09-15", 
                                       "2008-09-19",
-                                      "2009-01-19"))), 
+                                      "2009-01-19", 
+                                      "2009-04-14"
+                                      ))), 
              colour = 'red', size = 1.5, linetype = "dashed")
 
 # Ordens e Parametros - INICIO
@@ -838,8 +841,10 @@ ggplot(FTSE, aes(x = Index, y = ftse)) +
   geom_vline(xintercept = c(crises[1], 
                             as.Date(c("2008-09-15", 
                                       "2008-09-19",
-                                      "2009-01-19"))), 
-             colour = 'red', size = 1.5, linetype = "dashed")
+                                      "2009-01-19", 
+                                      "2009-04-14 "))), 
+             colour = c('red', 'grey', 'yellow', 'red', 'red'), 
+             size = 1.5, linetype = "dashed")
 
 # Ordens e Parametros - INICIO
 pars <- list(
@@ -949,7 +954,8 @@ ggplot(FTSE, aes(x = Index, y = ftse)) +
                             as.Date(c("2008-09-15", 
                                       "2008-09-19",
                                       "2009-01-19"))), 
-             colour = 'red', size = 1.5, linetype = "dashed")
+             colour = c('red','grey', 'yellow', 'red'), 
+                        size = 1.5, linetype = "dashed")
 
 # Ordens e Parametros - INICIO
 pars <- list(
@@ -1058,8 +1064,9 @@ ggplot(FTSE, aes(x = Index, y = ftse)) +
   geom_vline(xintercept = c(crises[1], 
                             as.Date(c("2008-09-15", 
                                       "2008-09-19",
-                                      "2009-01-19"))), 
-             colour = 'red', size = 1.5, linetype = "dashed")
+                                      "2009-06-18"))), 
+             colour = c('red', 'grey', 'yellow', 'grey', 'red'), 
+                        size = 1.5, linetype = "dashed")
 
 # Ordens e Parametros - INICIO
 pars <- list(
@@ -1067,7 +1074,7 @@ pars <- list(
   psi3 = log(.84),
   ar = .2,
   deltaMedia = 0,
-  deltaVar = c(-3, -3, -3, -3)
+  deltaVar = c(-3, -3, -5, -3)
 )
 
 alpha_order <- length(pars$psi2)
@@ -1216,6 +1223,173 @@ ggplot(data, aes(x = time, y = sqrt(var_incond))) +
 ggsave(r"{graficos\UK\desvio_incond_modelo7.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
+# Ajuste Fino -------------------------------------------------------------
+
+ggplot(FTSE, aes(x = Index, y = ftse)) +
+  geom_line(size = 1L, colour = "#112446") +
+  labs(x = "Tempo", y = "Retorno", title = "FTSE com as Restrições") +
+  theme_minimal() + 
+  geom_vline(xintercept = c(crises[1], 
+                            as.Date(c("2008-09-15", 
+                                      "2008-09-19",
+                                      "2009-06-18"))), 
+             colour = c('red', 'grey', 'yellow', 'grey', 'red'), 
+                        size = 1.5, linetype = "dashed")
+
+# Ordens e Parametros - INICIO
+pars <- list(
+  psi2 = log(c(.05, .05)),
+  psi3 = log(.8),
+  ar = .2,
+  deltaMedia = 0,
+  deltaVar = c(-3, -1.5, -1, -1.8)
+)
+
+alpha_order <- length(pars$psi2)
+beta_order <- length(pars$psi3)
+kmed <- length(pars$deltaMedia)
+kvar <- length(pars$deltaVar)
+n <- length(yt) # Tamanho da serie
+delta_ind <- c(2, 3)
+t_ast <- c(1186, 1190)
+t_til <- c(1190, 1375)
+
+dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
+dummy2 <- as.matrix(dummy_on_off(n, c(1, 883, 1190, 1375),
+                                 c(882, 1186, 1190, n)))
+
+(opt7_1 <- estimando(llike_suave, pars))
+
+media_cond_mod7_1 <- esp_cond_sauve(
+  data = yt,
+  est = opt7_1,
+  dummy1 = dummy1,
+  dummy2 = dummy2,
+  alpha_order = alpha_order,
+  beta_order = beta_order,
+  delta_ind = c(2, 3),
+  t_ast = c(1186, 1190),
+  t_til = c(1190, 1375),
+  kmed = kmed,
+  kvar = kvar,
+  n = n
+)
+
+var_cond_mod7_1 <- var_cond_sauve(
+  data = yt,
+  est = opt7_1,
+  dummy1 = dummy1,
+  dummy2 = dummy2,
+  alpha_order = alpha_order,
+  beta_order = beta_order,
+  Varyt = Varyt,
+  delta_ind = c(2, 3),
+  t_ast = c(1186, 1190),
+  t_til = c(1190, 1375),
+  kmed = kmed,
+  kvar = kvar,
+  n = n
+)
+
+var_incond_mod7_1 <- var_indcond_sauve(
+  data = yt,
+  est = opt7_1,
+  dummy1 = dummy1,
+  dummy2 = dummy2,
+  alpha_order = alpha_order,
+  beta_order = beta_order,
+  delta_ind = c(2, 3),
+  t_ast = c(1186, 1190),
+  t_til = c(1190, 1375),
+  kmed = kmed,
+  kvar = kvar
+)
+
+resid_pad_mod7_1 <- (yt - media_cond_mod7_1)/sqrt(var_cond_mod7_1)
+resid_pad_mod7_1 <- resid_pad_mod7_1[-(1:50)]
+
+resid_pad_data <- data.frame(resid_pad = resid_pad_mod7_1, 
+                             time = seq_along(resid_pad_mod7_1))
+resid_pad_data <- resid_pad_data[-1, ]
+
+plot(resid_pad_mod7_1, type = 'l')
+plot(var_incond_mod7_1, type = 'l')
+
+mean(resid_pad_data$resid_pad)
+var(resid_pad_data$resid_pad)
+
+# Estimando e residuos - FIM
+
+# FAC e FACP - INICIO
+acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+
+acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+# FAC e FACP - FIM
+
+poder_pred(yt, media_cond_mod7_1, var_cond_mod7_1)$rmse
+cor(var_cond_mod7_1[-(1:50)], ((yt - media_cond_mod7_1)^2)[-(1:50)])^2
+
+Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
+Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
+
+(dw <- sum(diff(yt - media_cond_mod7_1)^2)/sum((yt - media_cond_mod7_1)^2))
+
+# QQplot e Histograma - INICIO
+ggplot(resid_pad_data, aes(sample = resid_pad)) + 
+  stat_qq() + 
+  geom_abline(slope = 1, intercept = 0) + 
+  ylim(-6,6) + 
+  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6))
+
+ggplot(resid_pad_data, aes(x = resid_pad)) + 
+  geom_histogram(aes(y =..density..), fill = "#0c4c8a") +
+  theme_minimal() +
+  labs(x = "Residuos padronizados", y = 'Densidade') + 
+  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
+  stat_function(fun = dnorm, args = list(0, 1), color = 'red')
+# QQplot e Histograma - FIM
+
+# TH - INICIO
+
+shapiro.test(resid_pad_data$resid_pad)
+tseries::jarque.bera.test(resid_pad_data$resid_pad)
+nortest::ad.test(resid_pad_data$resid_pad)
+
+moments::kurtosis(resid_pad_mod7_1)
+moments::skewness(resid_pad_mod7_1)
+
+# TH - FIM
+
+# Graficos de linha para esp_cond e var_cond - INICIO
+data <- data.frame(
+  yt = yt,
+  one_step_predict = media_cond_mod7_1,
+  var_incond = var_incond_mod7_1,
+  var_cond = var_cond_mod7_1,
+  time = 1:n
+)
+
+ggplot(data, aes(x = time, y = yt)) +
+  geom_line(size = 1L, colour = "#0c4c8a") +
+  geom_line(aes(y = one_step_predict), size = 1L, colour = "red") +
+  theme(axis.title.y = element_text(angle = 0)) +
+  labs(x = 'Tempo') 
+
+ggplot(data, aes(x = time, y = sqrt(var_cond))) +
+  labs(y = "Tempo", x = "Variancia Condicional") + 
+  geom_line(size = 1L, colour = "red") + 
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+ggsave(r"{graficos\UK\desvio_cond_modelo7_1.png}", width = 20, height = 10)
+
+ggplot(data, aes(x = time, y = sqrt(var_incond))) +
+  labs(x = "Tempo", y = "Variancia Incondicional") + 
+  geom_line(size = 1L, colour = "red") + 
+  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+ggsave(r"{graficos\UK\desvio_incond_modelo7_1.png}", width = 20, height = 10)
+# Graficos de linha para esp_cond e var_cond - FIM
+
 # Modelo 08 ---------------------------------------------------------------
 
 ggplot(FTSE, aes(x = Index, y = ftse)) +
@@ -1225,8 +1399,9 @@ ggplot(FTSE, aes(x = Index, y = ftse)) +
   geom_vline(xintercept = c(crises[1], 
                             as.Date(c("2008-09-15", 
                                       "2008-09-19",
-                                      "2009-01-19"))), 
-             colour = 'red', size = 1.5, linetype = "dashed")
+                                      "2009-06-18"))), 
+             colour = c('red', 'grey', 'yellow', 'grey', 'red'), 
+                        size = 1.5, linetype = "dashed")
 
 # Ordens e Parametros - INICIO
 pars <- list(
@@ -1357,6 +1532,7 @@ resultado <- rbind(medidas(opt1, "opt1"),
                    medidas(opt5, "opt5"),
                    medidas(opt6, "opt6"),
                    medidas(opt7, "opt7"),
+                   medidas(opt7_1, "opt7_1"),
                    medidas(opt8$data, "opt8")
                    )
 
@@ -1390,6 +1566,7 @@ cor(var_cond_mod3[-(1:50)], ((yt - media_cond_mod3)^2)[-(1:50)])^2
 cor(var_cond_mod4[-(1:50)], ((yt - media_cond_mod4)^2)[-(1:50)])^2
 cor(var_cond_mod5[-(1:50)], ((yt - media_cond_mod5)^2)[-(1:50)])^2
 cor(var_cond_mod6[-(1:50)], ((yt - media_cond_mod6)^2)[-(1:50)])^2
+
 cor(var_cond_mod7[-(1:50)], ((yt - media_cond_mod7)^2)[-(1:50)])^2
 cor(var_cond_mod8[-(1:50)], ((yt - media_cond_mod8)^2)[-(1:50)])^2
 
