@@ -959,7 +959,8 @@ resultado <- rbind(
   medidas(opt1, "opt1"),
   medidas(opt2, "opt2"),
   medidas(opt3, "opt3"),
-  medidas(opt4, "opt4")
+  medidas(opt4, "opt4"),
+  medidas(opt5, "opt5")
 )
 
 resultado
@@ -972,6 +973,7 @@ teste_lr(opt1, opt0)
 teste_lr(opt2, opt0)
 
 teste_lr(opt1, opt2)
+teste_lr(opt5, opt3)
 
 ## Poder preditivo
 poder_pred(yt, media_cond_mod0, var_cond_mod0)$rmse
@@ -979,6 +981,7 @@ poder_pred(yt, media_cond_mod1, var_cond_mod1)$rmse
 poder_pred(yt, media_cond_mod2, var_cond_mod2)$rmse
 poder_pred(yt, media_cond_mod3, var_cond_mod3)$rmse
 poder_pred(yt, media_cond_mod4, var_cond_mod4)$rmse
+poder_pred(yt, media_cond_mod5, var_cond_mod5)$rmse
 
 ## Cor
 cor(var_cond_mod0[-(1:50)], ((yt - media_cond_mod0)^2)[-(1:50)])^2
@@ -986,4 +989,5 @@ cor(var_cond_mod1[-(1:50)], ((yt - media_cond_mod1)^2)[-(1:50)])^2
 cor(var_cond_mod2[-(1:50)], ((yt - media_cond_mod2)^2)[-(1:50)])^2
 cor(var_cond_mod3[-(1:50)], ((yt - media_cond_mod3)^2)[-(1:50)])^2
 cor(var_cond_mod4[-(1:50)], ((yt - media_cond_mod4)^2)[-(1:50)])^2
+cor(var_cond_mod5[-(1:50)], ((yt - media_cond_mod5)^2)[-(1:50)])^2
 

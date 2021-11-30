@@ -671,7 +671,7 @@ ggsave(r"{graficos\UK\desvio_incond_modelo3.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 
-# Modleo 04 ---------------------------------------------------------------
+# Modelo 04 ---------------------------------------------------------------
 
 ggplot(FTSE, aes(x = Index, y = ftse)) +
   geom_line(size = 1L, colour = "#112446") +
@@ -866,6 +866,7 @@ t_til <- 1190
 dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
 dummy2 <- as.matrix(dummy_on_off(n, c(1, 883, 1190, 1191, 1272, 1331),
                                  c(882, 1186, 1190, 1271, 1330, n)))
+
 
 (opt5 <- estimando(llike_suave, pars))
 
@@ -1223,17 +1224,6 @@ ggsave(r"{graficos\UK\desvio_incond_modelo7.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Ajuste Fino -------------------------------------------------------------
-
-ggplot(FTSE, aes(x = Index, y = ftse)) +
-  geom_line(size = 1L, colour = "#112446") +
-  labs(x = "Tempo", y = "Retorno", title = "FTSE com as Restrições") +
-  theme_minimal() + 
-  geom_vline(xintercept = c(crises[1], 
-                            as.Date(c("2008-09-15", 
-                                      "2008-09-19",
-                                      "2009-06-18"))), 
-             colour = c('red', 'grey', 'yellow', 'grey', 'red'), 
-                        size = 1.5, linetype = "dashed")
 
 # Ordens e Parametros - INICIO
 pars <- list(
