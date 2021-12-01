@@ -1228,10 +1228,10 @@ ggsave(r"{graficos\UK\desvio_incond_modelo7.png}", width = 20, height = 10)
 # Ordens e Parametros - INICIO
 pars <- list(
   psi2 = log(c(.05, .05)),
-  psi3 = log(.8),
+  psi3 = log(.89),
   ar = .2,
   deltaMedia = 0,
-  deltaVar = c(-3, -1.5, -1, -1.8)
+  deltaVar = c(-3, -3, -3, -3)
 )
 
 alpha_order <- length(pars$psi2)
@@ -1394,11 +1394,11 @@ ggplot(FTSE, aes(x = Index, y = ftse)) +
 
 # Ordens e Parametros - INICIO
 pars <- list(
-  psi2 = log(.15),
-  psi3 = log(.84),
+  psi2 = log(c(.05, .05)),
+  psi3 = log(.89),
   ar = .2,
   deltaMedia = 0,
-  deltaVar = c(-1, -3, -3)
+  deltaVar = c(-3, -3, -3)
 )
 
 alpha_order <- length(pars$psi2)
@@ -1521,8 +1521,8 @@ ggplot(FTSE, aes(x = Index, y = ftse)) +
 
 # Ordens e Parametros - INICIO
 pars <- list(
-  psi2 = log(.15),
-  psi3 = log(.84),
+  psi2 = log(c(.05, .05)),
+  psi3 = log(.89),
   deltaMedia = 0,
   deltaVar = c(-3, -3, -3)
 )
@@ -1626,9 +1626,10 @@ ggplot(data, aes(x = time, y = sqrt(var_cond))) +
 ggsave(r"{graficos\UK\desvio_cond_modelo8_1.png}", width = 20, height = 10)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Variancia Incondicional") + 
+  labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5) 
+  geom_line(aes(x = time, y = abs(yt-opt8_1$data$deltaMedia)), colour = "blue", alpha = .5) +
+  geom_vline(xintercept = 1271)
 ggsave(r"{graficos\UK\desvio_incond_modelo8_1.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
@@ -1663,7 +1664,7 @@ teste_lr(opt1, opt2)
 teste_lr(opt3, opt1)
 
 teste_lr(opt7, opt0)
-teste_lr(opt7, opt8$data)
+teste_lr(opt7_1, opt8$data)
 
 teste_lr(opt8$data, opt8_1$data)
 
@@ -1675,6 +1676,7 @@ poder_pred(yt, media_cond_mod4, var_cond_mod4)$rmse
 poder_pred(yt, media_cond_mod5, var_cond_mod5)$rmse
 poder_pred(yt, media_cond_mod6, var_cond_mod6)$rmse
 poder_pred(yt, media_cond_mod7, var_cond_mod7)$rmse
+poder_pred(yt, media_cond_mod7_1, var_cond_mod7_1)$rmse
 poder_pred(yt, media_cond_mod8, var_cond_mod8)$rmse
 poder_pred(yt, media_cond_mod8_1, var_cond_mod8_1)$rmse
 

@@ -1,53 +1,48 @@
 Modelo     llike      AIC      BIC
+  opt0 -2486.444 4982.889 5010.119
   opt1 -2479.563 4977.127 5026.141
-  opt2 -2479.565 4975.129 5018.698
-  opt3 -2466.785 4949.570 4993.138
-  opt4 -2465.772 4951.543 5006.003
-  opt5 -2464.438 4946.877 4995.891
-
+  opt2 -2466.435 4950.870 4999.884
+  opt3 -2466.013 4948.026 4991.594
+  opt4 -2466.424 4952.848 5007.308
+  opt5 -2467.240 4952.481 5001.495
+ 
 Ordenado pelo AIC
 
 Modelo     llike      AIC      BIC
-  opt5 -2464.438 4946.877 4995.891
-  opt3 -2466.785 4949.570 4993.138
-  opt4 -2465.772 4951.543 5006.003
-  opt2 -2479.565 4975.129 5018.698
+
 
 Ordenado pelo BIC
 
 Modelo     llike      AIC      BIC
-  opt3 -2466.785 4949.570 4993.138
-  opt5 -2464.438 4946.877 4995.891
-  opt4 -2465.772 4951.543 5006.003
-  opt2 -2479.565 4975.129 5018.698
-  opt1 -2479.563 4977.127 5026.141
+
 
 RMSE
 
 Modelo 00 => 6.498649
 Modelo 01 => 6.516902
-Modelo 02 => 6.517042
-Modelo 03 => 6.427884
-Modelo 04 => 6.139525
-Modelo 05 => 6.415678
+Modelo 02 => 6.395966
+Modelo 03 => 6.379858
+Modelo 04 => 6.234421
+Modelo 05 => 6.354970
 
 Cor
 
 Modelo 00 => 0.2595698
 Modelo 01 => 0.2610463
-Modelo 02 => 0.2610505
-Modelo 03 => 0.2787072
-Modelo 04 => 0.3406748
-Modelo 05 => 0.2800268
+Modelo 02 => 0.2849835
+Modelo 03 => 0.2885216
+Modelo 04 => 0.3210072
+Modelo 05 => 0.2942035
 
 Teste de Hipoteses
 
-> teste_lr(opt1, opt2)
-       lambda    pvalue df
-1 0.002557395 0.9596676  1
+> teste_lr(opt1, opt0)
+    lambda      pvalue df
+1 13.76179 0.008095435  4
 
-> teste_lr(opt5, opt3)
-    lambda     pvalue df
-1 4.693402 0.03027864  1
+> teste_lr(opt4, opt5)
+    lambda    pvalue df
+1 1.632916 0.2013003  1
+
 
 Ajuste Fino da parte ARCH/GARCH
