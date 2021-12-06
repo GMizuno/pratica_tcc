@@ -65,19 +65,17 @@ ggplot(NIKKEI, aes(x = Index, y = 100 * nikkei)) +
   theme_minimal() 
 ggsave(r"{graficos\Japan\jap_serie.png}",width = 20, height = 10)
 
-acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
-  theme_minimal() 
-ggsave(r"{graficos\Japan\jap_fac_serie.png}",width = 20, height = 10)
-pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
-  theme_minimal() 
-ggsave(r"{graficos\Japan\jap_facp_serie.png}",width = 20, height = 10)
+acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+ggsave(r"{graficos\Japan\jap_fac_serie.png}", width = 10, height = 10)
 
-acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
-  theme_minimal() 
-ggsave(r"{graficos\Japan\jap_fac_quad.png}",width = 20, height = 10)
-pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
-  theme_minimal() 
-ggsave(r"{graficos\Japan\jap_facp_quad.png}",width = 20, height = 10)
+pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
+ggsave(r"{graficos\Japan\jap_facp_serie.png}", width = 10, height = 10)
+
+acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+ggsave(r"{graficos\Japan\jap_fac_quad.png}", width = 10, height = 10)
+
+pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
+ggsave(r"{graficos\Japan\jap_facp_quad.png}", width = 10, height = 10)
 
 # Modelo 01 ----------------------------------------------------------------
 
@@ -1719,384 +1717,11 @@ ggplot(data, aes(x = time, y = sqrt(var_incond))) +
 ggsave(r"{graficos\Japan\desvio_incond_modelo12_1.png}",  width = 20, height = 10)
 ## Graficos de linha para esp_cond e var_cond - FIM
 
-# Modelo 13 ---------------------------------------------------------------
-
-# Ordens e Parametros - INICIO
-pars <- list(
-  psi1 = log(.5),
-  psi2 = log(c(.05, .05)),
-  psi3 = log(.84),
-  ar = .5,
-  deltaMedia = 0
-)
-
-alpha_order <- length(pars$psi2)
-beta_order <- length(pars$psi3)
-kmed <- length(pars$deltaMedia)
-
-n <- length(yt)
-dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
-
-# Ordens e Parametros - FIM
-
-# Estimando e residuos - INICIO
-
-(opt13 <- estimando(llike_garch, pars))
-
-media_cond_mod13 <- esp_cond_garch(
-  data = yt,
-  est = opt13,
-  dummy1 = dummy1,
-  alpha_order = alpha_order,
-  beta_order = beta_order,
-  kmed = kmed,
-  n = n
-)
-
-var_cond_mod13 <- var_cond_garch(
-  data = yt,
-  est = opt13,
-  dummy1 = dummy1,
-  alpha_order = alpha_order,
-  beta_order = beta_order,
-  Varyt = Varyt,
-  kmed = kmed,
-  n = n
-)
-
-resid_pad_mod13 <- (yt - media_cond_mod13)/sqrt(var_cond_mod13)
-resid_pad_mod13 <- resid_pad_mod13[-(1:50)]
-
-plot(resid_pad_mod13, type = 'l', ylim = c(-6, 6))
-
-mean(resid_pad_mod13)
-var(resid_pad_mod13)
-
-# Modelo 14 ---------------------------------------------------------------
-
-# Ordens e Parametros - INICIO
-pars <- list(
-  psi2 = log(c(.05, .05)),
-  psi3 = log(.85),
-  ar = .2,
-  deltaMedia = 0.0,
-  deltaVar = c(-3, -3, -3, -1)
-)
-
-## Definindo parametros e dummies
-alpha_order <- length(pars$psi2)
-beta_order <- length(pars$psi3)
-kmed <- length(pars$deltaMedia)
-kvar <- length(pars$deltaVar)
-n <- length(yt) # Tamanho da serie
-delta_ind <- c(2, 3)
-t_ast <- c(1157, 1179)
-t_til <- c(1174, 1227)
-
-dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
-dummy2 <- as.matrix(dummy_on_off(n, c(1, 985, 1175, 1227),
-                                 c(984, 1157, 1179, n)))
-# Ordens e Parametros - FIM
-
-# Estimando e residuos  - INICIO
-
-(opt14 <- estimando(llike_suave, pars))
-
-media_cond_mod14 <- esp_cond_sauve(
-  data = yt,
-  est = opt14,
-  dummy1 = dummy1,
-  dummy2 = dummy2,
-  delta_ind = delta_ind,
-  t_ast = t_ast,
-  t_til = t_til,
-  alpha_order = alpha_order,
-  beta_order = beta_order,
-  kmed = kmed,
-  kvar = kvar,
-  n = n
-)
-
-var_cond_mod14 <- var_cond_sauve(
-  data = yt,
-  est = opt14,
-  dummy1 = dummy1,
-  dummy2 = dummy2,
-  delta_ind = delta_ind,
-  t_ast = t_ast,
-  t_til = t_til,
-  Varyt = Varyt,
-  alpha_order = alpha_order,
-  beta_order = beta_order,
-  kmed = kmed,
-  kvar = kvar,
-  n = n
-)
-
-var_incond_mod14 <- var_indcond_sauve(
-  data = yt,
-  est = opt14,
-  dummy1 = dummy1,
-  dummy2 = dummy2,
-  delta_ind = delta_ind,
-  t_ast = t_ast,
-  t_til = t_til,
-  alpha_order = alpha_order,
-  beta_order = beta_order,
-  kmed = kmed,
-  kvar = kvar
-)
-
-resid_pad_mod14 <- (yt - media_cond_mod14)/sqrt(var_cond_mod14)
-resid_pad_mod14 <- resid_pad_mod14[-(1:50)]
-
-resid_pad_data <- data.frame(resid_pad = resid_pad_mod14, 
-                             time = seq_along(resid_pad_mod14))
-resid_pad_data <- resid_pad_data[-1, ]
-
-plot(resid_pad_mod14, type = 'l', ylim = c(-6, 6))
-plot(var_incond_mod14, type = 'l')
-
-# Modelo 15 - Novo --------------------------------------------------------
-
-# Ordens e Parametros - INICIO
-pars <- list(
-  psi2 = log(c(.05, .05)),
-  psi3 = log(.85),
-  ar = .2,
-  deltaMedia = 0.0,
-  deltaVar = c(-3, -3, -3, -3)
-)
-
-## Definindo parametros e dummies
-alpha_order <- length(pars$psi2)
-beta_order <- length(pars$psi3)
-kmed <- length(pars$deltaMedia)
-kvar <- length(pars$deltaVar)
-n <- length(yt) # Tamanho da serie
-delta_ind <- 2
-t_ast <- 1157
-t_til <- 1174
-
-dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
-dummy2 <- as.matrix(dummy_on_off(n, c(1, 985, 1175, 1180, 1228),
-                                 c(984, 1157, 1179, 1227, n)))
-# Ordens e Parametros - FIM
-
-# Estimando e residuos  - INICIO
-
-opt15 <- estimando_model9(llike_suave_nikkei, pars)
-opt15$data
-
-media_cond_mod15 <- opt15$media_cond
-var_cond_mod15 <- opt15$dp_cond^2
-var_incond_mod15 <- opt15$var_indcond
-
-resid_pad_mod15 <- (yt - media_cond_mod15)/sqrt(var_cond_mod15)
-resid_pad_mod15 <- resid_pad_mod15[-c(1:50)]
-
-resid_pad_data <- data.frame(resid_pad = resid_pad_mod15, 
-                             time = seq_along(resid_pad_mod15))
-resid_pad_data <- resid_pad_data[-1, ]
-
-plot(resid_pad_mod15, type = 'l', ylim = c(-6, 6))
-plot(var_incond_mod15[-c(1:50)], type = 'l')
-
-mean(resid_pad_data$resid_pad)
-var(resid_pad_data$resid_pad)
-
-## Analisando residuos 
-
-## FAC e FACP - INICIO
-acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
-
-acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-## FAC e FACP - FIM
-
-Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
-Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
-(dw <- sum(diff(yt - media_cond_mod15)^2)/sum((yt - media_cond_mod15)^2))
-
-## QQplot e Histograma - INICIO
-ggplot(resid_pad_data, aes(sample = resid_pad)) + 
-  stat_qq() + 
-  geom_abline(slope = 1, intercept = 0) + 
-  ylim(-6,6) + 
-  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6))
-
-ggplot(resid_pad_data, aes(x = resid_pad)) + 
-  geom_histogram(aes(y =..density..), fill = "#0c4c8a") +
-  theme_minimal() +
-  labs(x = "Residuos padronizados", y = 'Densidade') + 
-  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
-  stat_function(fun = dnorm, args = list(0, 1), color = 'red')
-## QQplot e Histograma - FIM
-
-## TH - INICIO
-
-shapiro.test(resid_pad_data$resid_pad)
-tseries::jarque.bera.test(resid_pad_data$resid_pad)
-nortest::ad.test(resid_pad_data$resid_pad)
-
-moments::kurtosis(resid_pad_mod15)
-moments::skewness(resid_pad_mod15)
-
-## TH - FIM
-
-## Graficos de linha para esp_cond e var_cond - INICIO
-data <- data.frame(
-  yt = yt,
-  one_step_predict = media_cond_mod15,
-  var_incond = var_incond_mod15,
-  var_cond = var_cond_mod15,
-  time = seq_along(media_cond_mod15)
-)
-
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  geom_line(size = 1L, colour = "#0c4c8a") +
-  geom_line(aes(y = one_step_predict), size = 1L, colour = "red") +
-  theme(axis.title.y = element_text(angle = 0)) +
-  labs(x = 'Tempo') 
-
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Variancia Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
-ggsave(r"{graficos\Japan\desvio_cond_modelo15.png}", width = 20, height = 10)
-
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Variancia padrao incondicional") + 
-  geom_line(size = 1L, colour = "red") +
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5)
-ggsave(r"{graficos\Japan\desvio_incond_modelo15.png}", width = 20, height = 10)
-
-## Graficos de linha para esp_cond e var_cond - FIM
-
-# Modelo 16 - Novo --------------------------------------------------------
-
-# Ordens e Parametros - INICIO
-pars <- list(
-  psi2 = log(c(.05, .05)),
-  psi3 = log(.85),
-  ar = .2,
-  deltaMedia = 0.0,
-  deltaVar = c(-3, -3, -3, -3, -3)
-)
-
-## Definindo parametros e dummies
-alpha_order <- length(pars$psi2)
-beta_order <- length(pars$psi3)
-kmed <- length(pars$deltaMedia)
-kvar <- length(pars$deltaVar)
-n <- length(yt) # Tamanho da serie
-delta_ind <- 2
-t_ast <- 1157
-t_til <- 1174
-
-dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
-dummy2 <- as.matrix(dummy_on_off(n, c(1, 985, 1175, 1180, 1196, 1228),
-                                 c(984, 1157, 1179, 1195, 1227, n)))
-# Ordens e Parametros - FIM
-
-# Estimando e residuos  - INICIO
-
-opt16 <- estimando_model9(llike_suave_nikkei, pars)
-opt6$data
-
-media_cond_mod16 <- opt16$media_cond
-var_cond_mod16 <- opt16$dp_cond^2
-var_incond_mod16 <- opt16$var_indcond
-
-resid_pad_mod16 <- (yt - media_cond_mod16)/sqrt(var_cond_mod16)
-resid_pad_mod16 <- resid_pad_mod16[-c(1:50)]
-
-resid_pad_data <- data.frame(resid_pad = resid_pad_mod16, 
-                             time = seq_along(resid_pad_mod16))
-resid_pad_data <- resid_pad_data[-1, ]
-
-plot(resid_pad_mod16, type = 'l', ylim = c(-6, 6))
-plot(var_incond_mod16[-c(1:50)], type = 'l')
-
-mean(resid_pad_data$resid_pad)
-var(resid_pad_data$resid_pad)
-
-## Analisando residuos 
-
-## FAC e FACP - INICIO
-acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
-
-acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-## FAC e FACP - FIM
-
-Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
-Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
-(dw <- sum(diff(yt - media_cond_mod16)^2)/sum((yt - media_cond_mod16)^2))
-
-## QQplot e Histograma - INICIO
-ggplot(resid_pad_data, aes(sample = resid_pad)) + 
-  stat_qq() + 
-  geom_abline(slope = 1, intercept = 0) + 
-  ylim(-6,6) + 
-  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6))
-
-ggplot(resid_pad_data, aes(x = resid_pad)) + 
-  geom_histogram(aes(y =..density..), fill = "#0c4c8a") +
-  theme_minimal() +
-  labs(x = "Residuos padronizados", y = 'Densidade') + 
-  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
-  stat_function(fun = dnorm, args = list(0, 1), color = 'red')
-## QQplot e Histograma - FIM
-
-## TH - INICIO
-
-shapiro.test(resid_pad_data$resid_pad)
-tseries::jarque.bera.test(resid_pad_data$resid_pad)
-nortest::ad.test(resid_pad_data$resid_pad)
-
-moments::kurtosis(resid_pad_mod16)
-moments::skewness(resid_pad_mod16)
-
-## TH - FIM
-
-## Graficos de linha para esp_cond e var_cond - INICIO
-data <- data.frame(
-  yt = yt,
-  one_step_predict = media_cond_mod16,
-  var_incond = var_incond_mod16,
-  var_cond = var_cond_mod16,
-  time = seq_along(media_cond_mod16)
-)
-
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  geom_line(size = 1L, colour = "#0c4c8a") +
-  geom_line(aes(y = one_step_predict), size = 1L, colour = "red") +
-  theme(axis.title.y = element_text(angle = 0)) +
-  labs(x = 'Tempo') 
-
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Variancia Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
-ggsave(r"{graficos\Japan\desvio_cond_modelo16.png}", width = 20, height = 10)
-
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Variancia padrao incondicional") + 
-  geom_line(size = 1L, colour = "red") +
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
-ggsave(r"{graficos\Japan\desvio_incond_modelo16.png}", width = 20, height = 10)
-
-## Graficos de linha para esp_cond e var_cond - FIM
-
-
 # Resultados --------------------------------------------------------------
 
 medidas <- function(modelo, nome){
-  modelo %>% select(llike, AIC, BIC) %>% mutate(Modelo = nome)
-  
+  modelo %>% select(llike, AIC, BIC) %>% mutate(Modelo = nome) %>% 
+    select(Modelo, llike, AIC, BIC)
 }
 
 resultado <- rbind(medidas(opt1, "opt1"),
@@ -2111,11 +1736,7 @@ resultado <- rbind(medidas(opt1, "opt1"),
                    medidas(opt10$data, "opt10"),
                    medidas(opt11$data, "opt11"),
                    medidas(opt12$data, "opt12"),
-                   medidas(opt12_1$data, "opt12_1"),
-                   medidas(opt13, "opt13"),
-                   medidas(opt14, "opt14"),
-                   medidas(opt15$data, "opt15"),
-                   medidas(opt16$data, "opt16")
+                   medidas(opt12_1$data, "opt12_1")
                    )
 
 resultado            
@@ -2173,9 +1794,6 @@ poder_pred(yt, media_cond_mod10, var_cond_mod10)$rmse
 poder_pred(yt, media_cond_mod11, var_cond_mod11)$rmse
 poder_pred(yt, media_cond_mod12, var_cond_mod12)$rmse
 poder_pred(yt, media_cond_mod12_1, var_cond_mod12_1)$rmse
-poder_pred(yt, media_cond_mod13, var_cond_mod13)$rmse
-poder_pred(yt, media_cond_mod14, var_cond_mod14)$rmse
-poder_pred(yt, media_cond_mod15, var_cond_mod15)$rmse
 
 cor(var_cond_mod1[-(1:50)], ((yt - media_cond_mod1)^2)[-(1:50)])^2
 cor(var_cond_mod2[-(1:50)], ((yt - media_cond_mod2)^2)[-(1:50)])^2
@@ -2185,5 +1803,4 @@ cor(var_cond_mod10[-(1:50)], ((yt - media_cond_mod10)^2)[-(1:50)])^2
 cor(var_cond_mod11[-(1:50)], ((yt - media_cond_mod11)^2)[-(1:50)])^2
 cor(var_cond_mod12[-(1:50)], ((yt - media_cond_mod12)^2)[-(1:50)])^2
 cor(var_cond_mod12_1[-(1:50)], ((yt - media_cond_mod12_1)^2)[-(1:50)])^2
-cor(var_cond_mod13[-(1:50)], ((yt - media_cond_mod13)^2)[-(1:50)])^2
-cor(var_cond_mod15[-(1:50)], ((yt - media_cond_mod15)^2)[-(1:50)])^2
+

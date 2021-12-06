@@ -1479,7 +1479,8 @@ ggplot(data, aes(x = time, y = sqrt(var_incond))) +
 # Resultado ---------------------------------------------------------------
 
 medidas <- function(modelo, nome){
-  modelo %>% select(llike, AIC, BIC) %>% mutate(Modelo = nome)
+  modelo %>% select(llike, AIC, BIC) %>% mutate(Modelo = nome) %>% 
+    select(Modelo, llike, AIC, BIC)
 }
 
 resultado <- rbind(medidas(opt1, "opt1"),

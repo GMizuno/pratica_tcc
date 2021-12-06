@@ -60,19 +60,17 @@ ggplot(NYSE, aes(x = Index, y = 100 * nyse)) +
   theme_minimal() 
 ggsave(r"{graficos\USA\usa_serie.png}", width = 6, height = 3.5)
 
-acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
-  theme_minimal() 
-ggsave(r"{graficos\USA\usa_fac_serie.png}", width = 6, height = 3.5)
-pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
-  theme_minimal() 
-ggsave(r"{graficos\USA\usa_facp_serie.png}", width = 6, height = 3.5)
+acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
+ggsave(r"{graficos\USA\usa_fac_serie.png}", width = 10, height = 10)
 
-acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
-  theme_minimal() 
-ggsave(r"{graficos\USA\usa_fac_quad.png}", width = 6, height = 3.5)
-pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") +
-  theme_minimal() 
-ggsave(r"{graficos\USA\usa_facp_quad.png}", width = 6, height = 3.5)
+pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+ggsave(r"{graficos\USA\usa_facp_serie.png}", width = 10, height = 10)
+
+acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
+ggsave(r"{graficos\USA\usa_fac_quad.png}", width = 10, height = 10)
+
+pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
+ggsave(r"{graficos\USA\usa_facp_quad.png}", width = 10, height = 10)
 
 # Modelo 00 AR(1)-GARCH(1,1) ----------------------------------------------
 
@@ -810,13 +808,13 @@ ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\USA\desvio_cond_modelo3.png}", width = 20, height = 10)
+ggsave(r"{graficos\USA\desvio_cond_modelo5.png}", width = 20, height = 10)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\USA\desvio_incond_modelo3.png}", width = 20, height = 10)
+ggsave(r"{graficos\USA\desvio_incond_modelo5.png}", width = 20, height = 10)
 
 # Modelo 05 ---------------------------------------------------------------
 
@@ -967,20 +965,19 @@ ggplot(data, aes(x = time, y = sqrt(var_cond))) +
   labs(y = "Tempo", x = "Desvio Condicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\USA\desvio_cond_modelo3.png}", width = 20, height = 10)
+ggsave(r"{graficos\USA\desvio_cond_modelo5.png}", width = 20, height = 10)
 
 ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   labs(x = "Tempo", y = "Desvio Incondicional") + 
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
-ggsave(r"{graficos\USA\desvio_incond_modelo3.png}", width = 20, height = 10)
+ggsave(r"{graficos\USA\desvio_incond_modelo5.png}", width = 20, height = 10)
 
 # Resultados --------------------------------------------------------------
 
 medidas <- function(modelo, nome){
   modelo %>% select(llike, AIC, BIC) %>% mutate(Modelo = nome) %>% 
     select(Modelo, llike, AIC, BIC)
-  
 }
 
 resultado <- rbind(

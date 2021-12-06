@@ -1,0 +1,15 @@
+Modelos Apresentados no TCC 
+
+Modelo 00 - AR(1)-GARCH(1,1);
+
+Modelo 01 - 5 degraus (Intervenção 1, Intervenção 3, Intervenção 4, Intervenção 5 e Intervenção 6), mas com um Int suave entre Intervenção 4 e Intervenção 5;
+
+Modelo 03 - 4 degraus (Intervenção 1, Intervenção 3, Intervenção 4, Intervenção 5), mas com um Int suave entre Intervenção 4 e Intervenção 5;
+
+Modelo 09 - 4 degraus (Intervenção 1, Intervenção 3, Intervenção 4 e Intervenção 5), mas com uma Int suave entre Intervenção 4 e Intervenção 5; Intervenção 3 igual a Intervenção 5 (modelo nikkei);
+
+Modelo 10 - 4 degraus (Intervenção 1, Intervenção 2, Intervenção 4 e Intervenção 5), mas com uma Int suave entre Intervenção 4 e Intervenção 5; Intervenção 3 igual a Intervenção 5 (modelo nikkei);
+
+Modelo 11 - 5 degraus (Intervenção 1, Intervenção 2, Intervenção 3, Intervenção 4 e Intervenção 5), mas com uma Int suave entre Intervenção 4 e Intervenção 5; Intervenção 3 igual a Intervenção 5 (modelo nikkei);
+
+Modelo 12_1 - 4 degraus (Intervenção 1, Intervenção 2, Intervenção 4 e Intervenção 5), mas com uma Ints suave entre Intervenção 2 e Intervenção 4, Intervenção 4 e Intervenção 5; Intervenção 3 igual a Intervenção 5 (modelo nikkei);
