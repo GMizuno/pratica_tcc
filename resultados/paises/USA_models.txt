@@ -22,3 +22,4 @@ Modelo 04 - 6 degraus (Crise I, Lehman Brothers, Intervenção 2, Intervenção 
 
 Modelo 05 - 7 degraus (Crise I, Lehman Brothers, Intervenção 2, Intervenção 3 e Intervenção 5), mas com um Int suave entre Intervenção 2 e Intervenção 3;
 
+Modelo 06 - 3 degraus (Crise I, Lehman Brothers, Intervenção 2 e Intervenção 3 ), mas com , mas com um Int suave entre Intervenção 2 e Intervenção 3, alem de beta2=beta5;

@@ -39,11 +39,11 @@ RMSE
 
 Modelo 00 => 6.133511
 Modelo 01 => 6.125136
-Modelo 02 => 6.11429
+Modelo 02 => 6.114290
 Modelo 03 => 6.114563
 Modelo 04 => 6.025315
-Modelo 05 => 6.01322
-Modelo 06 => 6.01909
+Modelo 05 => 6.013220
+Modelo 06 => 6.019090
 Modelo 07 => 6.009471
 Modelo 08 => 6.014063
 

@@ -2,6 +2,8 @@ Modelos Apresentados no TCC
 
 Modelo 00 - AR(1)-GARCH(1,1);
 
+Modelo 01 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1 e Intervenção 2);
+
 Modelo 04 - 6 degraus (Crise I, Lehman Brothers, Intervenção 1, Intervenção 2 e Intervenção 3);
 
 Modelo 05 - 6 degraus (Crise I, Lehman Brothers, Intervenção 1, Intervenção 2 e Intervenção 3), mas com um Int suave entre Lehman Brothers e Intervenção 1;
@@ -12,4 +14,44 @@ Modelo 07 - 4 degraus (Crise I, Lehman Brothers, Intervenção 1 e Intervenção
 
 ADICIONAR MODELO 7_1
 
-Modelo 08 - 4 degraus (Crise I, Lehman Brothers, Intervenção 1 e Intervenção 4), mas com um Int suave entre Lehman Brothers e Intervenção 1 e Intervenção 4, alem de beta4=beta2 (|>);
+Modelo 08 - 4 degraus (Crise I, Lehman Brothers, Intervenção 1 e Intervenção 4), mas com um Int suave entre Lehman Brothers e Intervenção 1 e Intervenção 4, além de beta4=beta2 (|>);
+
+Modelo     llike      AIC      BIC
+  opt0 -2018.291 4046.581 4073.012
+  opt1 -2007.623 4033.246 4080.821
+  opt4 -1998.230 4016.459 4069.321
+  opt5 -1997.785 4015.570 4068.432
+  opt6 -1998.411 4012.822 4055.111
+  opt7 -1996.954 4009.908 4052.198
+opt7_1 -1995.891 4009.782 4057.358
+  opt8 -1997.211 4010.421 4052.711
+   
+RMSE
+
+Modelo 00 => 5.227186
+Modelo 01 => 5.116870
+Modelo 04 => 5.112934
+Modelo 05 => 5.025201
+Modelo 06 => 5.102240
+Modelo 07 => 5.095321
+Modelo 07 => 5.082736 (Ajuste Fino)
+Modelo 08 => 5.092945
+
+Cor
+
+Modelo 00 => 0.2243137
+Modelo 01 => 0.2565738
+Modelo 04 => 0.2577561
+Modelo 05 => 0.2817410
+Modelo 06 => 0.2609340
+Modelo 07 => 0.2609431
+Modelo 07 => 0.2653202 (Ajuste Fino)
+Modelo 08 => 0.2623529
+
+Modelo 00
+
+resid_pad = 
+resid_pad^2 = 
+
+Anderson-Darling = 
+Durbin Watson = 

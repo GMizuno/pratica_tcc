@@ -8,14 +8,18 @@ Modelo 04 - 4 degraus (Crise I, Lehman Brothers, Intervenção 1 e Intervenção
 
 Modelo 05 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1, Intervenção 3 e Intervenção 4), mas com int suave entre Lehman Brothers e Intervenção 1;
 
+Modelo 07 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1, Intervenção 3 e Intervenção 5), mas com int suave entre Lehman Brothers e Intervenção 1;
+
 Modelo 08 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1, Intervenção 3 e Intervenção 4), mas com int suave entre Lehman Brothers e Intervenção 1 e beta5 = beta2;
 
-      llike      AIC      BIC Modelo
-1 -2283,235 4576,471 4602,997   opt0
-4 -2271,893 4559,786 4602,228   opt3
-5 -2263,042 4542,083 4584,525   opt4
-6 -2259,366 4536,732 4584,478   opt5
-9 -2259,377 4534,755 4577,196   opt8
+    llike      AIC      BIC Modelo
+-2283,235 4576,471 4602,997   opt0
+-2271,893 4559,786 4602,228   opt3
+-2263,042 4542,083 4584,525   opt4
+-2259,366 4536,732 4584,478   opt5
+-2260,260 4538,519 4586,266   opt7
+-2259,377 4534,755 4577,196   opt8
+
 
 RMSE
 
@@ -23,6 +27,7 @@ Modelo 00 => 6,133511
 Modelo 03 => 6,114563
 Modelo 04 => 6,025315
 Modelo 05 => 6,013220
+Modelo 07 => 6,009471
 Modelo 08 => 6,014063
 
 Cor
@@ -31,6 +36,7 @@ Modelo 00 => 0,2070972
 Modelo 03 => 0,2169114
 Modelo 04 => 0,2388324
 Modelo 05 => 0,2468708
+Modelo 07 => 0,2483139
 Modelo 08 => 0,2467051
 
 Modelo 00
@@ -41,8 +47,6 @@ Modelo 00
 resid_pad; p-value = 0,7348
 resid_pad^2; p-value = 0,1931
 
-Shapiro-Wilk; p-value = 4,624e-09
-Jarque Bera; p-value < 2,2e-16
 Anderson-Darling; p-value = 6,241e-07
 Durbin Watson; 2,025173
 
@@ -55,8 +59,6 @@ Modelo 03
 resid_pad; p-value = 0,7366
 resid_pad^2; p-value = 0,6707
 
-Shapiro-Wilk; p-value = 3,693e-08
-Jarque Bera; p-value < 2,2e-16
 Anderson-Darling; p-value = 1,006e-05
 Durbin Watson; 2,032553
 
@@ -69,8 +71,6 @@ Modelo 04
 resid_pad; p-value = 0,7348
 resid_pad^2; p-value = 0,1931
 
-Shapiro-Wilk; p-value = 3,693e-08
-Jarque Bera; p-value < 2,2e-16
 Anderson-Darling; p-value = 6,241e-07
 Durbin Watson; 2,025173
 
@@ -83,10 +83,20 @@ Modelo 05
 resid_pad; p-value = 0,8824
 resid_pad^2; p-value = 0,4748
 
-Shapiro-Wilk; p-value = 1,013e-06
-Jarque Bera; p-value = 5,014e-13
 Anderson-Darling; p-value = 0,0002584
 Durbin Watson; 2,038812
+
+
+Modelo 07
+
+       alpha      beta          ar deltaMedia deltaVar1 deltaVar2 deltaVar3 deltaVar4 deltaVar5 ite    llike num_par      AIC      BIC
+1 0,06849624 0,8551907 -0,07146575 0,06281065 -2,985033 -1,843581  0,427898 -1,184397 -1,900653  20 -2260,26       9 4538,519 4586,266
+
+resid_pad; p-value = 0,8661
+resid_pad^2; p-value = 0,409
+
+Anderson-Darling; p-value = 0,0002915
+Durbin Watson; 2,041404
 
 
 Modelo 08
@@ -97,8 +107,6 @@ Modelo 08
 resid_pad; p-value = 0,8822
 resid_pad^2; p-value = 0,4751
 
-Shapiro-Wilk; p-value = 9,319e-07
-Jarque Bera; p-value = 3,645e-13
 Anderson-Darling; p-value = 0,0002476
 Durbin Watson; 2,03942
 
@@ -106,4 +114,4 @@ Teste LR
 
 > teste_lr(opt5, opt8$data)
       lambda    pvalue df
-1 0.02292645 0.8796485  1
+1 0,02292645 0,8796485  1

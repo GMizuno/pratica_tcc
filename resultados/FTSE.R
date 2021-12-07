@@ -1643,17 +1643,19 @@ medidas <- function(modelo, nome){
     select(Modelo, llike, AIC, BIC)
 }
 
-resultado <- rbind(medidas(opt1, "opt1"),
-                   medidas(opt2, "opt2"),
-                   medidas(opt3, "opt3"),
-                   medidas(opt4, "opt4"),
-                   medidas(opt5, "opt5"),
-                   medidas(opt6, "opt6"),
-                   medidas(opt7, "opt7"),
-                   medidas(opt7_1, "opt7_1"),
-                   medidas(opt8$data, "opt8"),
-                   medidas(opt8_1$data, "opt8_1")
-                   )
+resultado <- rbind(
+  medidas(opt0, "opt0"),
+  medidas(opt1, "opt1"),
+  medidas(opt2, "opt2"),
+  medidas(opt3, "opt3"),
+  medidas(opt4, "opt4"),
+  medidas(opt5, "opt5"),
+  medidas(opt6, "opt6"),
+  medidas(opt7, "opt7"),
+  medidas(opt7_1, "opt7_1"),
+  medidas(opt8$data, "opt8"),
+  medidas(opt8_1$data, "opt8_1")
+)
 
 resultado
 resultado %>% arrange(AIC)

@@ -122,5 +122,5 @@ GARCH(2,2) => Muito instável
 
 Ajuste Fino da parte ARCH/GARCH - Modelo 8
 
-       alpha      beta deltaMedia deltaVar1 deltaVar2  deltaVar3 ite     llike num_par      AIC      BIC
-1 0.08868751 0.8321647 0.05543255 -3.367956 -1.897132 0.07534843  22 -2002.858       6 4017.715 4049.432
+     alpha1     alpha2      beta deltaMedia deltaVar1 deltaVar2 deltaVar3 ite    llike num_par     AIC      BIC
+1 0.0560086 0.05311098 0.7916687 0.05608322 -3.131506 -1.678221 0.3064866  28 -2001.58       7 4017.16 4054.163

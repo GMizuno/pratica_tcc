@@ -135,10 +135,13 @@ acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 # FAC e FACP - FIM
 
-# Poder preditivo - INICIO
 poder_pred(yt, media_cond_mod0, var_cond_mod0)$rmse
 cor(var_cond_mod0[-(1:50)], ((yt - media_cond_mod0)^2)[-(1:50)])^2
-# Poder preditivo - FIM
+
+Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
+Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
+
+(dw <- sum(diff(yt - media_cond_mod0)^2)/sum((yt - media_cond_mod0)^2))
 
 # QQplot e Histograma - INICIO
 ggplot(resid_pad_data, aes(sample = resid_pad)) + 
@@ -157,14 +160,10 @@ ggplot(resid_pad_data, aes(x = resid_pad)) +
 
 # TH - INICIO
 
-Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
-Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
-
 shapiro.test(resid_pad_data$resid_pad)
 tseries::jarque.bera.test(resid_pad_data$resid_pad)
 nortest::ad.test(resid_pad_data$resid_pad)
 
-(dw <- sum(diff(yt - media_cond_mod0)^2)/sum((yt - media_cond_mod0)^2))
 moments::kurtosis(resid_pad_mod0)
 moments::skewness(resid_pad_mod0)
 
@@ -600,10 +599,8 @@ acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 # FAC e FACP - FIM
 
-# Poder preditivo - INICIO
 poder_pred(yt, media_cond_mod3, var_cond_mod3)$rmse
 cor(var_cond_mod3[-(1:50)], ((yt - media_cond_mod3)^2)[-(1:50)])^2
-# Poder preditivo - FIM
 
 Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
 Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
@@ -772,10 +769,13 @@ acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 # FAC e FACP - FIM
 
-# Poder preditivo - INICIO
 poder_pred(yt, media_cond_mod4, var_cond_mod4)$rmse
 cor(var_cond_mod4[-(1:50)], ((yt - media_cond_mod4)^2)[-(1:50)])^2
-# Poder preditivo - FIM
+
+Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
+Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
+
+(dw <- sum(diff(yt - media_cond_mod4)^2)/sum((yt - media_cond_mod4)^2))
 
 # QQplot e Histograma - INICIO
 ggplot(resid_pad_data, aes(sample = resid_pad)) + 
@@ -794,14 +794,10 @@ ggplot(resid_pad_data, aes(x = resid_pad)) +
 
 # TH - INICIO
 
-Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
-Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
-
 shapiro.test(resid_pad_data$resid_pad)
 tseries::jarque.bera.test(resid_pad_data$resid_pad)
 nortest::ad.test(resid_pad_data$resid_pad)
 
-(dw <- sum(diff(yt - media_cond_mod4)^2)/sum((yt - media_cond_mod4)^2))
 moments::kurtosis(resid_pad_mod4)
 moments::skewness(resid_pad_mod4)
 
@@ -942,10 +938,13 @@ acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 # FAC e FACP - FIM
 
-# Poder preditivo - INICIO
 poder_pred(yt, media_cond_mod5, var_cond_mod5)$rmse
 cor(var_cond_mod5[-(1:50)], ((yt - media_cond_mod5)^2)[-(1:50)])^2
-# Poder preditivo - FIM
+
+Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
+Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
+
+(dw <- sum(diff(yt - media_cond_mod5)^2)/sum((yt - media_cond_mod5)^2))
 
 # QQplot e Histograma - INICIO
 ggplot(resid_pad_data, aes(sample = resid_pad)) + 
@@ -964,14 +963,10 @@ ggplot(resid_pad_data, aes(x = resid_pad)) +
 
 # TH - INICIO
 
-Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
-Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
-
 shapiro.test(resid_pad_data$resid_pad)
 tseries::jarque.bera.test(resid_pad_data$resid_pad)
 nortest::ad.test(resid_pad_data$resid_pad)
 
-(dw <- sum(diff(yt - media_cond_mod5)^2)/sum((yt - media_cond_mod5)^2))
 moments::kurtosis(resid_pad_mod5)
 moments::skewness(resid_pad_mod5)
 
@@ -1114,10 +1109,13 @@ acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 # FAC e FACP - FIM
 
-# Poder preditivo - INICIO
 poder_pred(yt, media_cond_mod6, var_cond_mod6)$rmse
 cor(var_cond_mod6[-(1:50)], ((yt - media_cond_mod6)^2)[-(1:50)])^2
-# Poder preditivo - FIM
+
+Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
+Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
+
+(dw <- sum(diff(yt - media_cond_mod6)^2)/sum((yt - media_cond_mod6)^2))
 
 # QQplot e Histograma - INICIO
 ggplot(resid_pad_data, aes(sample = resid_pad)) + 
@@ -1136,14 +1134,10 @@ ggplot(resid_pad_data, aes(x = resid_pad)) +
 
 # TH - INICIO
 
-Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
-Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
-
 shapiro.test(resid_pad_data$resid_pad)
 tseries::jarque.bera.test(resid_pad_data$resid_pad)
 nortest::ad.test(resid_pad_data$resid_pad)
 
-(dw <- sum(diff(yt - media_cond_mod6)^2)/sum((yt - media_cond_mod6)^2))
 moments::kurtosis(resid_pad_mod6)
 moments::skewness(resid_pad_mod6)
 
@@ -1585,10 +1579,13 @@ acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 # FAC e FACP - FIM
 
-# Poder preditivo - INICIO
 poder_pred(yt, media_cond_mod9, var_cond_mod9)$rmse
 cor(var_cond_mod9[-(1:50)], ((yt - media_cond_mod9)^2)[-(1:50)])^2
-# Poder preditivo - FIM
+
+Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
+Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
+
+(dw <- sum(diff(yt - media_cond_mod9)^2)/sum((yt - media_cond_mod9)^2))
 
 # QQplot e Histograma - INICIO
 ggplot(resid_pad_data, aes(sample = resid_pad)) + 
@@ -1607,14 +1604,10 @@ ggplot(resid_pad_data, aes(x = resid_pad)) +
 
 # TH - INICIO
 
-Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
-Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
-
 shapiro.test(resid_pad_data$resid_pad)
 tseries::jarque.bera.test(resid_pad_data$resid_pad)
 nortest::ad.test(resid_pad_data$resid_pad)
 
-(dw <- sum(diff(yt - media_cond_mod9)^2)/sum((yt - media_cond_mod9)^2))
 moments::kurtosis(resid_pad_mod9)
 moments::skewness(resid_pad_mod9)
 

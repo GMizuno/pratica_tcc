@@ -38,8 +38,6 @@ Modelo     llike      AIC      BIC
   opt1 -2306.237 4626.475 4663.569
   opt3 -2304.965 4625.929 4668.322
 
-Modelos Finais
-
 RMSE
 
 Modelo 00 => 6.208658
