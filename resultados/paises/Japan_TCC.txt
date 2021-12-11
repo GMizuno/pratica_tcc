@@ -17,32 +17,122 @@ ADICIONAR MODELO 12
 Modelo 12_1 - 4 degraus (Intervenção 1, Intervenção 2, Intervenção 4 e Intervenção 5), mas com uma Ints suave entre Intervenção 2 e Intervenção 4, Intervenção 4 e Intervenção 5; Intervenção 3 igual a Intervenção 5 (modelo nikkei);
 
  Modelo     llike      AIC      BIC
-   opt0 -2018.291 4046.581 4073.012
-   opt1 -2408.879 4835.758 4883.071
-   opt3 -2409.418 4834.837 4876.893
-   opt9 -2409.428 4832.856 4869.655
-  opt10 -2405.821 4825.643 4862.442
-  opt11 -2404.836 4825.672 4867.728
-  opt12 -2404.801 4823.602 4860.401
-opt12_1 -2402.925 4821.850 4863.906
+   opt0 -2018,291 4046,581 4073,012
+   opt1 -2408,879 4835,758 4883,071
+   opt3 -2409,418 4834,837 4876,893
+   opt9 -2409,428 4832,856 4869,655
+  opt10 -2405,821 4825,643 4862,442
+  opt11 -2404,836 4825,672 4867,728
+  opt12 -2404,801 4823,602 4860,401
+opt12_1 -2402,925 4821,850 4863,906
 
 
 RMSE
 
-Modelo 01 => 7.634819
-Modelo 03 => 7.63187
-Modelo 09 => 7.633231
-Modelo 10 => 7.925752
-Modelo 11 => 7.615103
-Modelo 12 => 7.671767
-Modelo 12 => 7.605349 (Ajuste Fino)
+Modelo 00 => 8,070432
+Modelo 01 => 7,634819
+Modelo 03 => 7,631870
+Modelo 09 => 7,633231
+Modelo 10 => 7,925752
+Modelo 11 => 7,615103
+Modelo 12 => 7,671767
+Modelo 12 => 7,605349 (Ajuste Fino)
 
 Cor
 
-Modelo 01 => 0.3446077
-Modelo 03 => 0.3411719
-Modelo 09 => 0.3417239
-Modelo 10 => 0.299666
-Modelo 11 => 0.3418193
-Modelo 12 => 0.3445408
-Modelo 12 => 0.3567573(Ajuste Fino)
+Modelo 00 => 0,271216
+Modelo 01 => 0,3446077
+Modelo 03 => 0,3411719
+Modelo 09 => 0,3417239
+Modelo 10 => 0,2996660
+Modelo 11 => 0,3418193
+Modelo 12 => 0,3445408
+Modelo 12 => 0,3567573 (Ajuste Fino)
+
+Modelo 00
+
+      omega     alpha     beta          ar deltaMedia ite     llike num_par      AIC      BIC
+1 0,0250533 0,1048932 0,888245 -0,04640599  0,0591856  33 -2413,138       5 4836,276 4862,561
+
+resid_pad = 0,5359
+resid_pad^2 = 0,7681
+
+Anderson-Darling = 8,655e-09
+Durbin Watson = 2,00066
+
+Modelo 01
+
+       alpha      beta          ar deltaMedia deltaVar1 deltaVar2 deltaVar3 deltaVar4 deltaVar5 ite     llike num_par      AIC      BIC
+1 0,09016555 0,8909292 -0,04486795 0,05641978 -3,463132 -2,607609 -1,459477 -2,311151 -2,827593  19 -2408,879       9 4835,758 4883,071
+
+resid_pad = 0,5419
+resid_pad^2 = 0,8525
+
+Anderson-Darling = 2,389e-08
+Durbin Watson = 2,002035
+
+Modelo 03
+
+       alpha      beta          ar deltaMedia deltaVar1 deltaVar2 deltaVar3 deltaVar4 ite     llike num_par      AIC      BIC
+1 0,09152955 0,8930339 -0,04413051 0,05683367 -3,565001  -2,80987 -1,764134 -2,875544  17 -2409,418       8 4834,837 4876,893
+
+resid_pad = 0,5686
+resid_pad^2 = 0,8309
+
+Anderson-Darling = 2,205e-08
+Durbin Watson = 2,003757
+
+Modelo 09
+
+       alpha      beta          ar deltaMedia deltaVar1 deltaVar2 deltaVar3 ite     llike num_par      AIC      BIC
+1 0,09180713 0,8927708 -0,04414108 0,05689914 -3,565848 -2,844406 -1,784686  15 -2409,428       7 4832,856 4869,655
+
+resid_pad = 0,5666
+resid_pad^2 = 0,8277
+
+Anderson-Darling = 2,152e-08
+Durbin Watson = 2,00409
+
+Modelo 10
+
+       alpha      beta          ar deltaMedia deltaVar1 deltaVar2  deltaVar3 ite     llike num_par      AIC      BIC
+1 0,08122025 0,9015463 -0,04581646 0,05556213 -3,592163 -2,854856 -0,9591981  24 -2405,821       7 4825,643 4862,442
+
+resid_pad = 0,5684
+resid_pad^2 = 0,84
+
+Anderson-Darling = 9,506e-08
+Durbin Watson = 2,002271
+
+Modelo 11
+
+       alpha      beta         ar deltaMedia deltaVar1 deltaVar2 deltaVar3  deltaVar4 ite     llike num_par      AIC      BIC
+1 0,07906988 0,9029553 -0,0445608 0,05465651 -3,582759 -2,830516 -1,198972 -0,4959401  18 -2404,836       8 4825,672 4867,728
+
+resid_pad = 0,5697
+resid_pad^2 = 0,828
+
+Anderson-Darling = 9,817e-08
+Durbin Watson = 2,0040762
+
+Modelo 12
+
+       alpha      beta         ar deltaMedia deltaVar1 deltaVar2  deltaVar3 ite     llike num_par      AIC      BIC
+1 0,07828475 0,9053151 -0,0449127 0,05470114 -3,642745 -2,908323 -0,7634816  16 -2404,801       7 4823,602 4860,401
+
+resid_pad = 0,5755
+resid_pad^2 = 0,8734
+
+Anderson-Darling = 9,607e-08
+Durbin Watson = 2,003751
+
+Modelo 12_1
+
+      alpha1     alpha2     beta          ar deltaMedia deltaVar1 deltaVar2 deltaVar3 ite     llike num_par     AIC      BIC
+1 0,02181915 0,07067852 0,883904 -0,04247423 0,05440538 -3,316662 -2,577159  -0,37982  33 -2402,925       8 4821,85 4863,906
+
+resid_pad = 0,5955
+resid_pad^2 = 0,9239
+
+Anderson-Darling = 2,158e-07
+Durbin Watson = 2,008592

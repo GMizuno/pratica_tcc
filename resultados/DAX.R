@@ -59,16 +59,16 @@ ggplot(DAX, aes(x = Index, y = 100 * dax)) +
   theme_minimal() 
 ggsave(r"{graficos\German\ger_serie.png}", width = 20, height = 10)
 
-acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+acf(yt, plot = F) %>% autoplot(main='') + ylim(c(-1,1)) + ggtitle("")
 ggsave(r"{graficos\German\ger_fac_serie.png}", width = 10, height = 10)
 
-pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+pacf(yt, plot = F) %>% autoplot(main='') + ylim(c(-1,1)) + ggtitle("")
 ggsave(r"{graficos\German\ger_facp_serie.png}", width = 10, height = 10)
 
-acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+acf(yt^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1)) + ggtitle("")
 ggsave(r"{graficos\German\ger_fac_quad.png}", width = 10, height = 10)
 
-pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+pacf(yt^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1)) + ggtitle("")
 ggsave(r"{graficos\German\ger_facp_quad.png}", width = 10, height = 10)
 
 # Modelo 00 AR(1)-GARCH(1,1) ----------------------------------------------
@@ -128,11 +128,15 @@ var(resid_pad_data$resid_pad)
 # Estimando e residuos - FIM
 
 # FAC e FACP - INICIO
-acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_fac_modelo0_serie.png}", width = 10, height = 10)
+pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_facp_modelo0_serie.png}", width = 10, height = 10)
 
-acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_fac_modelo0_quad.png}", width = 10, height = 10)
+pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_facp_modelo0_quad.png}", width = 10, height = 10)
 # FAC e FACP - FIM
 
 poder_pred(yt, media_cond_mod0, var_cond_mod0)$rmse
@@ -276,11 +280,11 @@ var(resid_pad_data$resid_pad)
 # Estimando e residuos - FIM
 
 # FAC e FACP - INICIO
-acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
 
-acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
 # FAC e FACP - FIM
 
 # Poder preditivo - INICIO
@@ -434,11 +438,11 @@ var(resid_pad_data$resid_pad)
 # Estimando e residuos - FIM
 
 # FAC e FACP - INICIO
-acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
 
-acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
 # FAC e FACP - FIM
 
 # Poder preditivo - INICIO
@@ -592,11 +596,15 @@ var(resid_pad_data$resid_pad)
 # Estimando e residuos - FIM
 
 # FAC e FACP - INICIO
-acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_fac_modelo3_serie.png}", width = 10, height = 10)
+pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_facp_modelo3_serie.png}", width = 10, height = 10)
 
-acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_fac_modelo3_quad.png}", width = 10, height = 10)
+pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_facp_modelo3_quad.png}", width = 10, height = 10)
 # FAC e FACP - FIM
 
 poder_pred(yt, media_cond_mod3, var_cond_mod3)$rmse
@@ -762,11 +770,15 @@ var(resid_pad_data$resid_pad)
 # Estimando e residuos - FIM
 
 # FAC e FACP - INICIO
-acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_fac_modelo4_serie.png}", width = 10, height = 10)
+pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_facp_modelo4_serie.png}", width = 10, height = 10)
 
-acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_fac_modelo4_quad.png}", width = 10, height = 10)
+pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_facp_modelo4_quad.png}", width = 10, height = 10)
 # FAC e FACP - FIM
 
 poder_pred(yt, media_cond_mod4, var_cond_mod4)$rmse
@@ -931,11 +943,15 @@ var(resid_pad_data$resid_pad)
 # Estimando e residuos - FIM
 
 # FAC e FACP - INICIO
-acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_fac_modelo5_serie.png}", width = 10, height = 10)
+pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_facp_modelo5_serie.png}", width = 10, height = 10)
 
-acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_fac_modelo5_quad.png}", width = 10, height = 10)
+pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_facp_modelo5_quad.png}", width = 10, height = 10)
 # FAC e FACP - FIM
 
 poder_pred(yt, media_cond_mod5, var_cond_mod5)$rmse
@@ -1102,11 +1118,15 @@ var(resid_pad_data$resid_pad)
 # Estimando e residuos - FIM
 
 # FAC e FACP - INICIO
-acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_fac_modelo6_serie.png}", width = 10, height = 10)
+pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_facp_modelo6_serie.png}", width = 10, height = 10)
 
-acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_fac_modelo6_quad.png}", width = 10, height = 10)
+pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_facp_modelo6_quad.png}", width = 10, height = 10)
 # FAC e FACP - FIM
 
 poder_pred(yt, media_cond_mod6, var_cond_mod6)$rmse
@@ -1272,11 +1292,11 @@ var(resid_pad_data$resid_pad)
 # Estimando e residuos - FIM
 
 # FAC e FACP - INICIO
-acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
 
-acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
 # FAC e FACP - FIM
 
 # Poder preditivo - INICIO
@@ -1442,11 +1462,11 @@ var(resid_pad_data$resid_pad)
 # Estimando e residuos - FIM
 
 # FAC e FACP - INICIO
-acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
 
-acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
 # FAC e FACP - FIM
 
 # Poder preditivo - INICIO
@@ -1572,11 +1592,15 @@ var(resid_pad_data$resid_pad)
 # Estimando e residuos - FIM
 
 # FAC e FACP - INICIO
-acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_fac_modelo9_serie.png}", width = 10, height = 10)
+pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_facp_modelo9_serie.png}", width = 10, height = 10)
 
-acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_fac_modelo9_quad.png}", width = 10, height = 10)
+pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
+ggsave(r"{graficos\German\ger_facp_modelo9_quad.png}", width = 10, height = 10)
 # FAC e FACP - FIM
 
 poder_pred(yt, media_cond_mod9, var_cond_mod9)$rmse

@@ -56,11 +56,11 @@ Modelo 03
        alpha     beta          ar deltaMedia deltaVar1 deltaVar2  deltaVar3 deltaVar4 ite     llike num_par      AIC      BIC
 1 0,08202727 0,880656 -0,07624259 0,06246861 -3,532997 -2,535221 -0,7941243 -2,072208  15 -2271,893       8 4559,786 4602,228
 
-resid_pad; p-value = 0,7366
-resid_pad^2; p-value = 0,6707
+resid_pad = 0,7366
+resid_pad^2 = 0,6707
 
-Anderson-Darling; p-value = 1,006e-05
-Durbin Watson; 2,032553
+Anderson-Darling = 1,006e-05
+Durbin Watson = 2,032553
 
 
 Modelo 04
@@ -68,8 +68,8 @@ Modelo 04
        alpha      beta         ar deltaMedia deltaVar1 deltaVar2 deltaVar3 deltaVar4 ite     llike num_par      AIC      BIC
 1 0,07046106 0,8590801 -0,0742123 0,06355357 -3,051768 -1,915019 0,4536915  -1,86554  28 -2263,042       8 4542,083 4584,525
 
-resid_pad; p-value = 0,7348
-resid_pad^2; p-value = 0,1931
+resid_pad = 0,7348
+resid_pad^2 = 0,1931
 
 Anderson-Darling; p-value = 6,241e-07
 Durbin Watson; 2,025173
@@ -80,11 +80,11 @@ Modelo 05
        alpha      beta          ar deltaMedia deltaVar1 deltaVar2 deltaVar3  deltaVar4 deltaVar5 ite     llike num_par      AIC      BIC
 1 0,06683586 0,8601073 -0,07269844 0,06249259 -3,027505 -1,868438 0,3453421 -0,9457539 -1,902288  37 -2259,366       9 4536,732 4584,478
 
-resid_pad; p-value = 0,8824
-resid_pad^2; p-value = 0,4748
+resid_pad = 0,8824
+resid_pad^2 = 0,4748
 
-Anderson-Darling; p-value = 0,0002584
-Durbin Watson; 2,038812
+Anderson-Darling = 0,0002584
+Durbin Watson = 2,038812
 
 
 Modelo 07
@@ -92,11 +92,11 @@ Modelo 07
        alpha      beta          ar deltaMedia deltaVar1 deltaVar2 deltaVar3 deltaVar4 deltaVar5 ite    llike num_par      AIC      BIC
 1 0,06849624 0,8551907 -0,07146575 0,06281065 -2,985033 -1,843581  0,427898 -1,184397 -1,900653  20 -2260,26       9 4538,519 4586,266
 
-resid_pad; p-value = 0,8661
-resid_pad^2; p-value = 0,409
+resid_pad = 0,8661
+resid_pad^2 = 0,409
 
-Anderson-Darling; p-value = 0,0002915
-Durbin Watson; 2,041404
+Anderson-Darling = 0,0002915
+Durbin Watson = 2,041404
 
 
 Modelo 08
@@ -104,11 +104,11 @@ Modelo 08
        alpha      beta          ar deltaMedia deltaVar1 deltaVar2 deltaVar3  deltaVar4 ite     llike num_par      AIC      BIC
 1 0,06699794 0,8597707 -0,07267389 0,06241893 -3,025085 -1,878939 0,3468039 -0,9410369  18 -2259,377       8 4534,755 4577,196
 
-resid_pad; p-value = 0,8822
-resid_pad^2; p-value = 0,4751
+resid_pad = 0,8822
+resid_pad^2 = 0,4751
 
-Anderson-Darling; p-value = 0,0002476
-Durbin Watson; 2,03942
+Anderson-Darling = 0,0002476
+Durbin Watson = 2,03942
 
 Teste LR
 

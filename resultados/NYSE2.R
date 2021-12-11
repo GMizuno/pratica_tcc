@@ -4,8 +4,6 @@ source("src/modelo_est.R")
 source("src/Modelo_usa.R")
 
 library(zoo)
-library(quantmod)
-library(imputeTS)
 library(ggplot2)
 library(dplyr)
 
@@ -1127,9 +1125,6 @@ ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   geom_line(size = 1L, colour = "red") + 
   geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
 ggsave(r"{graficos\USA\desvio_incond_modelo3_1.png}", width = 20, height = 10)
-
-
-
 
 # Modelo 06 ---------------------------------------------------------------
 

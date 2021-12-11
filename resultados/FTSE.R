@@ -4,8 +4,6 @@ source("src/modelo_est.R")
 source("src/Modelo_uk.R")
 
 library(zoo)
-library(quantmod)
-library(imputeTS)
 library(ggplot2)
 library(dplyr)
 
@@ -162,9 +160,6 @@ ggplot(resid_pad_data, aes(x = resid_pad)) +
 # QQplot e Histograma - FIM
 
 # TH - INICIO
-
-Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
-Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
 
 shapiro.test(resid_pad_data$resid_pad)
 tseries::jarque.bera.test(resid_pad_data$resid_pad)
@@ -915,6 +910,61 @@ var_incond_mod5 <- var_indcond_sauve(
   kvar = kvar
 )
 
+resid_pad_mod5 <- (yt - media_cond_mod5)/sqrt(var_cond_mod5)
+resid_pad_mod5 <- resid_pad_mod5[-(1:50)]
+
+resid_pad_data <- data.frame(resid_pad = resid_pad_mod5, 
+                             time = seq_along(resid_pad_mod5))
+resid_pad_data <- resid_pad_data[-1, ]
+
+plot(resid_pad_mod5, type = 'l')
+plot(var_incond_mod5, type = 'l')
+
+mean(resid_pad_data$resid_pad)
+var(resid_pad_data$resid_pad)
+
+# Estimando e residuos - FIM
+
+# FAC e FACP - INICIO
+acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+
+acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+# FAC e FACP - FIM
+
+poder_pred(yt, media_cond_mod5, var_cond_mod5)$rmse
+cor(var_cond_mod5[-(1:50)], ((yt - media_cond_mod5)^2)[-(1:50)])^2
+
+Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
+Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
+
+(dw <- sum(diff(yt - media_cond_mod5)^2)/sum((yt - media_cond_mod5)^2))
+
+# QQplot e Histograma - INICIO
+ggplot(resid_pad_data, aes(sample = resid_pad)) + 
+  stat_qq() + 
+  geom_abline(slope = 1, intercept = 0) + 
+  ylim(-6,6) + 
+  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6))
+
+ggplot(resid_pad_data, aes(x = resid_pad)) + 
+  geom_histogram(aes(y =..density..), fill = "#0c4c8a") +
+  theme_minimal() +
+  labs(x = "Residuos padronizados", y = 'Densidade') + 
+  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
+  stat_function(fun = dnorm, args = list(0, 1), color = 'red')
+# QQplot e Histograma - FIM
+
+# TH - INICIO
+
+shapiro.test(resid_pad_data$resid_pad)
+tseries::jarque.bera.test(resid_pad_data$resid_pad)
+nortest::ad.test(resid_pad_data$resid_pad)
+
+moments::kurtosis(resid_pad_mod5)
+moments::skewness(resid_pad_mod5)
+
 # Graficos de linha para esp_cond e var_cond - INICIO
 data <- data.frame(
   yt = yt,
@@ -943,7 +993,6 @@ ggplot(data, aes(x = time, y = sqrt(var_incond))) +
   geom_line(aes(x = time, y = abs(yt-med_incond)), colour = "blue", alpha = .5)
 ggsave(r"{graficos\UK\desvio_incond_modelo5.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
-
 
 # Modelo 06 ---------------------------------------------------------------
 
@@ -981,6 +1030,61 @@ dummy2 <- as.matrix(dummy_on_off(n, c(1, 883, 1190, 1330),
                                  c(882, 1186, 1190, n)))
 
 (opt6 <- estimando(llike_suave, pars))
+
+resid_pad_mod6 <- (yt - media_cond_mod6)/sqrt(var_cond_mod6)
+resid_pad_mod6 <- resid_pad_mod6[-(1:50)]
+
+resid_pad_data <- data.frame(resid_pad = resid_pad_mod6, 
+                             time = seq_along(resid_pad_mod6))
+resid_pad_data <- resid_pad_data[-1, ]
+
+plot(resid_pad_mod6, type = 'l')
+plot(var_incond_mod6, type = 'l')
+
+mean(resid_pad_data$resid_pad)
+var(resid_pad_data$resid_pad)
+
+# Estimando e residuos - FIM
+
+# FAC e FACP - INICIO
+acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+
+acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+# FAC e FACP - FIM
+
+poder_pred(yt, media_cond_mod6, var_cond_mod6)$rmse
+cor(var_cond_mod6[-(1:50)], ((yt - media_cond_mod6)^2)[-(1:50)])^2
+
+Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
+Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
+
+(dw <- sum(diff(yt - media_cond_mod6)^2)/sum((yt - media_cond_mod6)^2))
+
+# QQplot e Histograma - INICIO
+ggplot(resid_pad_data, aes(sample = resid_pad)) + 
+  stat_qq() + 
+  geom_abline(slope = 1, intercept = 0) + 
+  ylim(-6,6) + 
+  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6))
+
+ggplot(resid_pad_data, aes(x = resid_pad)) + 
+  geom_histogram(aes(y =..density..), fill = "#0c4c8a") +
+  theme_minimal() +
+  labs(x = "Residuos padronizados", y = 'Densidade') + 
+  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
+  stat_function(fun = dnorm, args = list(0, 1), color = 'red')
+# QQplot e Histograma - FIM
+
+# TH - INICIO
+
+shapiro.test(resid_pad_data$resid_pad)
+tseries::jarque.bera.test(resid_pad_data$resid_pad)
+nortest::ad.test(resid_pad_data$resid_pad)
+
+moments::kurtosis(resid_pad_mod6)
+moments::skewness(resid_pad_mod6)
 
 media_cond_mod6 <- esp_cond_sauve(
   data = yt,
