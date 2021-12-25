@@ -2,6 +2,7 @@ source("src/util.R")
 source("src/Analise de reisduos.R")
 source("src/modelo_est.R")
 source("src/Modelo_usa.R")
+source("src/graficos.R")
 
 library(zoo)
 library(ggplot2)
@@ -175,7 +176,7 @@ data <- data.frame(
   yt = yt,
   one_step_predict = media_cond_mod0,
   var_cond = var_cond_mod0,
-  time = 1:n
+  time = NYSE$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -184,10 +185,7 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(x = "Tempo", y = "Desvio Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue")
+grafico_var_cond(data)
 ggsave(r"{graficos\USA\desvio_cond_modelo0.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
@@ -318,7 +316,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod1,
   var_incond = var_incond_mod1,
   var_cond = var_cond_mod1,
-  time = 1:n
+  time = NYSE$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -327,16 +325,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Desvio Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt-one_step_predict)), colour = "blue", alpha = .5)
+grafico_var_cond(data)
 ggsave(r"{graficos\USA\desvio_cond_modelo1.png}", width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Desvio Incondicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt-opt1$deltaMedia)), colour = "blue", alpha = .5) 
+grafico_var_incond(data)
 ggsave(r"{graficos\USA\desvio_incond_modelo1.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
@@ -478,7 +470,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod2,
   var_incond = var_incond_mod2,
   var_cond = var_cond_mod2,
-  time = 1:n
+  time = NYSE$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -487,16 +479,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Desvio Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+grafico_var_cond(data)
 ggsave(r"{graficos\USA\desvio_cond_modelo2.png}", width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Desvio Incondicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+grafico_var_incond(data)
 ggsave(r"{graficos\USA\desvio_incond_modelo2.png}", width = 20, height = 10)
 
 
@@ -636,7 +622,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod3,
   var_incond = var_incond_mod3,
   var_cond = var_cond_mod3,
-  time = 1:n
+  time = NYSE$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -645,16 +631,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Desvio Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+grafico_var_cond(data)
 ggsave(r"{graficos\USA\desvio_cond_modelo3.png}", width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Desvio Incondicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+grafico_var_incond(data)
 ggsave(r"{graficos\USA\desvio_incond_modelo3.png}", width = 20, height = 10)
 
 # Modelo 04 ---------------------------------------------------------------
@@ -793,7 +773,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod4,
   var_incond = var_incond_mod4,
   var_cond = var_cond_mod4,
-  time = 1:n
+  time = NYSE$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -802,16 +782,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Desvio Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+grafico_var_cond(data)
 ggsave(r"{graficos\USA\desvio_cond_modelo4.png}", width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Desvio Incondicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+grafico_var_incond(data)
 ggsave(r"{graficos\USA\desvio_incond_modelo4.png}", width = 20, height = 10)
 
 # Modelo 05 ---------------------------------------------------------------
@@ -950,7 +924,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod5,
   var_incond = var_incond_mod5,
   var_cond = var_cond_mod5,
-  time = 1:n
+  time = NYSE$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -959,16 +933,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Desvio Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+grafico_var_cond(data)
 ggsave(r"{graficos\USA\desvio_cond_modelo5.png}", width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Desvio Incondicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+grafico_var_incond(data)
 ggsave(r"{graficos\USA\desvio_incond_modelo5.png}", width = 20, height = 10)
 
 # Ajuste Fino - Modelo 03 -------------------------------------------------
@@ -1105,7 +1073,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod3_1,
   var_incond = var_incond_mod3_1,
   var_cond = var_cond_mod3_1,
-  time = 1:n
+  time = NYSE$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -1114,16 +1082,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Desvio Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+grafico_var_cond(data)
 ggsave(r"{graficos\USA\desvio_cond_modelo3_1.png}", width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Desvio Incondicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+grafico_var_incond(data)
 ggsave(r"{graficos\USA\desvio_incond_modelo3_1.png}", width = 20, height = 10)
 
 # Modelo 06 ---------------------------------------------------------------
@@ -1220,7 +1182,7 @@ data <- data.frame(
   var_incond = var_incond_mod6,
   var_cond = var_cond_mod6,
   med_incond = opt6$data$deltaMedia,
-  time = 1:n
+  time = NYSE$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -1229,16 +1191,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Variancia Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+grafico_var_cond(data)
 ggsave(r"{graficos\USA\desvio_cond_modelo6.png}", width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Variancia Incondicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt-med_incond)), colour = "blue", alpha = .5) 
+grafico_var_incond(data)
 ggsave(r"{graficos\USA\desvio_incond_modelo6.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
@@ -1335,7 +1291,7 @@ data <- data.frame(
   var_incond = var_incond_mod6_1,
   var_cond = var_cond_mod6_1,
   med_incond = opt6_1$data$deltaMedia,
-  time = 1:n
+  time = NYSE$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -1344,16 +1300,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Variancia Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+grafico_var_cond(data)
 ggsave(r"{graficos\USA\desvio_cond_modelo6_1.png}", width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Variancia Incondicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt-med_incond)), colour = "blue", alpha = .5) 
+grafico_var_incond(data)
 ggsave(r"{graficos\USA\desvio_incond_modelo6_1.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 

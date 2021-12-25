@@ -2,6 +2,7 @@ source("src/util.R")
 source("src/Analise de reisduos.R")
 source("src/modelo_est.R")
 source("src/modelo8_france.R")
+source("src/graficos.R")
 
 library(zoo)
 library(quantmod)
@@ -175,7 +176,7 @@ data <- data.frame(
   yt = yt,
   one_step_predict = media_cond_mod0,
   var_cond = var_cond_mod0,
-  time = 1:n
+  time = CAC$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -325,7 +326,7 @@ data <- data.frame(
   var_incond = var_incond_mod1,
   var_cond = var_cond_mod1,
   med_incond = opt1$deltaMedia,
-  time = 1:n
+  time = CAC$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -334,16 +335,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Desvio Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+grafico_var_cond(data)
 ggsave(r"{graficos\France\desvio_cond_modelo1.png}", width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Desvio Incondicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt-med_incond)), colour = "blue", alpha = .5)
+grafico_var_incond(data)
 ggsave(r"{graficos\France\desvio_incond_modelo1.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
@@ -484,7 +479,7 @@ data <- data.frame(
   var_incond = var_incond_mod2,
   var_cond = var_cond_mod2,
   med_incond = opt2$deltaMedia,
-  time = 1:n
+  time = CAC$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -493,16 +488,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Desvio Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+grafico_var_cond(data)
 ggsave(r"{graficos\France\desvio_cond_modelo2.png}", width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Desvio Incondicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt-med_incond)), colour = "blue", alpha = .5)
+grafico_var_incond(data)
 ggsave(r"{graficos\France\desvio_incond_modelo2.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
@@ -658,7 +647,7 @@ data <- data.frame(
   var_incond = var_incond_mod3,
   var_cond = var_cond_mod3,
   med_incond = opt3$deltaMedia,
-  time = 1:n
+  time = CAC$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -667,16 +656,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Desvio Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+grafico_var_cond(data)
 ggsave(r"{graficos\France\desvio_cond_modelo3.png}", width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Desvio Incondicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt-med_incond)), colour = "blue", alpha = .5)
+grafico_var_incond(data)
 ggsave(r"{graficos\France\desvio_incond_modelo3.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
@@ -833,7 +816,7 @@ data <- data.frame(
   var_incond = var_incond_mod4,
   var_cond = var_cond_mod4,
   med_incond = opt4$deltaMedia,
-  time = 1:n
+  time = CAC$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -842,16 +825,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Desvio Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+grafico_var_cond(data)
 ggsave(r"{graficos\France\desvio_cond_modelo4.png}", width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Desvio Incondicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt-med_incond)), colour = "blue", alpha = .5)
+grafico_var_incond(data)
 ggsave(r"{graficos\France\desvio_incond_modelo4.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
@@ -1006,7 +983,7 @@ data <- data.frame(
   var_incond = var_incond_mod5,
   var_cond = var_cond_mod5,
   med_incond = opt5$deltaMedia,
-  time = 1:n
+  time = CAC$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -1015,16 +992,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Desvio Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+grafico_var_cond(data)
 ggsave(r"{graficos\France\desvio_cond_modelo5.png}", width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Desvio Incondicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt-med_incond)), colour = "blue", alpha = .5)
+grafico_var_incond(data)
 ggsave(r"{graficos\France\desvio_incond_modelo5.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
@@ -1182,7 +1153,7 @@ data <- data.frame(
   var_incond = var_incond_mod6,
   var_cond = var_cond_mod6,
   med_incond = opt6$deltaMedia,
-  time = 1:n
+  time = CAC$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -1355,7 +1326,7 @@ data <- data.frame(
   var_incond = var_incond_mod7,
   var_cond = var_cond_mod7,
   med_incond = opt7$deltaMedia,
-  time = 1:n
+  time = CAC$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -1364,16 +1335,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Desvio Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+grafico_var_cond(data)
 ggsave(r"{graficos\France\desvio_cond_modelo7.png}", width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Desvio Incondicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt-med_incond)), colour = "blue", alpha = .5)
+grafico_var_incond(data)
 ggsave(r"{graficos\France\desvio_incond_modelo7.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
@@ -1515,7 +1480,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod5_1,
   var_incond = var_incond_mod5_1,
   var_cond = var_cond_mod5_1,
-  time = 1:n
+  time = CAC$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -1645,7 +1610,7 @@ data <- data.frame(
   var_incond = var_incond_mod8,
   var_cond = var_cond_mod8,
   med_incond = opt8$data$deltaMedia,
-  time = 1:n
+  time = CAC$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -1654,16 +1619,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Desvio Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5)
+grafico_var_cond(data)
 ggsave(r"{graficos\France\desvio_cond_modelo8.png}", width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Desvio Incondicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt-med_incond)), colour = "blue", alpha = .5)
+grafico_var_incond(data)
 ggsave(r"{graficos\France\desvio_incond_modelo8.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 

@@ -180,7 +180,7 @@ data <- data.frame(
   yt = yt,
   one_step_predict = media_cond_mod0,
   var_cond = var_cond_mod0,
-  time = 1:n
+  time = NIKKEI$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -189,10 +189,7 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(x = "Tempo", y = "Desvio Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue")
+grafico_var_cond(data)
 ggsave(r"{graficos\Japan\desvio_cond_modelo0.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
@@ -335,7 +332,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod1,
   var_incond = var_incond_mod1,
   var_cond = var_cond_mod1,
-  time = 1:n
+  time = NIKKEI$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -344,16 +341,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
   
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Variancia Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_incond(data)
 ggsave(r"{graficos\Japan\desvio_cond_modelo1.png}",width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Variancia padrao incondicional") + 
-  geom_line(size = 1L, colour = "red") +
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_cond(data)
 ggsave(r"{graficos\Japan\desvio_incond_modelo1.png}",width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
@@ -458,13 +449,10 @@ data <- data.frame(
   one_step_predict = media_cond2,
   var_incond = var_incond2,
   var_cond = var_cond2,
-  time = 1:n
+  time = NIKKEI$Index
 )
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Variancia Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_cond(data)
 ggsave(r"{graficos\Japan\desvio_cond_modelo2.png}",width = 20, height = 10)
 ## Graficos de linha para esp_cond e var_cond - FIM
 
@@ -602,7 +590,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod3,
   var_incond = var_incond_mod3,
   var_cond = var_cond_mod3,
-  time = 1:n
+  time = NIKKEI$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -611,16 +599,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Variancia Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_cond(data)
 ggsave(r"{graficos\Japan\desvio_cond_modelo3.png}",width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Variancia padrao incondicional") + 
-  geom_line(size = 1L, colour = "red") +
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_incond(data)
 ggsave(r"{graficos\Japan\desvio_incond_modelo3.png}",width = 20, height = 10)
 ## Graficos de linha para esp_cond e var_cond - FIM
 
@@ -756,7 +738,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod4,
   var_incond = var_incond_mod4,
   var_cond = var_cond_mod4,
-  time = 1:n
+  time = NIKKEI$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -765,16 +747,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Variancia Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_cond(data)
 ggsave(r"{graficos\Japan\desvio_cond_modelo4.png}",width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Variancia padrao incondicional") + 
-  geom_line(size = 1L, colour = "red") +
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_incond(data)
 ggsave(r"{graficos\Japan\desvio_incond_modelo4.png}",width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
@@ -910,7 +886,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod5,
   var_incond = var_incond_mod5,
   var_cond = var_cond_mod5,
-  time = 1:n
+  time = NIKKEI$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -919,16 +895,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Variancia Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_cond(data)
 ggsave(r"{graficos\Japan\desvio_cond_modelo5.png}",width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Variancia padrao incondicional") + 
-  geom_line(size = 1L, colour = "red") +
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_incond(data)
 ggsave(r"{graficos\Japan\desvio_incond_modelo5.png}",width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
@@ -1064,7 +1034,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod6,
   var_incond = var_incond_mod6,
   var_cond = var_cond_mod6,
-  time = 1:n
+  time = NIKKEI$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -1073,16 +1043,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Variancia Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_cond(data)
 ggsave(r"{graficos\Japan\desvio_cond_modelo6.png}",width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Variancia padrao incondicional") + 
-  geom_line(size = 1L, colour = "red") +
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_incond(data) 
 ggsave(r"{graficos\Japan\desvio_incond_modelo6.png}",width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
@@ -1356,7 +1320,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod9,
   var_incond = var_incond_mod9,
   var_cond = var_cond_mod9,
-  time = 1:n
+  time = NIKKEI$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -1365,16 +1329,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Variancia Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_cond(data)
 ggsave(r"{graficos\Japan\desvio_cond_modelo9.png}",width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Variancia padrao incondicional") + 
-  geom_line(size = 1L, colour = "red") +
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_incond(data)
 ggsave(r"{graficos\Japan\desvio_incond_modelo9.png}",width = 20, height = 10)
 ## Graficos de linha para esp_cond e var_cond - FIM
 
@@ -1471,7 +1429,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod10,
   var_incond = var_incond_mod10,
   var_cond = var_cond_mod10,
-  time = 1:n
+  time = NIKKEI$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -1480,16 +1438,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Variancia Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_cond(data)
 ggsave(r"{graficos\Japan\desvio_cond_modelo10.png}",width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Variancia padrao incondicional") + 
-  geom_line(size = 1L, colour = "red") +
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_incond(data)
 ggsave(r"{graficos\Japan\desvio_incond_modelo10.png}",width = 20, height = 10)
 ## Graficos de linha para esp_cond e var_cond - FIM
 
@@ -1586,7 +1538,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod11,
   var_incond = var_incond_mod11,
   var_cond = var_cond_mod11,
-  time = 1:n
+  time = NIKKEI$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -1595,16 +1547,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Variancia Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_cond(data)
 ggsave(r"{graficos\Japan\desvio_cond_modelo11.png}",width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Variancia padrao incondicional") + 
-  geom_line(size = 1L, colour = "red") +
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_incond(data)
 ggsave(r"{graficos\Japan\desvio_incond_modelo11.png}",width = 20, height = 10)
 ## Graficos de linha para esp_cond e var_cond - FIM
 
@@ -1701,7 +1647,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod12,
   var_incond = var_incond_mod12,
   var_cond = var_cond_mod12,
-  time = 1:n
+  time = NIKKEI$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -1710,16 +1656,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Variancia Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_cond(data)
 ggsave(r"{graficos\Japan\desvio_cond_modelo12.png}",width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Variancia padrao incondicional") + 
-  geom_line(size = 1L, colour = "red") +
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_incond(data)
 ggsave(r"{graficos\Japan\desvio_incond_modelo12.png}",width = 20, height = 10)
 ## Graficos de linha para esp_cond e var_cond - FIM
 
@@ -1815,7 +1755,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod12_1,
   var_incond = var_incond_mod12_1,
   var_cond = var_cond_mod12_1,
-  time = 1:n
+  time = NIKKEI$Index
 )
 
 ggplot(data, aes(x = time, y = yt)) +
@@ -1824,16 +1764,10 @@ ggplot(data, aes(x = time, y = yt)) +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
 
-ggplot(data, aes(x = time, y = sqrt(var_cond))) +
-  labs(y = "Tempo", x = "Variancia Condicional") + 
-  geom_line(size = 1L, colour = "red") + 
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_cond(data)
 ggsave(r"{graficos\Japan\desvio_cond_modelo12_1.png}", width = 20, height = 10)
 
-ggplot(data, aes(x = time, y = sqrt(var_incond))) +
-  labs(x = "Tempo", y = "Variancia padrao incondicional") + 
-  geom_line(size = 1L, colour = "red") +
-  geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha=.5) 
+grafico_var_incond(data)
 ggsave(r"{graficos\Japan\desvio_incond_modelo12_1.png}",  width = 20, height = 10)
 ## Graficos de linha para esp_cond e var_cond - FIM
 
