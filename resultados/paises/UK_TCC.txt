@@ -16,6 +16,8 @@ ADICIONAR MODELO 7_1
 
 Modelo 08 - 4 degraus (Crise I, Lehman Brothers, Intervenção 1 e Intervenção 4), mas com um Int suave entre Lehman Brothers e Intervenção 1 e Intervenção 4, além de beta4=beta2 (|>);
 
+Melhor Modelo => Modelo 08
+
 Modelo     llike      AIC      BIC
   opt0 -2018,291 4046,581 4073,012
   opt1 -2007,623 4033,246 4080,821

@@ -2,12 +2,13 @@ source("src/util.R")
 source("src/Analise de reisduos.R")
 source("src/modelo_est.R")
 source("src/modelo7_dax.R")
+source("src/graficos.R")
 
 library(zoo)
 library(quantmod)
-library(imputeTS)
 library(ggplot2)
 library(dplyr)
+library(imputeTS)
 
 # Carregando dados --------------------------------------------------------
 
@@ -56,20 +57,24 @@ gridExtra::grid.arrange(p2, p3, ncol = 1)
 ggplot(DAX, aes(x = Index, y = 100 * dax)) +
   geom_line(size = 1L, colour = "#112446") + 
   labs(x = "Tempo", y = "Retorno", title = "DAX") +
-  theme_minimal() 
-ggsave(r"{graficos\German\ger_serie.png}", width = 20, height = 10)
+  theme_minimal()  +
+  theme(axis.title.y = element_text(size = 15),
+        axis.title.x = element_text(size = 15),
+        axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15))
+ggsave(r"{graficos\DAX\ger_serie.png}", width = 20, height = 10)
 
 acf(yt, plot = F) %>% autoplot(main='') + ylim(c(-1,1)) + ggtitle("")
-ggsave(r"{graficos\German\ger_fac_serie.png}", width = 10, height = 10)
+ggsave(r"{graficos\DAX\ger_fac_serie.png}", width = 10, height = 10)
 
 pacf(yt, plot = F) %>% autoplot(main='') + ylim(c(-1,1)) + ggtitle("")
-ggsave(r"{graficos\German\ger_facp_serie.png}", width = 10, height = 10)
+ggsave(r"{graficos\DAX\ger_facp_serie.png}", width = 10, height = 10)
 
 acf(yt^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1)) + ggtitle("")
-ggsave(r"{graficos\German\ger_fac_quad.png}", width = 10, height = 10)
+ggsave(r"{graficos\DAX\ger_fac_quad.png}", width = 10, height = 10)
 
 pacf(yt^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1)) + ggtitle("")
-ggsave(r"{graficos\German\ger_facp_quad.png}", width = 10, height = 10)
+ggsave(r"{graficos\DAX\ger_facp_quad.png}", width = 10, height = 10)
 
 # Modelo 00 AR(1)-GARCH(1,1) ----------------------------------------------
 
@@ -129,14 +134,14 @@ var(resid_pad_data$resid_pad)
 
 # FAC e FACP - INICIO
 acf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_fac_modelo0_serie.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_fac_modelo0_serie.png}", width = 10, height = 10)
 pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_facp_modelo0_serie.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_facp_modelo0_serie.png}", width = 10, height = 10)
 
 acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_fac_modelo0_quad.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_fac_modelo0_quad.png}", width = 10, height = 10)
 pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_facp_modelo0_quad.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_facp_modelo0_quad.png}", width = 10, height = 10)
 # FAC e FACP - FIM
 
 poder_pred(yt, media_cond_mod0, var_cond_mod0)$rmse
@@ -188,7 +193,7 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\German\desvio_cond_modelo0.png}", width = 20, height = 10)
+#ggsave(r"{graficos\DAX\desvio_cond_modelo0.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 01 ---------------------------------------------------------------
@@ -337,10 +342,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\German\desvio_cond_modelo1.png}", width = 20, height = 10)
+#ggsave(r"{graficos\DAX\desvio_cond_modelo1.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\German\desvio_incond_modelo1.png}", width = 20, height = 10)
+#ggsave(r"{graficos\DAX\desvio_incond_modelo1.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 02 ---------------------------------------------------------------
@@ -488,10 +493,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\German\desvio_cond_modelo2.png}", width = 20, height = 10)
+#ggsave(r"{graficos\DAX\desvio_cond_modelo2.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\German\desvio_incond_modelo2.png}", width = 20, height = 10)
+#ggsave(r"{graficos\DAX\desvio_incond_modelo2.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 03 ---------------------------------------------------------------
@@ -582,14 +587,14 @@ var(resid_pad_data$resid_pad)
 
 # FAC e FACP - INICIO
 acf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_fac_modelo3_serie.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_fac_modelo3_serie.png}", width = 10, height = 10)
 pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_facp_modelo3_serie.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_facp_modelo3_serie.png}", width = 10, height = 10)
 
 acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_fac_modelo3_quad.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_fac_modelo3_quad.png}", width = 10, height = 10)
 pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_facp_modelo3_quad.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_facp_modelo3_quad.png}", width = 10, height = 10)
 # FAC e FACP - FIM
 
 poder_pred(yt, media_cond_mod3, var_cond_mod3)$rmse
@@ -642,10 +647,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\German\desvio_cond_modelo3.png}", width = 20, height = 10)
+#ggsave(r"{graficos\DAX\desvio_cond_modelo3.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\German\desvio_incond_modelo3.png}", width = 20, height = 10)
+#ggsave(r"{graficos\DAX\desvio_incond_modelo3.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 04 ---------------------------------------------------------------
@@ -749,14 +754,14 @@ var(resid_pad_data$resid_pad)
 
 # FAC e FACP - INICIO
 acf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_fac_modelo4_serie.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_fac_modelo4_serie.png}", width = 10, height = 10)
 pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_facp_modelo4_serie.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_facp_modelo4_serie.png}", width = 10, height = 10)
 
 acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_fac_modelo4_quad.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_fac_modelo4_quad.png}", width = 10, height = 10)
 pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_facp_modelo4_quad.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_facp_modelo4_quad.png}", width = 10, height = 10)
 # FAC e FACP - FIM
 
 poder_pred(yt, media_cond_mod4, var_cond_mod4)$rmse
@@ -810,10 +815,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\German\desvio_cond_modelo4.png}", width = 20, height = 10)
+#ggsave(r"{graficos\DAX\desvio_cond_modelo4.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\German\desvio_incond_modelo4.png}", width = 20, height = 10)
+#ggsave(r"{graficos\DAX\desvio_incond_modelo4.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 05 ---------------------------------------------------------------
@@ -916,14 +921,14 @@ var(resid_pad_data$resid_pad)
 
 # FAC e FACP - INICIO
 acf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_fac_modelo5_serie.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_fac_modelo5_serie.png}", width = 10, height = 10)
 pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_facp_modelo5_serie.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_facp_modelo5_serie.png}", width = 10, height = 10)
 
 acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_fac_modelo5_quad.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_fac_modelo5_quad.png}", width = 10, height = 10)
 pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_facp_modelo5_quad.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_facp_modelo5_quad.png}", width = 10, height = 10)
 # FAC e FACP - FIM
 
 poder_pred(yt, media_cond_mod5, var_cond_mod5)$rmse
@@ -977,10 +982,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\German\desvio_cond_modelo5.png}", width = 20, height = 10)
+#ggsave(r"{graficos\DAX\desvio_cond_modelo5.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\German\desvio_incond_modelo5.png}", width = 20, height = 10)
+#ggsave(r"{graficos\DAX\desvio_incond_modelo5.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 06 ---------------------------------------------------------------
@@ -1085,14 +1090,14 @@ var(resid_pad_data$resid_pad)
 
 # FAC e FACP - INICIO
 acf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_fac_modelo6_serie.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_fac_modelo6_serie.png}", width = 10, height = 10)
 pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_facp_modelo6_serie.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_facp_modelo6_serie.png}", width = 10, height = 10)
 
 acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_fac_modelo6_quad.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_fac_modelo6_quad.png}", width = 10, height = 10)
 pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_facp_modelo6_quad.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_facp_modelo6_quad.png}", width = 10, height = 10)
 # FAC e FACP - FIM
 
 poder_pred(yt, media_cond_mod6, var_cond_mod6)$rmse
@@ -1146,10 +1151,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\German\desvio_cond_modelo6.png}", width = 20, height = 10)
+#ggsave(r"{graficos\DAX\desvio_cond_modelo6.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\German\desvio_incond_modelo6.png}", width = 20, height = 10)
+#ggsave(r"{graficos\DAX\desvio_incond_modelo6.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 
@@ -1311,10 +1316,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\German\desvio_cond_modelo7.png}", width = 20, height = 10)
+#ggsave(r"{graficos\DAX\desvio_cond_modelo7.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\German\desvio_incond_modelo7.png}", width = 20, height = 10)
+#ggsave(r"{graficos\DAX\desvio_incond_modelo7.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 08 -------------------------------------------------------------
@@ -1475,10 +1480,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\German\desvio_cond_modelo8.png}", width = 20, height = 10)
+#ggsave(r"{graficos\DAX\desvio_cond_modelo8.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\German\desvio_incond_modelo8.png}", width = 20, height = 10)
+#ggsave(r"{graficos\DAX\desvio_incond_modelo8.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 09 ---------------------------------------------------------------
@@ -1541,14 +1546,14 @@ var(resid_pad_data$resid_pad)
 
 # FAC e FACP - INICIO
 acf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_fac_modelo9_serie.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_fac_modelo9_serie.png}", width = 10, height = 10)
 pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_facp_modelo9_serie.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_facp_modelo9_serie.png}", width = 10, height = 10)
 
 acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_fac_modelo9_quad.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_fac_modelo9_quad.png}", width = 10, height = 10)
 pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-ggsave(r"{graficos\German\ger_facp_modelo9_quad.png}", width = 10, height = 10)
+#ggsave(r"{graficos\DAX\ger_facp_modelo9_quad.png}", width = 10, height = 10)
 # FAC e FACP - FIM
 
 poder_pred(yt, media_cond_mod9, var_cond_mod9)$rmse
@@ -1560,18 +1565,12 @@ Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
 (dw <- sum(diff(yt - media_cond_mod9)^2)/sum((yt - media_cond_mod9)^2))
 
 # QQplot e Histograma - INICIO
-ggplot(resid_pad_data, aes(sample = resid_pad)) + 
-  stat_qq() + 
-  geom_abline(slope = 1, intercept = 0) + 
-  ylim(-6,6) + 
-  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6))
 
-ggplot(resid_pad_data, aes(x = resid_pad)) + 
-  geom_histogram(aes(y =..density..), fill = "#0c4c8a") +
-  theme_minimal() +
-  labs(x = "Residuos padronizados", y = 'Densidade') + 
-  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
-  stat_function(fun = dnorm, args = list(0, 1), color = 'red')
+grafico_qqplot(resid_pad_data)
+grafico_hist(resid_pad_data)
+
+juntando_hist_qq(resid_pad_data)
+ggsave(r"{graficos\DAX\qqplot_hist_modelo9.png}", width = 20, height = 10)
 # QQplot e Histograma - FIM
 
 # TH - INICIO
@@ -1602,10 +1601,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\German\desvio_cond_modelo9.png}", width = 20, height = 10)
+ggsave(r"{graficos\DAX\desvio_cond_modelo9.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\German\desvio_incond_modelo9.png}", width = 20, height = 10)
+ggsave(r"{graficos\DAX\desvio_incond_modelo9.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Ajuste Fino - Modelo 06 -------------------------------------------------

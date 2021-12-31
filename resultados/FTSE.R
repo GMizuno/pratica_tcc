@@ -2,10 +2,13 @@ source("src/util.R")
 source("src/Analise de reisduos.R")
 source("src/modelo_est.R")
 source("src/Modelo_uk.R")
+source("src/graficos.R")
 
 library(zoo)
+library(quantmod)
 library(ggplot2)
 library(dplyr)
+library(imputeTS)
 
 # Carregando dados --------------------------------------------------------
 
@@ -55,20 +58,24 @@ gridExtra::grid.arrange(p1, p3, ncol = 1)
 ggplot(FTSE, aes(x = Index, y = 100 * ftse)) +
   geom_line(size = 1L, colour = "#112446") + 
   labs(x = "Tempo", y = "Retorno", title = "FTSE") +
-  theme_minimal() 
-ggsave(r"{graficos\UK\uk_serie.png}", width = 20, height = 10)
+  theme_minimal()  +
+  theme(axis.title.y = element_text(size = 15),
+        axis.title.x = element_text(size = 15),
+        axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15))
+ggsave(r"{graficos\FTSE\uk_serie.png}", width = 20, height = 10)
 
 acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
-ggsave(r"{graficos\UK\uk_fac_serie.png}", width = 10, height = 10)
+ggsave(r"{graficos\FTSE\uk_fac_serie.png}", width = 10, height = 10)
 
 pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
-ggsave(r"{graficos\UK\uk_facp_serie.png}", width = 10, height = 10)
+ggsave(r"{graficos\FTSE\uk_facp_serie.png}", width = 10, height = 10)
 
 acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
-ggsave(r"{graficos\UK\uk_fac_quad.png}", width = 10, height = 10)
+ggsave(r"{graficos\FTSE\uk_fac_quad.png}", width = 10, height = 10)
 
 pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
-ggsave(r"{graficos\UK\uk_facp_quad.png}", width = 10, height = 10)
+ggsave(r"{graficos\FTSE\uk_facp_quad.png}", width = 10, height = 10)
 
 # Modelo 00 AR(1)-GARCH(1,1) ----------------------------------------------
 
@@ -335,10 +342,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\UK\desvio_cond_modelo1.png}", width = 20, height = 10)
+#ggsave(r"{graficos\FTSE\desvio_cond_modelo1.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\UK\desvio_incond_modelo1.png}", width = 20, height = 10)
+#ggsave(r"{graficos\FTSE\desvio_incond_modelo1.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 02 ---------------------------------------------------------------
@@ -487,10 +494,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\UK\desvio_cond_modelo2.png}", width = 20, height = 10)
+#ggsave(r"{graficos\FTSE\desvio_cond_modelo2.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\UK\desvio_incond_modelo2.png}", width = 20, height = 10)
+#ggsave(r"{graficos\FTSE\desvio_incond_modelo2.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 
@@ -641,10 +648,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\UK\desvio_cond_modelo3.png}", width = 20, height = 10)
+#ggsave(r"{graficos\FTSE\desvio_cond_modelo3.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\UK\desvio_incond_modelo3.png}", width = 20, height = 10)
+#ggsave(r"{graficos\FTSE\desvio_incond_modelo3.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 
@@ -796,10 +803,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\UK\desvio_cond_modelo4.png}", width = 20, height = 10)
+#ggsave(r"{graficos\FTSE\desvio_cond_modelo4.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\UK\desvio_incond_modelo4.png}", width = 20, height = 10)
+#ggsave(r"{graficos\FTSE\desvio_incond_modelo4.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 
@@ -958,10 +965,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\UK\desvio_cond_modelo5.png}", width = 20, height = 10)
+#ggsave(r"{graficos\FTSE\desvio_cond_modelo5.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\UK\desvio_incond_modelo5.png}", width = 20, height = 10)
+#ggsave(r"{graficos\FTSE\desvio_incond_modelo5.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 06 ---------------------------------------------------------------
@@ -1118,10 +1125,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\UK\desvio_cond_modelo6.png}", width = 20, height = 10)
+#ggsave(r"{graficos\FTSE\desvio_cond_modelo6.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\UK\desvio_incond_modelo6.png}", width = 20, height = 10)
+#ggsave(r"{graficos\FTSE\desvio_incond_modelo6.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 
@@ -1281,10 +1288,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\UK\desvio_cond_modelo7.png}", width = 20, height = 10)
+#ggsave(r"{graficos\FTSE\desvio_cond_modelo7.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\UK\desvio_incond_modelo7.png}", width = 20, height = 10)
+#ggsave(r"{graficos\FTSE\desvio_incond_modelo7.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Ajuste Fino -------------------------------------------------------------
@@ -1421,6 +1428,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod7_1,
   var_incond = var_incond_mod7_1,
   var_cond = var_cond_mod7_1,
+  med_incond = opt7_1$deltaMedia,
   time = FTSE$Index
 )
 
@@ -1431,10 +1439,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\UK\desvio_cond_modelo7_1.png}", width = 20, height = 10)
+#ggsave(r"{graficos\FTSE\desvio_cond_modelo7_1.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\UK\desvio_incond_modelo7_1.png}", width = 20, height = 10)
+#ggsave(r"{graficos\FTSE\desvio_incond_modelo7_1.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 08 ---------------------------------------------------------------
@@ -1511,18 +1519,11 @@ Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
 (dw <- sum(diff(yt - media_cond_mod8)^2)/sum((yt - media_cond_mod8)^2))
 
 # QQplot e Histograma - INICIO
-ggplot(resid_pad_data, aes(sample = resid_pad)) + 
-  stat_qq() + 
-  geom_abline(slope = 1, intercept = 0) + 
-  ylim(-6,6) + 
-  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6))
+grafico_qqplot(resid_pad_data)
+grafico_hist(resid_pad_data)
 
-ggplot(resid_pad_data, aes(x = resid_pad)) + 
-  geom_histogram(aes(y =..density..), fill = "#0c4c8a") +
-  theme_minimal() +
-  labs(x = "Residuos padronizados", y = 'Densidade') + 
-  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
-  stat_function(fun = dnorm, args = list(0, 1), color = 'red')
+juntando_hist_qq(resid_pad_data)
+ggsave(r"{graficos\FTSE\qqplot_hist_modelo8.png}", width = 20, height = 10)
 # QQplot e Histograma - FIM
 
 # TH - INICIO
@@ -1553,10 +1554,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\UK\desvio_cond_modelo8.png}", width = 20, height = 10)
+ggsave(r"{graficos\FTSE\desvio_cond_modelo8.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\UK\desvio_incond_modelo8.png}", width = 20, height = 10)
+ggsave(r"{graficos\FTSE\desvio_incond_modelo8.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Ajuste Fino -------------------------------------------------------------
@@ -1674,10 +1675,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\UK\desvio_cond_modelo8_1.png}", width = 20, height = 10)
+#ggsave(r"{graficos\FTSE\desvio_cond_modelo8_1.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\UK\desvio_incond_modelo8_1.png}", width = 20, height = 10)
+#ggsave(r"{graficos\FTSE\desvio_incond_modelo8_1.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Resultados --------------------------------------------------------------

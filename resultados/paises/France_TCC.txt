@@ -12,6 +12,8 @@ Modelo 07 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1, Intervenção 
 
 Modelo 08 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1, Intervenção 3 e Intervenção 4), mas com int suave entre Lehman Brothers e Intervenção 1 e beta5 = beta2;
 
+Melhor Modelo => Modelo 08
+
     llike      AIC      BIC Modelo
 -2283,235 4576,471 4602,997   opt0
 -2271,893 4559,786 4602,228   opt3

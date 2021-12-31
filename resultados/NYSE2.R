@@ -5,8 +5,10 @@ source("src/Modelo_usa.R")
 source("src/graficos.R")
 
 library(zoo)
+library(quantmod)
 library(ggplot2)
 library(dplyr)
+library(imputeTS)
 
 # Carregando dados e graficos ---------------------------------------------
 
@@ -57,20 +59,24 @@ gridExtra::grid.arrange(p1, p2, p3, ncol = 1)
 ggplot(NYSE, aes(x = Index, y = 100 * nyse)) +
   geom_line(size = 1L, colour = "#112446") + 
   labs(x = "Tempo", y = "Retorno", title = "NYSE") +
-  theme_minimal() 
-ggsave(r"{graficos\USA\usa_serie.png}", width = 6, height = 3.5)
+  theme_minimal() +
+  theme(axis.title.y = element_text(size = 15),
+        axis.title.x = element_text(size = 15),
+        axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15)) 
+ggsave(r"{graficos\NYSE\usa_serie.png}", width = 6, height = 3.5)
 
 acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
-ggsave(r"{graficos\USA\usa_fac_serie.png}", width = 10, height = 10)
+ggsave(r"{graficos\NYSE\usa_fac_serie.png}", width = 10, height = 10)
 
 pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
-ggsave(r"{graficos\USA\usa_facp_serie.png}", width = 10, height = 10)
+ggsave(r"{graficos\NYSE\usa_facp_serie.png}", width = 10, height = 10)
 
 acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
-ggsave(r"{graficos\USA\usa_fac_quad.png}", width = 10, height = 10)
+ggsave(r"{graficos\NYSE\usa_fac_quad.png}", width = 10, height = 10)
 
 pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
-ggsave(r"{graficos\USA\usa_facp_quad.png}", width = 10, height = 10)
+#ggsave(r"{graficos\NYSE\usa_facp_quad.png}", width = 10, height = 10)
 
 # Modelo 00 AR(1)-GARCH(1,1) ----------------------------------------------
 
@@ -186,7 +192,7 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\USA\desvio_cond_modelo0.png}", width = 20, height = 10)
+#ggsave(r"{graficos\NYSE\desvio_cond_modelo0.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 
@@ -326,10 +332,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\USA\desvio_cond_modelo1.png}", width = 20, height = 10)
+#ggsave(r"{graficos\NYSE\desvio_cond_modelo1.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\USA\desvio_incond_modelo1.png}", width = 20, height = 10)
+#ggsave(r"{graficos\NYSE\desvio_incond_modelo1.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 
@@ -480,10 +486,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\USA\desvio_cond_modelo2.png}", width = 20, height = 10)
+#ggsave(r"{graficos\NYSE\desvio_cond_modelo2.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\USA\desvio_incond_modelo2.png}", width = 20, height = 10)
+#ggsave(r"{graficos\NYSE\desvio_incond_modelo2.png}", width = 20, height = 10)
 
 
 # Modelo 03 ---------------------------------------------------------------
@@ -632,10 +638,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\USA\desvio_cond_modelo3.png}", width = 20, height = 10)
+#ggsave(r"{graficos\NYSE\desvio_cond_modelo3.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\USA\desvio_incond_modelo3.png}", width = 20, height = 10)
+#ggsave(r"{graficos\NYSE\desvio_incond_modelo3.png}", width = 20, height = 10)
 
 # Modelo 04 ---------------------------------------------------------------
 
@@ -783,10 +789,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\USA\desvio_cond_modelo4.png}", width = 20, height = 10)
+#ggsave(r"{graficos\NYSE\desvio_cond_modelo4.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\USA\desvio_incond_modelo4.png}", width = 20, height = 10)
+#ggsave(r"{graficos\NYSE\desvio_incond_modelo4.png}", width = 20, height = 10)
 
 # Modelo 05 ---------------------------------------------------------------
 
@@ -934,10 +940,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\USA\desvio_cond_modelo5.png}", width = 20, height = 10)
+#ggsave(r"{graficos\NYSE\desvio_cond_modelo5.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\USA\desvio_incond_modelo5.png}", width = 20, height = 10)
+#ggsave(r"{graficos\NYSE\desvio_incond_modelo5.png}", width = 20, height = 10)
 
 # Ajuste Fino - Modelo 03 -------------------------------------------------
 
@@ -1083,10 +1089,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\USA\desvio_cond_modelo3_1.png}", width = 20, height = 10)
+#ggsave(r"{graficos\NYSE\desvio_cond_modelo3_1.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\USA\desvio_incond_modelo3_1.png}", width = 20, height = 10)
+#ggsave(r"{graficos\NYSE\desvio_incond_modelo3_1.png}", width = 20, height = 10)
 
 # Modelo 06 ---------------------------------------------------------------
 
@@ -1116,7 +1122,6 @@ opt6 <- estimando_usa(llike_suave_usa, pars)
 media_cond_mod6 <- opt6$media_cond
 var_cond_mod6 <- opt6$dp_cond^2
 var_incond_mod6 <- opt6$var_indcond
-
 
 resid_pad_mod6 <- (yt - media_cond_mod6)/sqrt(var_cond_mod6)
 resid_pad_mod6 <- resid_pad_mod6[-(1:50)]
@@ -1150,18 +1155,11 @@ Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
 (dw <- sum(diff(yt - media_cond_mod6)^2)/sum((yt - media_cond_mod6)^2))
 
 # QQplot e Histograma - INICIO
-ggplot(resid_pad_data, aes(sample = resid_pad)) + 
-  stat_qq() + 
-  geom_abline(slope = 1, intercept = 0) + 
-  ylim(-6,6) + 
-  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6))
+grafico_qqplot(resid_pad_data)
+grafico_hist(resid_pad_data)
 
-ggplot(resid_pad_data, aes(x = resid_pad)) + 
-  geom_histogram(aes(y =..density..), fill = "#0c4c8a") +
-  theme_minimal() +
-  labs(x = "Residuos padronizados", y = 'Densidade') + 
-  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
-  stat_function(fun = dnorm, args = list(0, 1), color = 'red')
+juntando_hist_qq(resid_pad_data)
+ggsave(r"{graficos\USA\qqplot_hist_modelo6.png}", width = 20, height = 10)
 # QQplot e Histograma - FIM
 
 # TH - INICIO
@@ -1192,10 +1190,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\USA\desvio_cond_modelo6.png}", width = 20, height = 10)
+ggsave(r"{graficos\NYSE\desvio_cond_modelo6.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\USA\desvio_incond_modelo6.png}", width = 20, height = 10)
+ggsave(r"{graficos\NYSE\desvio_incond_modelo6.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 
@@ -1301,10 +1299,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\USA\desvio_cond_modelo6_1.png}", width = 20, height = 10)
+#ggsave(r"{graficos\NYSE\desvio_cond_modelo6_1.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\USA\desvio_incond_modelo6_1.png}", width = 20, height = 10)
+#ggsave(r"{graficos\NYSE\desvio_incond_modelo6_1.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 

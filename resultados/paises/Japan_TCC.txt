@@ -16,6 +16,8 @@ ADICIONAR MODELO 12
 
 Modelo 12_1 - 4 degraus (Intervenção 1, Intervenção 2, Intervenção 4 e Intervenção 5), mas com uma Ints suave entre Intervenção 2 e Intervenção 4, Intervenção 4 e Intervenção 5; Intervenção 3 igual a Intervenção 5 (modelo nikkei);
 
+Melhor Modelo => Modelo 12_1
+
  Modelo     llike      AIC      BIC
    opt0 -2018,291 4046,581 4073,012
    opt1 -2408,879 4835,758 4883,071

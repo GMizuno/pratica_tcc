@@ -1,4 +1,5 @@
-require(ggplot2)
+library(ggplot2)
+library(patchwork)
 
 grafico_var_cond <- function(data){
   ggplot(data, aes(x = time, y = sqrt(var_cond))) +
@@ -12,7 +13,6 @@ grafico_var_cond <- function(data){
     scale_x_date(date_breaks = "1 year", date_labels = "%Y-%m")
   
 }
-
 
 grafico_var_incond <- function(data){
   ggplot(data, aes(x = time, y = sqrt(var_incond))) +
@@ -28,3 +28,37 @@ grafico_var_incond <- function(data){
   
 }
 
+grafico_qqplot <- function(data){
+  ggplot(data, aes(sample = resid_pad)) + 
+    stat_qq() + 
+    geom_abline(slope = 1, intercept = 0) + 
+    ylim(-6,6) + 
+    theme_minimal() +
+    labs(x = "Quantil Teorico", y = 'Quantil Amostral') + 
+    scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6))  +
+    theme(axis.title.y = element_text(size = 15),
+          axis.title.x = element_text(size = 15),
+          axis.text.x = element_text(size = 15),
+          axis.text.y = element_text(size = 15))
+  
+}
+
+grafico_hist <- function(data){
+  ggplot(data, aes(x = resid_pad)) + 
+    geom_histogram(aes(y =..density..), fill = "#0c4c8a") +
+    theme_minimal() +
+    labs(x = "Residuos padronizados", y = 'Densidade') + 
+    scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
+    stat_function(fun = dnorm, args = list(0, 1), color = 'red')  +
+    theme(axis.title.y = element_text(size = 15),
+          axis.title.x = element_text(size = 15),
+          axis.text.x = element_text(size = 15),
+          axis.text.y = element_text(size = 15))
+} 
+
+juntando_hist_qq <- function(data){
+  p1 <- grafico_qqplot(data)
+  p2 <- grafico_hist(data)
+  
+  p1 + p2
+}

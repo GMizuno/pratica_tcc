@@ -2,11 +2,13 @@ source("src/util.R")
 source("src/Analise de reisduos.R")
 source("src/modelo_est.R")
 source("src/modelo9_nikkei.R")
+source("src/graficos.R")
 
 library(zoo)
 library(ggplot2)
 library(dplyr)
 library(moments)
+library(imputeTS)
 
 # Carregando dados ---------------------------------------------
 load("dados/NIKKEI.RData")
@@ -61,20 +63,24 @@ gridExtra::grid.arrange(p1, p3, ncol = 1)
 ggplot(NIKKEI, aes(x = Index, y = 100 * nikkei)) +
   geom_line(size = 1L, colour = "#112446") + 
   labs(x = "Tempo", y = "Retorno", title = "NIKKEI") +
-  theme_minimal() 
-ggsave(r"{graficos\Japan\jap_serie.png}",width = 20, height = 10)
+  theme_minimal()  +
+  theme(axis.title.y = element_text(size = 15),
+        axis.title.x = element_text(size = 15),
+        axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15)) 
+ggsave(r"{graficos\NIKKEI\jap_serie.png}",width = 20, height = 10)
 
 acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
-ggsave(r"{graficos\Japan\jap_fac_serie.png}", width = 10, height = 10)
+ggsave(r"{graficos\NIKKEI\jap_fac_serie.png}", width = 10, height = 10)
 
 pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
-ggsave(r"{graficos\Japan\jap_facp_serie.png}", width = 10, height = 10)
+ggsave(r"{graficos\NIKKEI\jap_facp_serie.png}", width = 10, height = 10)
 
 acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
-ggsave(r"{graficos\Japan\jap_fac_quad.png}", width = 10, height = 10)
+ggsave(r"{graficos\NIKKEI\jap_fac_quad.png}", width = 10, height = 10)
 
 pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
-ggsave(r"{graficos\Japan\jap_facp_quad.png}", width = 10, height = 10)
+ggsave(r"{graficos\NIKKEI\jap_facp_quad.png}", width = 10, height = 10)
 
 # Modelo 00 AR(1)-GARCH(1,1) ----------------------------------------------
 
@@ -190,7 +196,7 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\Japan\desvio_cond_modelo0.png}", width = 20, height = 10)
+#ggsave(r"{graficos\NIKKEI\desvio_cond_modelo0.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 
@@ -342,10 +348,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
   
 grafico_var_incond(data)
-ggsave(r"{graficos\Japan\desvio_cond_modelo1.png}",width = 20, height = 10)
+#ggsave(r"{graficos\NIKKEI\desvio_cond_modelo1.png}",width = 20, height = 10)
 
 grafico_var_cond(data)
-ggsave(r"{graficos\Japan\desvio_incond_modelo1.png}",width = 20, height = 10)
+#ggsave(r"{graficos\NIKKEI\desvio_incond_modelo1.png}",width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 02 ----------------------------------------------------------------
@@ -453,7 +459,7 @@ data <- data.frame(
 )
 
 grafico_var_cond(data)
-ggsave(r"{graficos\Japan\desvio_cond_modelo2.png}",width = 20, height = 10)
+#ggsave(r"{graficos\NIKKEI\desvio_cond_modelo2.png}",width = 20, height = 10)
 ## Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 03 ----------------------------------------------------------------
@@ -600,10 +606,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\Japan\desvio_cond_modelo3.png}",width = 20, height = 10)
+#ggsave(r"{graficos\NIKKEI\desvio_cond_modelo3.png}",width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\Japan\desvio_incond_modelo3.png}",width = 20, height = 10)
+#ggsave(r"{graficos\NIKKEI\desvio_incond_modelo3.png}",width = 20, height = 10)
 ## Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 04 ----------------------------------------------------------------
@@ -748,10 +754,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\Japan\desvio_cond_modelo4.png}",width = 20, height = 10)
+#ggsave(r"{graficos\NIKKEI\desvio_cond_modelo4.png}",width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\Japan\desvio_incond_modelo4.png}",width = 20, height = 10)
+#ggsave(r"{graficos\NIKKEI\desvio_incond_modelo4.png}",width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 05 ----------------------------------------------------------------
@@ -896,10 +902,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\Japan\desvio_cond_modelo5.png}",width = 20, height = 10)
+#ggsave(r"{graficos\NIKKEI\desvio_cond_modelo5.png}",width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\Japan\desvio_incond_modelo5.png}",width = 20, height = 10)
+#ggsave(r"{graficos\NIKKEI\desvio_incond_modelo5.png}",width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 06 - Pq fiz isso ???????? ----------------------------------------
@@ -1044,10 +1050,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\Japan\desvio_cond_modelo6.png}",width = 20, height = 10)
+#ggsave(r"{graficos\NIKKEI\desvio_cond_modelo6.png}",width = 20, height = 10)
 
 grafico_var_incond(data) 
-ggsave(r"{graficos\Japan\desvio_incond_modelo6.png}",width = 20, height = 10)
+#ggsave(r"{graficos\NIKKEI\desvio_incond_modelo6.png}",width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 07 -----------------------------------------------------------------
@@ -1330,10 +1336,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\Japan\desvio_cond_modelo9.png}",width = 20, height = 10)
+#ggsave(r"{graficos\NIKKEI\desvio_cond_modelo9.png}",width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\Japan\desvio_incond_modelo9.png}",width = 20, height = 10)
+#ggsave(r"{graficos\NIKKEI\desvio_incond_modelo9.png}",width = 20, height = 10)
 ## Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 10 ----------------------------------------------------------------
@@ -1439,10 +1445,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\Japan\desvio_cond_modelo10.png}",width = 20, height = 10)
+#ggsave(r"{graficos\NIKKEI\desvio_cond_modelo10.png}",width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\Japan\desvio_incond_modelo10.png}",width = 20, height = 10)
+#ggsave(r"{graficos\NIKKEI\desvio_incond_modelo10.png}",width = 20, height = 10)
 ## Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 11 ---------------------------------------------------------------
@@ -1548,10 +1554,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\Japan\desvio_cond_modelo11.png}",width = 20, height = 10)
+#ggsave(r"{graficos\NIKKEI\desvio_cond_modelo11.png}",width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\Japan\desvio_incond_modelo11.png}",width = 20, height = 10)
+#ggsave(r"{graficos\NIKKEI\desvio_incond_modelo11.png}",width = 20, height = 10)
 ## Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 12 ---------------------------------------------------------------
@@ -1657,10 +1663,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\Japan\desvio_cond_modelo12.png}",width = 20, height = 10)
+#ggsave(r"{graficos\NIKKEI\desvio_cond_modelo12.png}",width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\Japan\desvio_incond_modelo12.png}",width = 20, height = 10)
+#ggsave(r"{graficos\NIKKEI\desvio_incond_modelo12.png}",width = 20, height = 10)
 ## Graficos de linha para esp_cond e var_cond - FIM
 
 # Modelo 12 - ajuste fino ---------------------------------------------------
@@ -1721,25 +1727,18 @@ acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
 ## FAC e FACP - FIM
 
-
 Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
 Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
 (dw <- sum(diff(yt - media_cond_mod12_1)^2)/sum((yt - media_cond_mod12_1)^2))
 
 
 ## QQplot e Histograma - INICIO
-ggplot(resid_pad_data, aes(sample = resid_pad)) + 
-  stat_qq() + 
-  geom_abline(slope = 1, intercept = 0) + 
-  ylim(-6,6) + 
-  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6))
 
-ggplot(resid_pad_data, aes(x = resid_pad)) + 
-  geom_histogram(aes(y =..density..), fill = "#0c4c8a") +
-  theme_minimal() +
-  labs(x = "Residuos padronizados", y = 'Densidade') + 
-  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
-  stat_function(fun = dnorm, args = list(0, 1), color = 'red')
+grafico_qqplot(resid_pad_data)
+grafico_hist(resid_pad_data)
+
+juntando_hist_qq(resid_pad_data)
+ggsave(r"{graficos\NIKKEI\qqplot_hist_modelo12_1.png}", width = 20, height = 10)
 ## QQplot e Histograma - FIM
 
 shapiro.test(resid_pad_data$resid_pad)
@@ -1753,6 +1752,7 @@ moments::skewness(resid_pad_mod12_1)
 data <- data.frame(
   yt = yt,
   one_step_predict = media_cond_mod12_1,
+  med_incond = opt12_1$media_cond,
   var_incond = var_incond_mod12_1,
   var_cond = var_cond_mod12_1,
   time = NIKKEI$Index
@@ -1765,10 +1765,10 @@ ggplot(data, aes(x = time, y = yt)) +
   labs(x = 'Tempo') 
 
 grafico_var_cond(data)
-ggsave(r"{graficos\Japan\desvio_cond_modelo12_1.png}", width = 20, height = 10)
+ggsave(r"{graficos\NIKKEI\desvio_cond_modelo12_1.png}", width = 20, height = 10)
 
 grafico_var_incond(data)
-ggsave(r"{graficos\Japan\desvio_incond_modelo12_1.png}",  width = 20, height = 10)
+ggsave(r"{graficos\NIKKEI\desvio_incond_modelo12_1.png}",  width = 20, height = 10)
 ## Graficos de linha para esp_cond e var_cond - FIM
 
 # Resultados --------------------------------------------------------------
