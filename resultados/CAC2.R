@@ -56,24 +56,20 @@ gridExtra::grid.arrange(p2, p3, ncol = 1)
 
 ggplot(CAC, aes(x = Index, y = 100 * cac)) +
   geom_line(size = 1L, colour = "#112446") + 
-  labs(x = "Tempo", y = "Retorno", title = "CAC") +
-  theme_minimal()  +
-  theme(axis.title.y = element_text(size = 15),
-        axis.title.x = element_text(size = 15),
-        axis.text.x = element_text(size = 15),
-        axis.text.y = element_text(size = 15))
+  labs(x = "Tempo", y = "Retorno", title = "") +
+  theme_minimal() + tema
 ggsave(r"{graficos\CAC\fra_serie.png}", width = 20, height = 10)
 
-acf(yt, plot = F) %>% autoplot(main='') + ylim(c(-1,1)) + ggtitle("")
+acf(yt, plot = F) %>% autoplot(main='') + ylim(c(-1,1)) + ggtitle("") + tema
 ggsave(r"{graficos\CAC\fra_fac_serie.png}", width = 10, height = 10)
 
-pacf(yt, plot = F) %>% autoplot(main='') + ylim(c(-1,1)) + ggtitle("")
+pacf(yt, plot = F) %>% autoplot(main='') + ylim(c(-1,1)) + ggtitle("") + tema
 ggsave(r"{graficos\CAC\fra_facp_serie.png}", width = 10, height = 10)
 
-acf(yt^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1)) + ggtitle("")
+acf(yt^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1)) + ggtitle("") + tema
 ggsave(r"{graficos\CAC\fra_fac_quad.png}", width = 10, height = 10)
 
-pacf(yt^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1)) + ggtitle("") 
+pacf(yt^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1)) + ggtitle("") + tema
 ggsave(r"{graficos\CAC\fra_facp_quad.png}", width = 10, height = 10)
 
 # Modelo 00 AR(1)-GARCH(1,1) ----------------------------------------------
@@ -1563,15 +1559,15 @@ var(resid_pad_data$resid_pad)
 # Estimando e residuos - FIM
 
 # FAC e FACP - INICIO
-acf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-#ggsave(r"{graficos\CAC\fra_fac_modelo8_serie.png}", width = 10, height = 10)
-pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-#ggsave(r"{graficos\CAC\fra_facp_modelo8_serie.png}", width = 10, height = 10)
+acf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1)) + tema
+ggsave(r"{graficos\CAC\fra_fac_modelo8_serie.png}", width = 10, height = 10)
+pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot(main='') + ylim(c(-1,1))+ tema
+ggsave(r"{graficos\CAC\fra_facp_modelo8_serie.png}", width = 10, height = 10)
 
-acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-#ggsave(r"{graficos\CAC\fra_fac_modelo8_quad.png}", width = 10, height = 10)
-pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1))
-#ggsave(r"{graficos\CAC\fra_facp_modelo8_quad.png}", width = 10, height = 10)
+acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1)) + tema
+ggsave(r"{graficos\CAC\fra_fac_modelo8_quad.png}", width = 10, height = 10)
+pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot(main='') + ylim(c(-1,1)) + tema
+ggsave(r"{graficos\CAC\fra_facp_modelo8_quad.png}", width = 10, height = 10)
 # FAC e FACP - FIM
 
 # QQplot e Histograma - INICIO
@@ -1651,6 +1647,11 @@ resultado %>% arrange(BIC)
 teste_lr(opt2, opt1)
 teste_lr(opt5, opt6)
 teste_lr(opt5, opt8$data)
+
+teste_lr(opt7, opt0)
+teste_lr(opt8$data, opt0)
+
+
 
 ## Poder preditivo
 poder_pred(yt, media_cond_mod1, var_cond_mod1)$rmse

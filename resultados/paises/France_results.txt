@@ -69,6 +69,14 @@ Teste de Hipoteses
       lambda    pvalue df
 1 0.02292645 0.8796485  1
 
+> teste_lr(opt7, opt0)
+    lambda       pvalue df
+1 45.95152 2.520732e-09  4
+
+> teste_lr(opt8$data, opt0)
+    lambda       pvalue df
+1 47.71638 2.446948e-10  3
+
 Ajuste Fino da parte ARCH/GARCH
 
 

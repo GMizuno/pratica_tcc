@@ -63,11 +63,7 @@ gridExtra::grid.arrange(p1, p3, ncol = 1)
 ggplot(NIKKEI, aes(x = Index, y = 100 * nikkei)) +
   geom_line(size = 1L, colour = "#112446") + 
   labs(x = "Tempo", y = "Retorno", title = "NIKKEI") +
-  theme_minimal()  +
-  theme(axis.title.y = element_text(size = 15),
-        axis.title.x = element_text(size = 15),
-        axis.text.x = element_text(size = 15),
-        axis.text.y = element_text(size = 15)) 
+  theme_minimal() + tema
 ggsave(r"{graficos\NIKKEI\jap_serie.png}",width = 20, height = 10)
 
 acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")

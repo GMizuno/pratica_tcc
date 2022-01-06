@@ -1,15 +1,18 @@
 library(ggplot2)
 library(patchwork)
 
+tema <- theme(axis.title.y = element_text(size = 30),
+      axis.title.x = element_text(size = 30),
+      axis.text.x = element_text(size = 30),
+      axis.text.y = element_text(size = 30))
+
+
 grafico_var_cond <- function(data){
   ggplot(data, aes(x = time, y = sqrt(var_cond))) +
     labs(x = "Tempo", y = "Desvio Condicional") + 
     geom_line(size = 1L, colour = "red") + 
     geom_line(aes(x = time, y = abs(yt)), colour = "blue", alpha = .5) +
-    theme(axis.title.y = element_text(size = 15),
-          axis.title.x = element_text(size = 15),
-          axis.text.x = element_text(size = 15),
-          axis.text.y = element_text(size = 15)) +
+    tema +
     scale_x_date(date_breaks = "1 year", date_labels = "%Y-%m")
   
 }
@@ -20,10 +23,7 @@ grafico_var_incond <- function(data){
     geom_line(size = 1L, colour = "red") + 
     geom_line(aes(x = time, y = abs(yt-med_incond)), 
               colour = "blue", alpha = .5)  +
-    theme(axis.title.y = element_text(size = 15),
-          axis.title.x = element_text(size = 15),
-          axis.text.x = element_text(size = 15),
-          axis.text.y = element_text(size = 15)) +
+    tema +
     scale_x_date(date_breaks = "1 year", date_labels = "%Y-%m")
   
 }
@@ -36,10 +36,7 @@ grafico_qqplot <- function(data){
     theme_minimal() +
     labs(x = "Quantil Teorico", y = 'Quantil Amostral') + 
     scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6))  +
-    theme(axis.title.y = element_text(size = 15),
-          axis.title.x = element_text(size = 15),
-          axis.text.x = element_text(size = 15),
-          axis.text.y = element_text(size = 15))
+    tema
   
 }
 
@@ -50,10 +47,7 @@ grafico_hist <- function(data){
     labs(x = "Residuos padronizados", y = 'Densidade') + 
     scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
     stat_function(fun = dnorm, args = list(0, 1), color = 'red')  +
-    theme(axis.title.y = element_text(size = 15),
-          axis.title.x = element_text(size = 15),
-          axis.text.x = element_text(size = 15),
-          axis.text.y = element_text(size = 15))
+    tema
 } 
 
 juntando_hist_qq <- function(data){

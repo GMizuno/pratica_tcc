@@ -59,11 +59,7 @@ gridExtra::grid.arrange(p1, p2, p3, ncol = 1)
 ggplot(NYSE, aes(x = Index, y = 100 * nyse)) +
   geom_line(size = 1L, colour = "#112446") + 
   labs(x = "Tempo", y = "Retorno", title = "NYSE") +
-  theme_minimal() +
-  theme(axis.title.y = element_text(size = 15),
-        axis.title.x = element_text(size = 15),
-        axis.text.x = element_text(size = 15),
-        axis.text.y = element_text(size = 15)) 
+  theme_minimal() + tema
 ggsave(r"{graficos\NYSE\usa_serie.png}", width = 6, height = 3.5)
 
 acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
