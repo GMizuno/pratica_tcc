@@ -1,0 +1,6 @@
+Canada OSC (Ontario Securities Commission, https://www.osc.ca/en/about-us)
+France: AMF (Autorité des Marchés Financiers (AMF), https://www.amf-france.org/fr)
+Germany: BaFin (Federal Financial Supervisory Authority or Bundesanstalt für Finanzdienstleistungsaufsicht, https://www.bafin.de/)
+Japan: FSA (Financial Services Agency, https://www.fsa.go.jp/en/)
+UK: FCA (Financial Conduct Authority, https://www.fca.org.uk/)
+US: SEC (Securities and Exchange Commission, https://www.sec.gov/)

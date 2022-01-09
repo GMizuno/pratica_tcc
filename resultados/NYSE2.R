@@ -10,7 +10,7 @@ library(ggplot2)
 library(dplyr)
 library(imputeTS)
 
-# Carregando dados e graficos ---------------------------------------------
+# Carregando dados ---------------------------------------------
 
 load("dados/NYSE.RData")
 BegSample <- '2004-01-01'
@@ -60,19 +60,19 @@ ggplot(NYSE, aes(x = Index, y = 100 * nyse)) +
   geom_line(size = 1L, colour = "#112446") + 
   labs(x = "Tempo", y = "Retorno", title = "NYSE") +
   theme_minimal() + tema
-ggsave(r"{graficos\NYSE\usa_serie.png}", width = 6, height = 3.5)
+ggsave(r"{graficos\NYSE\usa_serie.png}", width = 20, height = 10)
 
-acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
+acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") + tema
 ggsave(r"{graficos\NYSE\usa_fac_serie.png}", width = 10, height = 10)
 
-pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") + tema
 ggsave(r"{graficos\NYSE\usa_facp_serie.png}", width = 10, height = 10)
 
-acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
+acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") + tema
 ggsave(r"{graficos\NYSE\usa_fac_quad.png}", width = 10, height = 10)
 
-pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
-#ggsave(r"{graficos\NYSE\usa_facp_quad.png}", width = 10, height = 10)
+pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") + tema
+ggsave(r"{graficos\NYSE\usa_facp_quad.png}", width = 10, height = 10)
 
 # Modelo 00 AR(1)-GARCH(1,1) ----------------------------------------------
 
@@ -318,6 +318,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod1,
   var_incond = var_incond_mod1,
   var_cond = var_cond_mod1,
+  med_incond = opt1$deltaMedia,
   time = NYSE$Index
 )
 
@@ -472,6 +473,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod2,
   var_incond = var_incond_mod2,
   var_cond = var_cond_mod2,
+  med_incond = opt2$deltaMedia,
   time = NYSE$Index
 )
 
@@ -624,6 +626,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod3,
   var_incond = var_incond_mod3,
   var_cond = var_cond_mod3,
+  med_incond = opt3$deltaMedia,
   time = NYSE$Index
 )
 
@@ -775,6 +778,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod4,
   var_incond = var_incond_mod4,
   var_cond = var_cond_mod4,
+  med_incond = opt4$deltaMedia,
   time = NYSE$Index
 )
 
@@ -926,6 +930,7 @@ data <- data.frame(
   one_step_predict = media_cond_mod5,
   var_incond = var_incond_mod5,
   var_cond = var_cond_mod5,
+  med_incond = opt5$deltaMedia,
   time = NYSE$Index
 )
 
@@ -1113,6 +1118,7 @@ dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
 dummy2 <- as.matrix(dummy_on_off(n, c(1, 881, 1189, 1375),
                                  c(880, 1184, 1201, n)))
 
+
 opt6 <- estimando_usa(llike_suave_usa, pars)
 
 media_cond_mod6 <- opt6$media_cond
@@ -1135,11 +1141,15 @@ var(resid_pad_data$resid_pad)
 # Estimando e residuos - FIM
 
 # FAC e FACP - INICIO
-acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle('') + tema
+ggsave(r"{graficos\NYSE\usa_fac_modelo6_serie.png}", width = 10, height = 10)
+pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ggtitle('')  + ylim(c(-1,1)) + tema
+ggsave(r"{graficos\NYSE\usa_facp_modelo6_serie.png}", width = 10, height = 10)
 
-acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ggtitle('')  + ylim(c(-1,1)) + tema
+ggsave(r"{graficos\NYSE\usa_fac_modelo6_quad.png}", width = 10, height = 10)
+pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ggtitle('')  + ylim(c(-1,1)) + tema
+ggsave(r"{graficos\NYSE\usa_facp_modelo6_quad.png}", width = 10, height = 10)
 # FAC e FACP - FIM
 
 poder_pred(yt, media_cond_mod6, var_cond_mod6)$rmse
@@ -1155,7 +1165,7 @@ grafico_qqplot(resid_pad_data)
 grafico_hist(resid_pad_data)
 
 juntando_hist_qq(resid_pad_data)
-ggsave(r"{graficos\USA\qqplot_hist_modelo6.png}", width = 20, height = 10)
+ggsave(r"{graficos\NYSE\qqplot_hist_modelo6.png}", width = 20, height = 10)
 # QQplot e Histograma - FIM
 
 # TH - INICIO
@@ -1193,115 +1203,6 @@ ggsave(r"{graficos\NYSE\desvio_incond_modelo6.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 
 
-# Ajuste Fino - Modelo 06 -------------------------------------------------
-pars <- list(
-  psi2 = log(c(.05, .05)),
-  psi3 = log(.85),
-  deltaMedia = 0.0,
-  deltaVar = c(-3, -3, -3)
-)
-
-alpha_order <- length(pars$psi2)
-beta_order <- length(pars$psi3)
-kmed <- length(pars$deltaMedia)
-kvar <- length(pars$deltaVar)
-n <- length(yt) # Tamanho da serie
-delta_ind <- c(2, 3)
-t_ast <- c(1184, 1201)
-t_til <- c(1189, 1375)
-
-dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
-dummy2 <- as.matrix(dummy_on_off(n, c(1, 881, 1189, 1375),
-                                 c(880, 1184, 1201, n)))
-
-opt6_1 <- estimando_usa(llike_suave_usa2, pars)
-
-media_cond_mod6_1 <- opt6_1$media_cond
-var_cond_mod6_1 <- opt6_1$dp_cond^2
-var_incond_mod6_1 <- opt6_1$var_indcond
-
-
-resid_pad_mod6_1 <- (yt - media_cond_mod6_1)/sqrt(var_cond_mod6_1)
-resid_pad_mod6_1 <- resid_pad_mod6_1[-(1:50)]
-
-resid_pad_data <- data.frame(resid_pad = resid_pad_mod6_1, 
-                             time = seq_along(resid_pad_mod6_1))
-resid_pad_data <- resid_pad_data[-1, ]
-
-plot(resid_pad_mod6_1, type = 'l')
-plot(var_incond_mod6_1, type = 'l')
-
-mean(resid_pad_data$resid_pad)
-var(resid_pad_data$resid_pad)
-
-# Estimando e residuos - FIM
-
-# FAC e FACP - INICIO
-acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
-
-acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-# FAC e FACP - FIM
-
-poder_pred(yt, media_cond_mod6_1, var_cond_mod6_1)$rmse
-cor(var_cond_mod6_1[-(1:50)], ((yt - media_cond_mod6_1)^2)[-(1:50)])^2
-
-Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
-Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
-
-(dw <- sum(diff(yt - media_cond_mod6_1)^2)/sum((yt - media_cond_mod6_1)^2))
-
-# QQplot e Histograma - INICIO
-ggplot(resid_pad_data, aes(sample = resid_pad)) + 
-  stat_qq() + 
-  geom_abline(slope = 1, intercept = 0) + 
-  ylim(-6,6) + 
-  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6))
-
-ggplot(resid_pad_data, aes(x = resid_pad)) + 
-  geom_histogram(aes(y =..density..), fill = "#0c4c8a") +
-  theme_minimal() +
-  labs(x = "Residuos padronizados", y = 'Densidade') + 
-  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
-  stat_function(fun = dnorm, args = list(0, 1), color = 'red')
-# QQplot e Histograma - FIM
-
-# TH - INICIO
-
-shapiro.test(resid_pad_data$resid_pad)
-tseries::jarque.bera.test(resid_pad_data$resid_pad)
-nortest::ad.test(resid_pad_data$resid_pad)
-
-moments::kurtosis(resid_pad_mod6_1)
-moments::skewness(resid_pad_mod6_1)
-
-# TH - FIM
-
-# Graficos de linha para esp_cond e var_cond - INICIO
-data <- data.frame(
-  yt = yt,
-  one_step_predict = media_cond_mod6_1,
-  var_incond = var_incond_mod6_1,
-  var_cond = var_cond_mod6_1,
-  med_incond = opt6_1$data$deltaMedia,
-  time = NYSE$Index
-)
-
-ggplot(data, aes(x = time, y = yt)) +
-  geom_line(size = 1L, colour = "#0c4c8a") +
-  geom_line(aes(y = one_step_predict), size = 1L, colour = "red") +
-  theme(axis.title.y = element_text(angle = 0)) +
-  labs(x = 'Tempo') 
-
-grafico_var_cond(data)
-#ggsave(r"{graficos\NYSE\desvio_cond_modelo6_1.png}", width = 20, height = 10)
-
-grafico_var_incond(data)
-#ggsave(r"{graficos\NYSE\desvio_incond_modelo6_1.png}", width = 20, height = 10)
-# Graficos de linha para esp_cond e var_cond - FIM
-
-
 # Resultados --------------------------------------------------------------
 
 medidas <- function(modelo, nome){
@@ -1317,8 +1218,7 @@ resultado <- rbind(
   medidas(opt4, "opt4"),
   medidas(opt5, "opt5"),
   medidas(opt3_1, "opt3_1"),
-  medidas(opt6$data, "opt6"),
-  medidas(opt6_1$data, "opt6_1")
+  medidas(opt6$data, "opt6")
 )
 
 resultado
@@ -1334,6 +1234,9 @@ teste_lr(opt4, opt5)
 
 teste_lr(opt3_1, opt6$data)
 teste_lr(opt6$data, opt6_1$data)
+
+teste_lr(opt6$data, opt0)
+teste_lr(opt3_1, opt0)
 
 
 

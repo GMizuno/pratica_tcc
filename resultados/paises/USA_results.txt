@@ -100,3 +100,5 @@ ARCH(1) => Instabilidade
 GARCH(2,2) => Instabilidade
 
 
+
+Crise de 2008: o impacto das restrições nas vendas a descoberto sobre a volatilidade em mercados financeiros de países desenvolvidos

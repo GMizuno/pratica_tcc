@@ -61,16 +61,16 @@ ggplot(FTSE, aes(x = Index, y = 100 * ftse)) +
   theme_minimal() + tema
 ggsave(r"{graficos\FTSE\uk_serie.png}", width = 20, height = 10)
 
-acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") + tema
 ggsave(r"{graficos\FTSE\uk_fac_serie.png}", width = 10, height = 10)
 
-pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") + tema
 ggsave(r"{graficos\FTSE\uk_facp_serie.png}", width = 10, height = 10)
 
-acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") + tema
 ggsave(r"{graficos\FTSE\uk_fac_quad.png}", width = 10, height = 10)
 
-pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") + tema
 ggsave(r"{graficos\FTSE\uk_facp_quad.png}", width = 10, height = 10)
 
 # Modelo 00 AR(1)-GARCH(1,1) ----------------------------------------------
@@ -1499,11 +1499,15 @@ var(resid_pad_data$resid_pad)
 # Estimando e residuos - FIM
 
 # FAC e FACP - INICIO
-acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") + tema
+ggsave(r"{graficos\FTSE\uk_fac_modelo8_serie.png}", width = 10, height = 10)
+pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ggtitle('')  + ylim(c(-1,1)) + tema
+ggsave(r"{graficos\FTSE\uk_facp_modelo8_serie.png}", width = 10, height = 10)
 
-acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ggtitle('')  + ylim(c(-1,1)) + tema
+ggsave(r"{graficos\FTSE\uk_fac_modelo8_quad.png}", width = 10, height = 10)
+pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ggtitle('')  + ylim(c(-1,1)) + tema
+ggsave(r"{graficos\FTSE\uk_facp_modelo8_quad.png}", width = 10, height = 10)
 # FAC e FACP - FIM
 
 poder_pred(yt, media_cond_mod8, var_cond_mod8)$rmse
@@ -1707,8 +1711,13 @@ resultado %>% arrange(BIC)
 teste_lr(opt1, opt0)
 teste_lr(opt1, opt2)
 teste_lr(opt3, opt1)
+teste_lr(opt4, opt1)
 
 teste_lr(opt7, opt0)
+teste_lr(opt7_1, opt0)
+teste_lr(opt8$data, opt0)
+
+teste_lr(opt7, opt8$data)
 teste_lr(opt7_1, opt8$data)
 
 teste_lr(opt8$data, opt8_1$data)

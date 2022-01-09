@@ -1,20 +1,27 @@
 Modelos Apresentados no TCC 
 
+Crise I -> 2007-07-01 => 880
+Lehman Brothers -> 2008-09-15 => 1184
+
+Intervenção 1 -> 2008-09-19 => 1188 (Intervenção Agência Reguladora)
+Intervenção 2 -> 2008-10-08 => 1201 (Intervenção Agência Reguladora)
+Intervenção 3 -> 2009-06-18 => 1375 (Data Driven)
+Intervenção 4 -> 2008-12-17 => 1250 (Data Driven)
+Intervenção 5 -> 2009-12-09 => 1495 (Data Driven)
+
 Modelo 00 - AR(1)-GARCH(1,1);
 
-Modelo 01 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1 e Intervenção 2);
+1 Modelo 01 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1 e Intervenção 2);
 
-Modelo 02 - 4 degraus (Crise I, Lehman Brothers e Intervenção 2);
+2 Modelo 03 - 3 degraus (Crise I, Lehman Brothers, Intervenção 2 e Intervenção 3), mas com , mas com um Int suave entre LB e Intervenção 1 e Intervenção 3;
 
-Modelo 03 - 3 degraus (Crise I, Lehman Brothers, Intervenção 2 e Intervenção 3 ), mas com , mas com um Int suave entre Intervenção 2 e Intervenção 3;
+3 Modelo 04 - 6 degraus (Crise I, Lehman Brothers, Intervenção 2, Intervenção 4 e Intervenção 3) 
 
-Modelo 04 - 5 degraus (Crise I, Lehman Brothers, Intervenção 2, Intervenção 4 e Intervenção 3) 
+4 Modelo 05 - 7 degraus (Crise I, Lehman Brothers, Intervenção 2, Intervenção 4 e Intervenção 5)
 
-Modelo 05 - 5 degraus (Crise I, Lehman Brothers, Intervenção 2, Intervenção 3 e Intervenção 5), mas com um Int suave entre Intervenção 2 e Intervenção 3;
+5 ADICIONAR MODELO 3_1
 
-ADICIONAR MODELO 3_1
-
-Modelo 06 - 5 degraus (Crise I, Lehman Brothers, Intervenção 2, Intervenção 3 e Intervenção 5), mas com um Int suave entre Intervenção 2 e Intervenção 3, além de beta2=beta4;
+6 Modelo 06 - 5 degraus (Crise I, Lehman Brothers, Intervenção 2 e Intervenção 3), mas com , mas com um Int suave entre LB e Intervenção 1 e Intervenção 3, além de beta2=beta4;
 
 Melhor Modelo => Modelo 06
 

@@ -66,16 +66,16 @@ ggplot(NIKKEI, aes(x = Index, y = 100 * nikkei)) +
   theme_minimal() + tema
 ggsave(r"{graficos\NIKKEI\jap_serie.png}",width = 20, height = 10)
 
-acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+acf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") + tema
 ggsave(r"{graficos\NIKKEI\jap_fac_serie.png}", width = 10, height = 10)
 
-pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
+pacf(yt, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") + tema
 ggsave(r"{graficos\NIKKEI\jap_facp_serie.png}", width = 10, height = 10)
 
-acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("")
+acf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") + tema
 ggsave(r"{graficos\NIKKEI\jap_fac_quad.png}", width = 10, height = 10)
 
-pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") 
+pacf(yt^2, plot = F) %>% autoplot() + ylim(c(-1,1)) + ggtitle("") + tema 
 ggsave(r"{graficos\NIKKEI\jap_facp_quad.png}", width = 10, height = 10)
 
 # Modelo 00 AR(1)-GARCH(1,1) ----------------------------------------------
@@ -1716,11 +1716,15 @@ var(resid_pad_data$resid_pad)
 ## Analisando residuos 
 
 ## FAC e FACP - INICIO
-acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ggtitle('') + ylim(c(-1,1)) + tema
+ggsave(r"{graficos\NIKKEI\jap_fac_modelo12_1_serie.png}", width = 10, height = 10)
+pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ggtitle('')  + ylim(c(-1,1)) + tema
+ggsave(r"{graficos\NIKKEI\jap_facp_modelo12_1_serie.png}", width = 10, height = 10)
 
-acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
-pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ggtitle('')  + ylim(c(-1,1)) + tema
+ggsave(r"{graficos\NIKKEI\jap_fac_modelo12_1_quad.png}", width = 10, height = 10)
+pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ggtitle('')  + ylim(c(-1,1)) + tema
+ggsave(r"{graficos\NIKKEI\jap_facp_modelo12_1_quad.png}", width = 10, height = 10)
 ## FAC e FACP - FIM
 
 Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
