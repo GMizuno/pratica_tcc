@@ -1,10 +1,16 @@
 library(ggplot2)
 library(patchwork)
 
-tema <- theme(axis.title.y = element_text(size = 30),
-      axis.title.x = element_text(size = 30),
-      axis.text.x = element_text(size = 30),
-      axis.text.y = element_text(size = 30))
+tema <- theme(
+    panel.background = element_rect(fill = "white"), 
+    panel.grid.major.y = element_line(linetype = "solid", colour = 'grey'),
+    panel.grid.major.x = element_line(linetype = "solid", colour = 'grey'),
+    axis.line = element_line(colour = "black"),
+    axis.title.y = element_text(size = 30),
+    axis.title.x = element_text(size = 30),
+    axis.text.x = element_text(size = 30),
+    axis.text.y = element_text(size = 30)
+)
 
 
 grafico_var_cond <- function(data){

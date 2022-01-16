@@ -21,7 +21,7 @@ Modelo 00 - AR(1)-GARCH(1,1);
 
 5 ADICIONAR MODELO 3_1
 
-6 Modelo 06 - 5 degraus (Crise I, Lehman Brothers, Intervenção 2 e Intervenção 3), mas com , mas com um Int suave entre LB e Intervenção 1 e Intervenção 3, além de beta2=beta4;
+6 Modelo 06 - 4 degraus (Crise I, Lehman Brothers, Intervenção 1 e Intervenção 3), mas com , mas com um Int suave entre LB e Intervenção 1 e Intervenção 3, além de beta2=beta4;
 
 Melhor Modelo => Modelo 06
 

@@ -81,7 +81,7 @@ Modelo 09 => 0.3417239
 Modelo 10 => 0.299666
 Modelo 11 => 0.3418193
 Modelo 12 => 0.3445408
-Modelo 12 => 0.3567573(Ajuste Fino)
+Modelo 12 => 0.3567573 (Ajuste Fino)
 Modelo 15 => 0.3005199
  
 Teste de Hipooteses

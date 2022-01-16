@@ -1,4 +1,4 @@
-############# França 
+##########################  CAC ##########################  
 
 Modelo 08 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1, Intervenção 3 e Intervenção 4), mas com int suave entre Lehman Brothers e Intervenção 1 e beta5 = beta2;
 
@@ -27,7 +27,7 @@ Modelo 08
 1 0,06699794 0,8597707 -0,07267389 0,06241893 -3,025085 -1,878939 0,3468039 -0,9410369  18 -2259,377       8 4534,755 4577,196
 
 
-############# DAX
+########################## DAX ##########################
 
 Modelo 09 - 5 degraus (Crise I, Lehman Brothers, Intervenção 1, Intervenção 3 e Intervenção 4), mas com int suave entre Lehman Brothers e Intervenção 1 e beta5 = beta2
 
@@ -54,7 +54,7 @@ Cor = 0,1996413
 1 0,06765458 0,8753772 -0,03656284 0,08567808 -3,101716 -2,212704 0,0403311 -1,330478  18 -2296,456       8 4608,911 4651,304
 
 
-############# NIKKEI
+########################## NIKKEI ##########################
 
 Modelo 12_1 - 4 degraus (Intervenção 1, Intervenção 2, Intervenção 4 e Intervenção 5), mas com uma Ints suave entre Intervenção 2 e Intervenção 4, Intervenção 4 e Intervenção 5; Intervenção 3 igual a Intervenção 5; 
 
@@ -77,8 +77,7 @@ RMSE = 7,605349
 
 Cor = 0,3567573
 
-
-############# FTSE
+########################## FTSE ##########################
 
 Modelo 08 - 4 degraus (Crise I, Lehman Brothers, Intervenção 1 e Intervenção 4), mas com um Int suave entre Lehman Brothers e Intervenção 1 e Intervenção 4, alem de beta4=beta2 (|>);
 
@@ -110,24 +109,24 @@ Cor = 0,2623529
 Modelo 06 - 3 degraus (Crise I, Lehman Brothers, Intervenção 2 e Intervenção 3 ), mas com , mas com um Int suave entre Intervenção 2 e Intervenção 3, alem de beta2=beta5;
 
 Modelo     llike      AIC      BIC
-  opt6 -2459,892 4935,785 4979,353
+  opt6 -2061.743 4139.486 4181.781
 
 Media Residuo = -0.02653365
 Var Residuo = 1.000137
 
-Ljung-Box Nivel = (X-squared = 25.668, p-value = 0.692)
-Ljung Box Quadrado = (X-squared = 25.134, p-value = 0.7185)
+Ljung-Box Nivel = (X-squared = 31.55, p-value = 0.3887)
+Ljung Box Quadrado = (X-squared = 20.746, p-value = 0.8957)
 
-Durbin Watson = 2.087623
+Durbin Watson = 2.09312
 
-Shapiro	=  (W = 0.98612, p-value = 8.715e-12)
-Jarque Bera = (X-squared = 155.01, p-value < 2.2e-16)
-Anderson-Darling = (A = 6.0505, p-value = 7.075e-15)
+Shapiro	=  (W = 0.98772, p-value = 9.141e-10)
+Jarque Bera = (X-squared = 119.58, df = 2, p-value < 2.2e-16)
+Anderson-Darling = (A = 4.1148, p-value = 3.099e-10)
 
 
-RMSE = 6.376779
+RMSE = 6.748963
 
-Cor = 0.2892873
+Cor = 0.3012764
 
         alpha1     alpha2      beta          ar deltaMedia deltaVar1 deltaVar2 deltaVar3 ite     llike num_par      AIC      BIC
-1 1,348049e-05 0,06786759 0,8688999 -0,05412051 0,05388066 -3,467789 -2,316091 0,1975035  40 -2459,892       8 4935,785 4979,353
+1 7.030649e-05 0.05377515 0.8742399 -0.05812697 0.05101496 -3.398013 -2.092295 0.3564991  37 -2061.743       8 4139.486 4181.781

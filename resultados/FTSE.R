@@ -1546,6 +1546,9 @@ data <- data.frame(
   med_incond = opt8$data$deltaMedia,
   time = FTSE$Index
 )
+data %>% 
+  select(time, var_incond) %>% 
+  save(file=r"{dados\Volatilidade\ftse_vol.RData}")
 
 ggplot(data, aes(x = time, y = yt)) +
   geom_line(size = 1L, colour = "#0c4c8a") +
@@ -1556,7 +1559,22 @@ ggplot(data, aes(x = time, y = yt)) +
 grafico_var_cond(data)
 ggsave(r"{graficos\FTSE\desvio_cond_modelo8.png}", width = 20, height = 10)
 
-grafico_var_incond(data)
+grafico_var_incond(data) + theme_bw() + 
+  geom_vline(xintercept = c(crises[1], 
+                            as.Date(c("2008-09-15", 
+                                      "2009-06-18"))), 
+             colour = c('darkorange', 'yellow', 'green'), 
+             size = 1.5, linetype = "dashed") +
+  geom_rect(data=data, 
+            mapping=aes(xmin= as.Date("2008-09-19"), 
+                        xmax=as.Date('2009-01-19'),
+                        ymin=0, ymax=max(abs(yt-med_incond))), 
+            color="grey", alpha=0.003) + tema +
+  annotate(geom = "text",
+           x = as.Date(c("2009-07-08")), y = 7.5, 
+           label = c("18-06-2009"),
+           color = "red", size = 5,
+           angle = 90)
 ggsave(r"{graficos\FTSE\desvio_incond_modelo8.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 

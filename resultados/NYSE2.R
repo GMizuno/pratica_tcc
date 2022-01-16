@@ -14,7 +14,7 @@ library(imputeTS)
 
 load("dados/NYSE.RData")
 BegSample <- '2004-01-01'
-EndSample <- '2010-12-31'
+EndSample <- '2009-12-31'
 crises <- as.Date(c("2007-07-01", "2008-11-28")) # Nao usar segunda data
 
 NYSE <- NYSE %>% fortify.zoo %>% as_tibble 
@@ -1097,6 +1097,17 @@ grafico_var_incond(data)
 
 # Modelo 06 ---------------------------------------------------------------
 
+ggplot(NYSE, aes(x = Index, y = nyse)) +
+  geom_line(size = 1L, colour = "#112446") +
+  labs(x = "Tempo", y = "Retorno", title = "FTSE com as Restrições") +
+  theme_minimal() + 
+  geom_vline(xintercept = c(crises[1], 
+                            as.Date(c("2008-09-15",
+                                      "2008-09-19", 
+                                      "2009-06-18"))), 
+             colour = c('red', 'yellow', 'grey', 'green'), 
+             size = 1.5, linetype = "dashed")
+
 pars <- list(
   psi2 = log(c(.05, .05)),
   psi3 = log(.85),
@@ -1189,6 +1200,10 @@ data <- data.frame(
   time = NYSE$Index
 )
 
+data %>% 
+  select(time, var_incond) %>% 
+  save(file=r"{dados\Volatilidade\nyse_vol.RData}")
+
 ggplot(data, aes(x = time, y = yt)) +
   geom_line(size = 1L, colour = "#0c4c8a") +
   geom_line(aes(y = one_step_predict), size = 1L, colour = "red") +
@@ -1198,10 +1213,25 @@ ggplot(data, aes(x = time, y = yt)) +
 grafico_var_cond(data)
 ggsave(r"{graficos\NYSE\desvio_cond_modelo6.png}", width = 20, height = 10)
 
-grafico_var_incond(data)
+grafico_var_incond(data) + 
+  theme_minimal() + 
+  geom_vline(xintercept = c(crises[1], 
+                            as.Date(c("2008-09-15",
+                                      "2009-06-18"))), 
+             colour = c('darkorange', 'yellow', 'green'), 
+             size = 1.5, linetype = "dashed") +
+  geom_rect(data=data, 
+            mapping=aes(xmin= as.Date("2008-09-19"), 
+                        xmax=as.Date('2008-10-08'),
+                        ymin=0, ymax=max(abs(yt-med_incond))), 
+            color="grey", alpha=0.003) + tema +
+  annotate(geom = "text",
+           x = as.Date(c("2009-07-08")), y = 7.5, 
+           label = c("18-06-2009"),
+           color = "red", size = 5,
+           angle = 90)
 ggsave(r"{graficos\NYSE\desvio_incond_modelo6.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
-
 
 # Resultados --------------------------------------------------------------
 
@@ -1233,7 +1263,6 @@ teste_lr(opt2, opt0)
 teste_lr(opt4, opt5)
 
 teste_lr(opt3_1, opt6$data)
-teste_lr(opt6$data, opt6_1$data)
 
 teste_lr(opt6$data, opt0)
 teste_lr(opt3_1, opt0)
@@ -1249,7 +1278,6 @@ poder_pred(yt, media_cond_mod4, var_cond_mod4)$rmse
 poder_pred(yt, media_cond_mod5, var_cond_mod5)$rmse
 poder_pred(yt, media_cond_mod3_1, var_cond_mod3_1)$rmse
 poder_pred(yt, media_cond_mod6, var_cond_mod6)$rmse
-poder_pred(yt, media_cond_mod6_1, var_cond_mod6_1)$rmse
 
 ## Cor
 cor(var_cond_mod0[-(1:50)], ((yt - media_cond_mod0)^2)[-(1:50)])^2
@@ -1260,5 +1288,4 @@ cor(var_cond_mod4[-(1:50)], ((yt - media_cond_mod4)^2)[-(1:50)])^2
 cor(var_cond_mod5[-(1:50)], ((yt - media_cond_mod5)^2)[-(1:50)])^2
 cor(var_cond_mod3_1[-(1:50)], ((yt - media_cond_mod3_1)^2)[-(1:50)])^2
 cor(var_cond_mod6[-(1:50)], ((yt - media_cond_mod6)^2)[-(1:50)])^2
-cor(var_cond_mod6_1[-(1:50)], ((yt - media_cond_mod6_1)^2)[-(1:50)])^2
 

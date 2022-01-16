@@ -1590,6 +1590,10 @@ data <- data.frame(
   time = DAX$Index
 )
 
+data %>% 
+  select(time, var_incond) %>% 
+  save(file=r"{dados\Volatilidade\dax_vol.RData}")
+
 ggplot(data, aes(x = time, y = yt)) +
   geom_line(size = 1L, colour = "#0c4c8a") +
   geom_line(aes(y = one_step_predict), size = 1L, colour = "red") +
@@ -1599,8 +1603,25 @@ ggplot(data, aes(x = time, y = yt)) +
 grafico_var_cond(data)
 ggsave(r"{graficos\DAX\desvio_cond_modelo9.png}", width = 20, height = 10)
 
-grafico_var_incond(data)
+grafico_var_incond(data) + theme_bw() + 
+  geom_vline(xintercept = c(crises[1], 
+                          as.Date(c("2008-09-15",
+                                    "2008-12-11", 
+                                    "2009-05-26"))), 
+           colour = c('darkorange', "yellow", 'green', 'green'), size = 1.5,
+           linetype = "dashed") +
+  geom_rect(data=data, 
+            mapping=aes(xmin= as.Date("2008-09-20"), 
+                        xmax=as.Date('2009-12-31'),
+                        ymin=0, ymax=max(abs(yt-med_incond))), 
+            color="grey", alpha=0.002) + tema +
+  annotate(geom = "text",
+           x = as.Date(c("2008-12-31", "2009-06-16")), y = 7.5, 
+           label = c("11-12-2008", "26-05-2009"),
+           color = "red", size = 5,
+           angle = 90)
 ggsave(r"{graficos\DAX\desvio_incond_modelo9.png}", width = 20, height = 10)
+
 # Graficos de linha para esp_cond e var_cond - FIM
 
 # Ajuste Fino - Modelo 06 -------------------------------------------------

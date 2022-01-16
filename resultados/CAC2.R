@@ -1607,6 +1607,10 @@ data <- data.frame(
   time = CAC$Index
 )
 
+data %>% 
+  select(time, var_incond) %>% 
+  save(file=r"{dados\Volatilidade\cac_vol.RData}")
+
 ggplot(data, aes(x = time, y = yt)) +
   geom_line(size = 1L, colour = "#0c4c8a") +
   geom_line(aes(y = one_step_predict), size = 1L, colour = "red") +
@@ -1616,7 +1620,23 @@ ggplot(data, aes(x = time, y = yt)) +
 grafico_var_cond(data)
 ggsave(r"{graficos\CAC\desvio_cond_modelo8.png}", width = 20, height = 10)
 
-grafico_var_incond(data)
+grafico_var_incond(data) + 
+  theme_bw() + 
+  geom_vline(xintercept = c(crises[1], as.Date("2008-09-15"),
+                            as.Date("2008-12-18"), 
+                            as.Date("2009-04-07")), 
+             colour = c('darkorange', "yellow", 'green', 'green'), size = 1.5,
+             linetype = "dashed") +
+  geom_rect(data=data, 
+            mapping=aes(xmin= as.Date("2008-09-22"), 
+                        xmax=as.Date('2009-12-31'),
+                        ymin=0, ymax=max(abs(yt-med_incond))), 
+            color="grey", alpha=0.003) + tema +
+  annotate(geom = "text",
+           x = as.Date(c("2007-07-20", "2009-01-08", "2009-04-27")), y = 7.5, 
+           label = c("01-01-2008", "10-10-2008", "01-01-2009"),
+           color = "red", size = 5,
+           angle = 90)
 ggsave(r"{graficos\CAC\desvio_incond_modelo8.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM
 

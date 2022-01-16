@@ -1,5 +1,14 @@
 Modelos Apresentados no TCC 
 
+Crise I -> 2007-07-01 => 898
+Lehman Brothers -> 2008-09-15 => 1207
+
+Intervenção 1 -> 2008-09-22 => 1212 (Intervenção Agência Reguladora)
+Intervenção 2 -> 2012-12-11 => ???? ---> Muito longe do range dos dados
+Intervenção 3 -> 2008-12-18 => 1270 (Data Driven)
+Intervenção 4 -> 2009-04-07 => 1350 (Data Driven)
+Intervenção 5 -> 2009-06-19 => 1400 (Data Driven)
+
 Modelo 00 - AR(1)-GARCH(1,1);
 
 Modelo 03 - 4 degraus (Crise I, Lehman Brothers e Intervenção 1);

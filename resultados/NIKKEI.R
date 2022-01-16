@@ -1667,6 +1667,19 @@ grafico_var_incond(data)
 
 # Modelo 12 - ajuste fino ---------------------------------------------------
 
+ggplot(NIKKEI, aes(x = Index, y = nikkei)) +
+  geom_line(size = 1L, colour = "#112446") +
+  labs(x = "Tempo", y = "Retorno", title = "NIKKEI com as Restrições") +
+  theme_minimal() + 
+  geom_vline(xintercept = c(as.Date(c("2008-01-01",
+                                      "2008-09-15", 
+                                      "2008-10-10",
+                                      "2009-01-01"
+                                      )
+                                    )), 
+             colour = c('green', "yellow", 'green', 'green'), size = 1.5,
+             linetype = "dashed") 
+
 # Ordens e Parametros - INICIO
 pars <- list(
   psi2 = log(c(.05, .05)),
@@ -1757,6 +1770,9 @@ data <- data.frame(
   var_cond = var_cond_mod12_1,
   time = NIKKEI$Index
 )
+data %>% 
+  select(time, var_incond) %>% 
+  save(file=r"{dados\Volatilidade\nikkei_vol.RData}")
 
 ggplot(data, aes(x = time, y = yt)) +
   geom_line(size = 1L, colour = "#0c4c8a") +
@@ -1767,9 +1783,178 @@ ggplot(data, aes(x = time, y = yt)) +
 grafico_var_cond(data)
 ggsave(r"{graficos\NIKKEI\desvio_cond_modelo12_1.png}", width = 20, height = 10)
 
-grafico_var_incond(data)
+grafico_var_incond(data) + theme_bw() + 
+  geom_vline(xintercept = c(as.Date(c(crises[1], "2008-01-01",
+                                      "2008-09-15", 
+                                      "2008-10-10",
+                                      "2009-01-01"))), 
+             colour = c('darkorange', 'green', "yellow", 'green', 'green'), size = 1.5,
+             linetype = "dashed") +
+  geom_rect(data=data, 
+            mapping=aes(xmin= as.Date("2008-10-20"), 
+                        xmax=as.Date('2009-12-31'),
+                        ymin=0, ymax=max(abs(yt-med_incond))),
+            color="grey", alpha=0.003) + tema +
+  annotate(geom = "text",
+           x = as.Date(c("2007-07-20","2008-01-20", "2008-10-30", "2009-01-20")),
+           y = 7.5, 
+           label = c("Início da crise, sem intervenção", "01-01-2008", "10-10-2008", "01-01-2009"),
+           color = "red", size = 5,
+           angle = 90)
 ggsave(r"{graficos\NIKKEI\desvio_incond_modelo12_1.png}",  width = 20, height = 10)
 ## Graficos de linha para esp_cond e var_cond - FIM
+
+# Modelo 13 ---------------------------------------------------
+
+# Ordens e Parametros - INICIO
+pars <- list(
+  psi2 = log(c(.05, .05)),
+  psi3 = log(.85),
+  ar = .2,
+  deltaMedia = 0.0,
+  deltaVar = c(-3, -3, -3, -3)
+)
+
+## Definindo parametros e dummies
+alpha_order <- length(pars$psi2)
+beta_order <- length(pars$psi3)
+kmed <- length(pars$deltaMedia)
+kvar <- length(pars$deltaVar)
+n <- length(yt) # Tamanho da serie
+delta_ind <- c(2, 3)
+t_ast <- c(1157, 1179)
+t_til <- c(1174, 1227)
+
+dummy1 <- as.matrix(dummy_step(n, 1, "Media"))
+dummy2 <- as.matrix(dummy_on_off(n, c(1, 985, 1175, 1227),
+                                 c(984, 1157, 1179, n)))
+# Ordens e Parametros - FIM
+
+# Estimando e residuos  - INICIO
+
+(opt13 <- estimando(llike_suave, pars))
+
+media_cond_mod13 <- esp_cond_sauve(
+  data = yt,
+  est = opt13,
+  dummy1 = dummy1,
+  dummy2 = dummy2,
+  t_ast = t_ast,
+  t_til = t_til,
+  delta_ind = delta_ind,
+  alpha_order = alpha_order,
+  beta_order = beta_order,
+  kmed = kmed,
+  kvar = kvar,
+  n = n
+)
+
+var_cond_mod13 <- var_cond_sauve(
+  data = yt,
+  est = opt13,
+  dummy1 = dummy1,
+  dummy2 = dummy2,
+  t_ast = t_ast,
+  t_til = t_til,
+  delta_ind = delta_ind,
+  Varyt = Varyt,
+  alpha_order = alpha_order,
+  beta_order = beta_order,
+  kmed = kmed,
+  kvar = kvar,
+  n = n
+)
+
+var_incond_mod13 <- var_indcond_sauve(
+  data = yt,
+  est = opt13,
+  dummy1 = dummy1,
+  dummy2 = dummy2,
+  t_ast = t_ast,
+  t_til = t_til,
+  delta_ind = delta_ind,
+  alpha_order = alpha_order,
+  beta_order = beta_order,
+  kmed = kmed,
+  kvar = kvar
+)
+
+resid_pad_mod13 <- (yt - media_cond_mod13)/sqrt(var_cond_mod13)
+resid_pad_mod13 <-resid_pad_mod13[-(1:50)]
+
+resid_pad_data <- data.frame(resid_pad = resid_pad_mod13, 
+                             time = seq_along(resid_pad_mod13))
+resid_pad_data <- resid_pad_data[-1, ]
+
+plot(resid_pad_mod13, type = 'l', ylim = c(-6, 6))
+plot(var_incond_mod13, type = 'l')
+
+mean(resid_pad_data$resid_pad)
+var(resid_pad_data$resid_pad)
+
+## Analisando residuos 
+
+## FAC e FACP - INICIO
+acf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+pacf(resid_pad_data$resid_pad, plot = F) %>% autoplot() + ylim(c(-1,1))
+
+acf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+pacf(resid_pad_data$resid_pad^2, plot = F) %>% autoplot() + ylim(c(-1,1))
+## FAC e FACP - FIM
+
+## QQplot e Histograma - INICIO
+ggplot(resid_pad_data, aes(sample = resid_pad)) + 
+  stat_qq() + 
+  geom_abline(slope = 1, intercept = 0) + 
+  ylim(-6,6) + 
+  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6))
+
+ggplot(resid_pad_data, aes(x = resid_pad)) + 
+  geom_histogram(aes(y =..density..), fill = "#0c4c8a") +
+  theme_minimal() +
+  labs(x = "Residuos padronizados", y = 'Densidade') + 
+  scale_x_continuous(limits = c(-6, 6),  breaks = c(-6, -4, -2, 0, 2, 4, 6)) +
+  stat_function(fun = dnorm, args = list(0, 1), color = 'red')
+## QQplot e Histograma - FIM
+
+## TH - INICIO
+
+Box.test(resid_pad_data$resid_pad, type = 'Ljung-Box', lag = 30)
+Box.test(resid_pad_data$resid_pad^2, type = 'Ljung-Box', lag = 30)
+
+shapiro.test(resid_pad_data$resid_pad)
+tseries::jarque.bera.test(resid_pad_data$resid_pad)
+nortest::ad.test(resid_pad_data$resid_pad)
+
+(dw <- sum(diff(yt - media_cond_mod13)^2)/sum((yt - media_cond_mod13)^2))
+moments::kurtosis(resid_pad_mod13)
+moments::skewness(resid_pad_mod13)
+
+## TH - FIM
+
+## Graficos de linha para esp_cond e var_cond - INICIO
+data <- data.frame(
+  yt = yt,
+  one_step_predict = media_cond_mod13,
+  var_incond = var_incond_mod13,
+  var_cond = var_cond_mod13,
+  med_incond = opt13$deltaMedia,
+  time = NIKKEI$Index
+)
+
+ggplot(data, aes(x = time, y = yt)) +
+  geom_line(size = 1L, colour = "#0c4c8a") +
+  geom_line(aes(y = one_step_predict), size = 1L, colour = "red") +
+  theme(axis.title.y = element_text(angle = 0)) +
+  labs(x = 'Tempo') 
+
+grafico_var_cond(data)
+#ggsave(r"{graficos\NIKKEI\desvio_cond_modelo3.png}",width = 20, height = 10)
+
+grafico_var_incond(data)
+#ggsave(r"{graficos\NIKKEI\desvio_incond_modelo3.png}",width = 20, height = 10)
+## Graficos de linha para esp_cond e var_cond - FIM
+
 
 # Resultados --------------------------------------------------------------
 
@@ -1792,7 +1977,8 @@ resultado <- rbind(
   medidas(opt10$data, "opt10"),
   medidas(opt11$data, "opt11"),
   medidas(opt12$data, "opt12"),
-  medidas(opt12_1$data, "opt12_1")
+  medidas(opt12_1$data, "opt12_1"),
+  medidas(opt13, "opt13")
 )
 
 resultado            
@@ -1831,6 +2017,11 @@ teste_lr(opt3, opt9$data)
 teste_lr(opt9$data, opt2)
 teste_lr(opt11$data, opt9$data)
 teste_lr(opt11$data, opt10$data)
+teste_lr(opt11$data, opt12_1$data)
+teste_lr(opt13, opt12_1$data)
+
+teste_lr(opt12_1$data, opt0)
+
 
 ## Poder preditivo
 poder_pred(yt, media_cond_mod0, var_cond_mod0)$rmse
