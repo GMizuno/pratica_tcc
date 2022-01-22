@@ -1772,16 +1772,17 @@ data <- data.frame(
 )
 data %>% 
   select(time, var_incond) %>% 
-  save(file=r"{dados\Volatilidade\nikkei_vol.RData}")
+  write.csv(file=r"{dados\Volatilidade\nikkei_vol.csv}")
+
+data %>% 
+  select(time, var_incond) %>% 
+  saveRDS(file=r"{dados\Volatilidade\nikkei_vol.rds}")
 
 ggplot(data, aes(x = time, y = yt)) +
   geom_line(size = 1L, colour = "#0c4c8a") +
   geom_line(aes(y = one_step_predict), size = 1L, colour = "red") +
   theme(axis.title.y = element_text(angle = 0)) +
   labs(x = 'Tempo') 
-
-grafico_var_cond(data)
-ggsave(r"{graficos\NIKKEI\desvio_cond_modelo12_1.png}", width = 20, height = 10)
 
 grafico_var_incond(data) + theme_bw() + 
   geom_vline(xintercept = c(as.Date(c(crises[1], "2008-01-01",
@@ -1796,10 +1797,10 @@ grafico_var_incond(data) + theme_bw() +
                         ymin=0, ymax=max(abs(yt-med_incond))),
             color="grey", alpha=0.003) + tema +
   annotate(geom = "text",
-           x = as.Date(c("2007-07-20","2008-01-20", "2008-10-30", "2009-01-20")),
+           x = as.Date(c("2007-07-25","2008-01-25", "2008-11-5", "2009-01-25")),
            y = 7.5, 
            label = c("Início da crise, sem intervenção", "01-01-2008", "10-10-2008", "01-01-2009"),
-           color = "red", size = 5,
+           color = "red", size = 10,
            angle = 90)
 ggsave(r"{graficos\NIKKEI\desvio_incond_modelo12_1.png}",  width = 20, height = 10)
 ## Graficos de linha para esp_cond e var_cond - FIM

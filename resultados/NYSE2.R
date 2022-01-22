@@ -1202,7 +1202,11 @@ data <- data.frame(
 
 data %>% 
   select(time, var_incond) %>% 
-  save(file=r"{dados\Volatilidade\nyse_vol.RData}")
+  write.csv(file=r"{dados\Volatilidade\nyse_vol.csv}")
+
+data %>% 
+  select(time, var_incond) %>% 
+  saveRDS(file=r"{dados\Volatilidade\nyse_vol.rds}")
 
 ggplot(data, aes(x = time, y = yt)) +
   geom_line(size = 1L, colour = "#0c4c8a") +
@@ -1226,9 +1230,9 @@ grafico_var_incond(data) +
                         ymin=0, ymax=max(abs(yt-med_incond))), 
             color="grey", alpha=0.003) + tema +
   annotate(geom = "text",
-           x = as.Date(c("2009-07-08")), y = 7.5, 
+           x = as.Date(c("2009-07-13")), y = 7.5, 
            label = c("18-06-2009"),
-           color = "red", size = 5,
+           color = "red", size = 10,
            angle = 90)
 ggsave(r"{graficos\NYSE\desvio_incond_modelo6.png}", width = 20, height = 10)
 # Graficos de linha para esp_cond e var_cond - FIM

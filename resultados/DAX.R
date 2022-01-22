@@ -1592,7 +1592,11 @@ data <- data.frame(
 
 data %>% 
   select(time, var_incond) %>% 
-  save(file=r"{dados\Volatilidade\dax_vol.RData}")
+  write.csv(file=r"{dados\Volatilidade\dax_vol.csv}")
+
+data %>% 
+  select(time, var_incond) %>% 
+  saveRDS(file=r"{dados\Volatilidade\dax_vol.rds}")
 
 ggplot(data, aes(x = time, y = yt)) +
   geom_line(size = 1L, colour = "#0c4c8a") +
@@ -1616,9 +1620,9 @@ grafico_var_incond(data) + theme_bw() +
                         ymin=0, ymax=max(abs(yt-med_incond))), 
             color="grey", alpha=0.002) + tema +
   annotate(geom = "text",
-           x = as.Date(c("2008-12-31", "2009-06-16")), y = 7.5, 
+           x = as.Date(c("2009-01-05", "2009-06-21")), y = 7.5, 
            label = c("11-12-2008", "26-05-2009"),
-           color = "red", size = 5,
+           color = "red", size = 10,
            angle = 90)
 ggsave(r"{graficos\DAX\desvio_incond_modelo9.png}", width = 20, height = 10)
 
